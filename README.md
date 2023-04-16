@@ -1,0 +1,2 @@
+"# TP-Principal" 
+Desarrollo de una aplicación web que permita soportar las actividades de una empresa que se dedica a la compra-venta de vehículos usados. Nuestro equipo de trabajo se enfocará en el desarrollo del módulo “Operaciones del Área Técnica”, responsable de la gestión de cotizaciones, revisiones y diagnósticos físicos, y garantías. Para llevar a cabo este proyecto fue necesario adentrarnos en la lógica de negocio de una empresa de compra-venta de autos usados e investigar, proponer y justificar las funcionalidades que estén relacionadas con lo pedido.

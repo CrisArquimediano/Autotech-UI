@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class VisualizarTecnicoConfig(AppConfig):
+class BusquedatecnicosConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'visualizar_tecnico'
+    name = 'busquedatecnicos'

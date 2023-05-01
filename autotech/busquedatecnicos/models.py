@@ -9,4 +9,4 @@ class Tecnico(models.Model):
     categoria = models.CharField(max_length=1)
 
     def __str__(self) -> str:
-        return self.id_empleado + "-" + self.dni + "-" + self.nombre + " " + self.apellido + "-" + self.categoria
+        return self.id_empleado + " | " + self.dni + " | " + self.nombre + " " + self.apellido + " " + self.categoria

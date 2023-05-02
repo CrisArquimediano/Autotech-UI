@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Horarios from '../components/Horarios'
+import Calendar from './calendar'
 
 function Boton() {
     return (
@@ -19,7 +19,11 @@ export default function Turno() {
                 <Link href="/">Volver</Link>
             </h2>
             <Boton />
-            <Horarios />
+            <Calendar />
         </>
     );
 }
+
+
+
+

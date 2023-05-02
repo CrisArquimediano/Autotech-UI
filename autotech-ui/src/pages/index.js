@@ -34,12 +34,24 @@ export default function Home() {
 
         <div className={styles.grid}>
           <Link
+            href="turnos/turnos-supervisor"
+            className={styles.card}
+          >
+            <h3>Turno Supervisor &rarr;</h3>
+            <p>
+              Sacar turno para supervisor.
+            </p>
+          </Link>
+        </div>
+
+        <div className={styles.grid}>
+          <Link
             href="turnos/turnos-cliente"
             className={styles.card}
           >
-            <h3>Turno &rarr;</h3>
+            <h3>Turno Cliente &rarr;</h3>
             <p>
-              Sacar turno.
+              Sacar turno cliente.
             </p>
           </Link>
         </div>

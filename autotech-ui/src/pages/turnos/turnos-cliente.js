@@ -1,4 +1,15 @@
 import Link from 'next/link';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Calendar from './calendar'
+
+function Boton() {
+    return (
+        <div>
+            <Button variant="contained">Volver</Button>
+        </div>
+    );
+}
 
 export default function Turno() {
     return (
@@ -7,6 +18,12 @@ export default function Turno() {
             <h2>
                 <Link href="/">Volver</Link>
             </h2>
+            <Boton />
+            <Calendar />
         </>
     );
 }
+
+
+
+

@@ -46,7 +46,7 @@ export default function Home() {
 
         <div className={styles.grid}>
           <Link
-            href="turnos/turnos-cliente"
+            href="turnos/turnos-cliente-motivo"
             className={styles.card}
           >
             <h3>Turno Cliente &rarr;</h3>

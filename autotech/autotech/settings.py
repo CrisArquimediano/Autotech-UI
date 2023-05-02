@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'django_filters',
-    'visualizar_tecnico',
+    'busquedatecnicos',
 ]
 
 MIDDLEWARE = [

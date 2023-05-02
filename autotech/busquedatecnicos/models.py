@@ -1,6 +1,6 @@
 from django.db import models
 
-class TecnicoModel(models.Model):
+class Tecnico(models.Model):
     id_empleado = models.CharField(max_length=4, primary_key=True)
     dni = models.CharField(max_length=8) 
     nombre = models.CharField(max_length=30)

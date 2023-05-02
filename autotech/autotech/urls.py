@@ -19,7 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('visualizar_tecnico'))
 ]
 
 #comentario random para subir la rama joaco

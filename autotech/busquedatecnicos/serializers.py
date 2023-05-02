@@ -1,8 +1,3 @@
-from rest_framework import serializers
-from .models import Project
+#from rest_framework import serializers
 
-class TecnicoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ('id','dni','nombre', 'apellido', 'calificacion', 'contrasena', 'id_taller')
-        
+

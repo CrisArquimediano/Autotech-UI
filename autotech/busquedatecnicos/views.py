@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets, filters
-from models import TecnicoModel
+from models import Tecnico
 from serializers import TecnicoSerializer
 
 class BusquedaTecnicosView(viewsets.ReadOnlyModelViewSet):
-    queryset = TecnicoModel.objects.all()
+    queryset = Tecnico.objects.all()
     serializer = TecnicoSerializer
 
     #filtrado

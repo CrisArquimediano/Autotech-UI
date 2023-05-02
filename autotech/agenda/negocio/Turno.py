@@ -1,8 +1,8 @@
 from typing import Any
 from datetime import date
 class Turno:
-                                                    # 0: evaluacion, 1: service  
-    def __init__(self, id:int, fecha: date, hora: int, duracion: int, tipo_de_turno:int, dni_cliente: str, patente:str):
+                                                                 # 0: evaluacion, 1: service, 2: reparacion/excepcional 
+    def __init__(self, id:int, fecha: date, hora: int, duracion: int, tipo_de_turno:int, dni_cliente: str, patente:str, id_taller:int):
         
         if not self._validos(hora, duracion, tipo_de_turno, dni_cliente, patente):
             raise ValueError("Datos no válidos")
@@ -14,6 +14,7 @@ class Turno:
         self.dni_cliente = dni_cliente
         self.patente = patente
         self.dni_tecnico = None
+        self.taller_id = id_taller
         
     def _validos(hora, duracion, tipo_de_turno, dni_cliente, patente):
         return id != None and hora >= 8 and hora <=18 and duracion <= 8 and duracion >= 1 and (tipo_de_turno == 0 or tipo_de_turno == 1) and len(dni_cliente) == 8 and len(patente) > 0
@@ -22,7 +23,7 @@ class Turno:
         self.dni_tecnico = dni_tecnico
         
     def __eq__(self, otro_turno):
-        return self.get_id(self) == self.get_id(otro_turno) and self.get_fecha(self) == otro_turno.get_fecha(otro_turno) and self.get_hora(self) == otro_turno.get_hora(otro_turno) and self.get_duracion(self) == otro_turno.get_duracion(otro_turno) and self.get_tipo(self) == otro_turno.get_tipo(otro_turno) and self.get_dni_cliente(self) == otro_turno.get_dni_cliente(otro_turno) and self.get_patente(self) == otro_turno.get_patente(otro_turno)
+        return self.get_id(self) == self.get_id(otro_turno) and self.get_fecha(self) == otro_turno.get_fecha(otro_turno) and self.get_hora(self) == otro_turno.get_hora(otro_turno) and self.get_duracion(self) == otro_turno.get_duracion(otro_turno) and self.get_tipo(self) == otro_turno.get_tipo(otro_turno) and self.get_dni_cliente(self) == otro_turno.get_dni_cliente(otro_turno) and self.get_patente(self) == otro_turno.get_patente(otro_turno and self.get_taller_id(self) == otro_turno.get_taller_id(otro_turno))
         
     def get_id(self):
         return self.id
@@ -47,4 +48,8 @@ class Turno:
     
     def get_tecnico(self):
         return self.dni_tecnico
+    
+    def get_taller_id(self):
+        return self.taller_id
+    
         

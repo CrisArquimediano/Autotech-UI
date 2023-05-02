@@ -20,7 +20,8 @@ Si todos los campos están vacíos, regresa al formulario de busqueda con un err
 """
 def busquedaTecnicos(request):
     errores = []
-
+    datos = requests.get(url, params=request)
+    
     if 'dni' in request.GET and 'nombre'in request.GET and 'apellido'in request.GET:
         dni = request.GET['dni']
         nombre = request.GET['nombre']
@@ -30,8 +31,15 @@ def busquedaTecnicos(request):
         else:
             #no se si anda xd --> aca iria la logica, para traerme de la api los datos que coincidan con el
             #request que esta pasando el usuario
-            for dato in datos:
+            """for dato in datos:
                 print(f"{dato['dni']}  - {dato['nombre']} - : {dato['apellido']}")
+            """
 
+            """
+            if datos.status_code == 200:
+                contenido_json = datos.json()
+                origin = contenido_json['origin'] 
+                print(contenido_json)
+            """
 
 

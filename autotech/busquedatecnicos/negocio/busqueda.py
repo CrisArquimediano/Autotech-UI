@@ -1,8 +1,8 @@
 import requests
 
 #es de prueba, se puede reutilizar para la busqueda pero no lo puedo probar xd
-if __name__ == '__busqueda__':
 
+def get_datosGoogle():
     url = 'http://httpbin.org/get'
     args = { 'nombre': 'Eduardo', 'curso': 'python'}
 
@@ -12,7 +12,15 @@ if __name__ == '__busqueda__':
         contenido_json = datos.json()
         origin = contenido_json['origin'] # --> trae la ip
         print(contenido_json)
+        
+        """
+        if contenido_json:
+            for cont in contenido_json:
+                print(cont.get('origin'))
+        """
 
+if __name__ == '__main__':
+    get_datosGoogle()
 
 """ 
 En caso de haber campos vacio, se ignora la busqueda hasta que complete todo. 

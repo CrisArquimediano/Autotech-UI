@@ -1,9 +1,10 @@
 import requests
 
 #es de prueba, se puede reutilizar para la busqueda pero no lo puedo probar xd
-
+# TENES QUE PONER QUE SE PUEDA EJECUTAR COMO ARCHIVO PYTHON Y NO COMO "code"
+url = 'http://httpbin.org/get'
 def get_datosGoogle():
-    url = 'http://httpbin.org/get'
+    
     args = { 'nombre': 'Maite', 'curso': 'apis con python'}
 
     datos = requests.get(url, params=args) #nuestros args, seria los datos que escribiria el usuario

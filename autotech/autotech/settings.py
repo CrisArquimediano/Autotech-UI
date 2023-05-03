@@ -11,9 +11,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Pra las variables de entorno
+env = environ.Env()
+env.read_env()
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -21,6 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ju6+lu5tneni4*563!$*6iq#a!93_$c2(n(3&gv81g5bms5p-r'
+# Vamos a usar la de abajo una vez esté todo lo de manejar variables de entorno listo
+# SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,12 +84,24 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Esta es la bbdd por defecto de Django, que sirve para pruebas y demás
+# pero nosotros vamos a usar todo el tiempo la de Postgres, que es lo
+# que se recomienda, empezar a usar en desarrollo ya la de producción.
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+
+# Para conectar la bbdd Pöstgres que tenemos en Render
+
+DATABASES = {
+    'default': dj_database_url.parse('postgres://insomniadb_user:7IP8dJ1IND8TUfqv7Hn8f1YaiurjXTM8@dpg-ch67baak728iqr6g7pd0-a.ohio-postgres.render.com/insomniadb') 
+}
+
 
 
 # Password validation

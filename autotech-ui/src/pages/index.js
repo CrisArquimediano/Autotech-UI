@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -15,33 +14,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Saque su turno&nbsp;
-          </p>
+        <div className={styles.title}>
+          <h1>Autotech</h1>
         </div>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/autotech-logo.jpg"
-            alt="Autotech Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <Link
-            href="turnos/turnos-supervisor"
-            className={styles.card}
-          >
-            <h3>Turno Supervisor &rarr;</h3>
-            <p>
-              Sacar turno para supervisor.
-            </p>
-          </Link>
+        <div>
+          <img src="/concesionaria.jpg" width="99%"></img>
         </div>
 
         <div className={styles.grid}>
@@ -49,9 +27,10 @@ export default function Home() {
             href="turnos/turnos-cliente-motivo"
             className={styles.card}
           >
-            <h3>Turno Cliente &rarr;</h3>
+            <h3>Saque su turno &rarr;</h3>
             <p>
-              Sacar turno cliente.
+              Evaluaciones para vender tu auto. <br></br>
+              Service para reparar el que compraste.
             </p>
           </Link>
         </div>

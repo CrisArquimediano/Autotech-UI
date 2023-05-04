@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import TurnoForm from '../components/TurnoForm';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,15 +38,6 @@ export default function Motivo() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
-                <div className={styles.description}>
-                    <p>
-                        Elija el motivo de su turno&nbsp;
-                    </p>
-                </div>
-
-                <div className={styles.grid}>
-                    <RadioButtonsGroup />
-                </div>
 
                 <div className={styles.grid}>
                     <Link
@@ -57,6 +49,10 @@ export default function Motivo() {
                             Ver talleres.
                         </p>
                     </Link>
+                </div>
+
+                <div>
+                    <TurnoForm />
                 </div>
 
                 <h2>

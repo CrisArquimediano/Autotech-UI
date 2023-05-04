@@ -16,10 +16,6 @@ args_json = json.dumps(parametros)
 if __name__ == '__main__':
     url = 'https://api-rest-pp1.onrender.com/api/tecnicos/'
 
-""" 
-En caso de haber campos vacio, se ignora la busqueda hasta que complete todo. 
-Si todos los campos están vacíos, regresa al formulario de busqueda con un error
-"""
 def busquedaTecnicos(request):
     """
     errores = []

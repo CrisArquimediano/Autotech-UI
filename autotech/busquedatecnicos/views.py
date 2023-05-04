@@ -9,8 +9,9 @@ from django.views.decorators.http import require_http_methods
 
 
 #------------------------------------------------------MEL Y JOA----------------------------------------------------------------------- 
-## Funciones principales
-
+# ---------------------
+# Funciones principales
+# ---------------------
 @require_http_methods(["GET"])
 def lista_tecnicos(request):
     """Devuelve un listado de todos los técnicos, con su ID, nombre completo y categoría.
@@ -42,20 +43,23 @@ def categorias(request):
 
 
 @require_http_methods(['GET'])
-def buscar_tecnicos(request, categoria=None, dni=None, nombre=None):
+def buscar_tecnicos(request):
     """Busca y devuelve una lista de técnicos según los filtros especificados.
     
     Returns:
         JsonResponse: Un objeto JSON que contiene una lista de técnicos que cumplen los filtros especificados.
         HttpResponse: Si se encuentra un error HTTP al realizar la búsqueda.
     """
+    categoria = request.GET.get('categoria')
+    dni = request.GET.get('dni')
+    nombre = request.GET.get('nombre_completo')
+       
+    if not categoria_es_valida(categoria=categoria):
+        return HttpResponse("error: Categoría no válida", status=400)
+
+    if not dni_es_valido(dni=dni):
+        return HttpResponse("error: DNI no válida", status=400)
     try:
-        if not categoria_es_valida(categoria=categoria):
-            return HttpResponse("error: Categoría no válida", status=400)
-
-        if not dni_es_valido(dni=dni):
-            return HttpResponse("error: DNI no válida", status=400)
-
         tecnicos = obtener_tecnicos(categoria=categoria, dni=dni, nombre=nombre)
         return JsonResponse({'tecnicos': tecnicos})
     
@@ -82,7 +86,9 @@ def obtener_tecnicos(categoria=None, dni=None, nombre=None):
     return tecnicos
 
 
+# ---------------------
 # Funciones Auxiliares
+# ---------------------
 
 def tecnicos_todos():
     """Realiza una solicitud GET a una API para obtener una lista de todos los técnicos y devuelve los datos como una lista de diccionarios.

@@ -1,18 +1,5 @@
 import requests
 
-#es de prueba, se puede reutilizar para la busqueda pero no lo puedo probar xd
-
-"""json_prueba = {"id":1,
-                "fullname":"nombre apellido",
-                "document":"182381284",
-                "username":"pepe",
-                "password":"1234",
-                "type":"tecnico",
-                "branch":"T001",
-                "contact_id":1,
-                "adress_id":1}"""
-
-
 def busqueda_prueba(request):
 
     datos = request.GET
@@ -23,8 +10,10 @@ def busqueda_prueba(request):
         if not (dni or nombre):
             print("dato invalido")
 
+url = 'http://httpbin.org/get'
+
 def get_datosGoogle():
-    url = 'http://httpbin.org/get'
+    
     args = { 'nombre': 'Maite', 'curso': 'apis con python'}
 
     datos = requests.get(url, params=args) #nuestros args, seria los datos que escribiria el usuario

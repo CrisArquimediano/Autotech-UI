@@ -2,15 +2,12 @@ import requests
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 
-
 """--------------------JSON MOCKEADO--------------------------"""
 args_json = {
             "nombre_completo": "Camila Anahí Sánchez Rodriguez",
             "dni": "41024628",
             }
 """-----------------------------------------------------------"""
-
-
 """ 
 En caso de haber campos vacio, se ignora la busqueda hasta que complete todo. 
 Si todos los campos están vacíos, regresa al formulario de busqueda con un error

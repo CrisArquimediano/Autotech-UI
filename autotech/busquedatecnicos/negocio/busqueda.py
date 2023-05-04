@@ -2,6 +2,27 @@ import requests
 
 #es de prueba, se puede reutilizar para la busqueda pero no lo puedo probar xd
 
+"""json_prueba = {"id":1,
+                "fullname":"nombre apellido",
+                "document":"182381284",
+                "username":"pepe",
+                "password":"1234",
+                "type":"tecnico",
+                "branch":"T001",
+                "contact_id":1,
+                "adress_id":1}"""
+
+
+def busqueda_prueba(request):
+
+    datos = request.GET
+    
+    if 'dni' in request.GET and 'nombre'in request.GET and 'apellido'in request.GET:
+        dni = request.GET['document']
+        nombre = request.GET['fullname']
+        if not (dni or nombre):
+            print("dato invalido")
+
 def get_datosGoogle():
     url = 'http://httpbin.org/get'
     args = { 'nombre': 'Maite', 'curso': 'apis con python'}
@@ -20,7 +41,11 @@ def get_datosGoogle():
         """
 
 if __name__ == '__main__':
-    get_datosGoogle()
+    url = "https://www.obuma.cl/ayuda/api-integracion/empleados.list.json"
+    datos = requests.get(url)
+
+    if datos.status_code == 200:
+        print(datos)
 
 """ 
 En caso de haber campos vacio, se ignora la busqueda hasta que complete todo. 
@@ -39,6 +64,7 @@ def busquedaTecnicos(request):
         else:
             #no se si anda xd --> aca iria la logica, para traerme de la api los datos que coincidan con el
             #request que esta pasando el usuario
+
             """for dato in datos:
                 print(f"{dato['dni']}  - {dato['nombre']} - : {dato['apellido']}")
             """

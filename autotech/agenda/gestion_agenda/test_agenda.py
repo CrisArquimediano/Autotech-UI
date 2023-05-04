@@ -1,9 +1,9 @@
 import pytest
 from datetime import date, timedelta
 
-from agenda.negocio.Agenda import *
-from agenda.negocio.Turno import *
-#from autotech.agenda.negocio import Turno
+from agenda  import *
+from turno  import *
+#from . import *
 
 # ------------------------------------------------------------- esta disponible -------------------------------------------------------------
 
@@ -16,28 +16,28 @@ def test_esta_disponible_1():
 def test_esta_disponible_2():
     agenda = Agenda(123, 3)
     hoy = date.today
-    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, 43911246, "abc123", 3))
+    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, "43911246", "abc123", 3))
     # el dia ya esta registrado y tiene un turno, pero el horario esta disponible
     assert agenda.esta_disponible(hoy, 14, 3) == True
     
 def test_esta_disponible_3():
     agenda = Agenda(123, 3)
     hoy = date.today
-    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, 43911246, "abc123", 3))
+    agenda.cargar_turno(Turno(1, hoy, 9, 3, 1, "43911246", "abc123", 3))
+    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, "43911246", "abc123", 3))
+    agenda.cargar_turno(Turno(3, hoy, 9, 3, 1, "43911246", "abc123", 3))
     # el dia ya esta registrado y tiene un turno, pero el horario no esta disponible al 100%
     assert agenda.esta_disponible(hoy, 10, 3) == False
-    
-def test_esta_disponible_3():
-    agenda = Agenda(123, 3)
-    hoy = date.today
-    agenda.cargar_turno(Turno(2, hoy, 10, 3, 1, 43911246, "abc123", 3))
-    # el dia ya esta registrado y tiene un turno, pero el horario no esta disponible al 100%
-    assert agenda.esta_disponible(hoy, 9, 3) == False
     
 def test_esta_disponible_4():
     agenda = Agenda(123, 3)
     hoy = date.today
-    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, 43911246, "abc123", 3))
+    agenda.cargar_turno(Turno(1, hoy, 9, 3, 1, "43911246", "abc123", 3))
+    agenda.cargar_turno(Turno(2, hoy, 9, 3, 1, "43911246", "abc123", 3))
+    agenda.cargar_turno(Turno(3, hoy, 9, 3, 1, "43911246", "abc123", 3))
+    # el dia ya esta registrado y tiene un turno, pero el horario no esta disponible
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print(agenda.horarios_ocupados.get(hoy))
     assert agenda.esta_disponible(hoy, 9, 3) == False
     
     # ------------------------------------------------------------- horarios disponibles -------------------------------------------------------------
@@ -49,7 +49,7 @@ def test_horarios_disponibles_1():
     for i in range(8,17):
         resultado.append([i, 3])
     # el dia no esta registrado
-    assert agenda.horarios_disponibles(hoy, 9, 3) == resultado
+    assert agenda.horarios_disponibles(hoy) == resultado
     
 def test_horarios_disponibles_2():
     agenda = Agenda(123, 3)
@@ -63,7 +63,7 @@ def test_horarios_disponibles_2():
         resultado.append([i, 3])
             
     # el dia ya esta registrado y tiene solo un turno a esa hora, asi que esta todo disponible
-    assert agenda.horarios_disponibles(hoy, 14, 3) == resultado
+    assert agenda.horarios_disponibles(hoy) == resultado
     
 def test_horarios_disponibles_3():
     agenda = Agenda(123, 3)
@@ -75,12 +75,12 @@ def test_horarios_disponibles_3():
     agenda.cargar_turno(Turno(3, hoy, 9, 3, 1, "43911248", "abc123", 3))
     
     resultado = []
-    for i in range(8,17):
+    for i in range(9,17):
         if i >= 9 and i < 12:
             resultado.append([i, 3])
             
     # el dia ya esta registrado y tiene tres turnos a la misma hora, asi que no esta todo disponible
-    assert agenda.horarios_disponibles(hoy, 14, 3) == resultado
+    assert agenda.horarios_disponibles(hoy) == resultado
 
 # ------------------------------------------------------------- dias y horarios disponibles de varios dias -------------------------------------------------------------
 def test_dias_horarios_disponibles_1():
@@ -118,19 +118,24 @@ def test_cargar_turno():
     
 # ------------------------------------------------------------- inicializar horarios -------------------------------------------------------------
 
-# ------------------------------------------------------------- disminuir horarios -------------------------------------------------------------
 
+# ------------------------------------------------------------- disminuir horarios -------------------------------------------------------------
+def test_disminuir_horarios():
+    agenda = Agenda(123, 3)
+    hoy = date.today
+    turno = Turno(1, hoy, 9, 3, 2, "43911246", "abc123", 3)
+    agenda.cargar_turno(turno)
+    horarios_ocupados_hoy = agenda.horarios_ocupados.get(hoy)
+    resultado = horarios_ocupados_hoy[1][1]
+    
+    assert resultado == 2
 # ------------------------------------------------------------- eliminar turno -------------------------------------------------------------
 
 # ------------------------------------------------------------- aumentar horarios -------------------------------------------------------------
 
 # ------------------------------------------------------------- obtener inidice -------------------------------------------------------------
 
-# ------------------------------------------------------------- obtener turnos sin tecnico -------------------------------------------------------------
-
-# ------------------------------------------------------------- obtener turnos con tecnico -------------------------------------------------------------
-
-# ------------------------------------------------------------- obtener turnos de tecnico -------------------------------------------------------------
+# ------------------------------------------------------------- obtener turnos sin/con/de tecnico -------------------------------------------------------------
 
 # ------------------------------------------------------------- asignar tecnico -------------------------------------------------------------
 

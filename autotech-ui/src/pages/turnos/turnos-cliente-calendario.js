@@ -44,6 +44,15 @@ function Calendar() {
             <div>
                 <DateValidationShouldDisableDate />
             </div>
+
+            <div>
+                <Link href="./prueba-api">
+                    <h3>técnicos &rarr;</h3>
+                    <p>
+                        Ver técnicos.
+                    </p>
+                </Link>
+            </div>
         </>
     );
 }

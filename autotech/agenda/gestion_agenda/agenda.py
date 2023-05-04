@@ -1,16 +1,14 @@
-import turno
 from datetime import date, timedelta
 
 class Agenda:
     
     def __init__(self, taller_id:int, capacidad:int) -> None:
         self.horarios_ocupados = {} #date->[[8, capacidad], [9, capacidad], [10, capacidad],...]
-        self.turnos = []
         self.capacidad = capacidad
         self.taller_id = taller_id
-        self.turnos_id = 0
         self.comienzo_horario_de_trabajo= 8
         self.fin_horario_de_trabajo= 17
+        self.fin_horario_de_trabajo_domingos= 12
         
     def esta_disponible(self, dia:date, horario:int, duracion:int) -> bool:
         horarios_del_dia = self.horarios_ocupados.get(dia)
@@ -24,72 +22,79 @@ class Agenda:
     
     def horarios_disponibles(self, dia:date) -> list:
         horarios_del_dia = self.horarios_ocupados.get(dia)
+        dia_de_la_semana = dia.weekday()
         horarios_disponibles = []
         if  horarios_del_dia == None:
-            for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo):
-                horarios_disponibles.append([i, self.capacidad])
+            if dia_de_la_semana != 6:
+                for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo):
+                    horarios_disponibles.append([i, self.capacidad])
+            else:
+                for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo_domingos):
+                    horarios_disponibles.append([i, self.capacidad])
         else:
             for hora in horarios_del_dia: #[0,1][][]
                 if hora[1] > 0:
                     horarios_disponibles.append(hora)
         return horarios_disponibles
     
-    def dias_horarios_disponibles_de_varios_dias(self, dia:date, cant_dias: int) -> dict:
+    def dias_horarios_disponibles_de_treinta_dias(self, dia:date) -> dict:
         dias_horarios_disponibles = {}
         dia_a_revisar = dia
-        for i in range(cant_dias):
-            if dia_a_revisar.isoweekday() != 6 and dia_a_revisar.isoweekday() != 7: # no trabajamos sabados ni domingos
-                horarios_disponibles = self.horarios_disponibles(dia_a_revisar)
-                dias_horarios_disponibles[dia_a_revisar]= horarios_disponibles
+        for i in range(30):
+            horarios_disponibles = self.horarios_disponibles(dia_a_revisar)
+            dias_horarios_disponibles[dia_a_revisar]= horarios_disponibles
             dia_a_revisar = dia_a_revisar + timedelta(days=1)
         return dias_horarios_disponibles
     
-    def cargar_turno(self, turno: turno.Turno):
-        self.turnos.append(turno)
-        hora_inicio_turno = turno.get_hora()
-        hora_fin_turno = hora_inicio_turno + turno.get_duracion()
-        dia_turno = turno.get_fecha()
-        
-        horarios_del_dia = self.horarios_ocupados.get(dia_turno)
+    def cargar_turno(self, dia:date, hora:int, cant_horas:int):
+        dia_de_la_semana = dia.weekday()
+        hora_fin_turno = hora + cant_horas
+        horarios_del_dia = self.horarios_ocupados.get(dia)
+        if  dia_de_la_semana != 6 and hora + cant_horas > self.fin_horario_de_trabajo:
+            raise ValueError("La duración del turno excede la jornada laboral.")
+        if  dia_de_la_semana == 6 and hora + cant_horas > self.fin_horario_de_trabajo_domingos:
+            raise ValueError("La duración del turno excede la jornada laboral.")
         if horarios_del_dia == None:
-            self.horarios_ocupados[dia_turno] = self._inicializar_horarios(dia_turno)
-        #self.horarios_ocupados[dia_turno] = self._disminuir_horario(dia_turno, hora_inicio_turno, hora_fin_turno)
-        self._disminuir_horario(dia_turno, hora_inicio_turno, hora_fin_turno)
+            self._inicializar_horarios(dia)
+        self._disminuir_horario(dia, hora, hora_fin_turno)
         
     def _inicializar_horarios(self, dia:date):
+        dia_de_la_semana = dia.weekday()
         horas = []
-        for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo):
-            hora = [i, self.capacidad]
-            horas.append(hora)
+        if dia_de_la_semana != 6:
+            for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo):
+                hora = [i, self.capacidad]
+                horas.append(hora)
+        else:
+            for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo_domingos):
+                hora = [i, self.capacidad]
+                horas.append(hora)
         self.horarios_ocupados[dia] = horas
         
     # [[9, capacidad - 1][][]]
     def _disminuir_horario(self, dia:date, hora_inicio: int, hora_fin:int):
         horarios_del_dia = self.horarios_ocupados.get(dia)
-        #falta la comprobacion!
         for horario in horarios_del_dia:    #[] [] []
             if horario[0] >= hora_inicio and horario[0] < hora_fin:
                 horario[1] = horario[1] - 1 # disminuimos la disponibilidad en ese horario
     
-    def eliminar_turno(self, turno:turno.Turno):
-        hora_inicio_turno = turno.get_hora()
-        hora_fin_turno = hora_inicio_turno + turno.get_duracion()
-        dia_turno = turno.get_fecha()
-        self.horarios_ocupados[dia_turno] = self._aumentar_horario(dia_turno, hora_inicio_turno, hora_fin_turno)
-        self.turnos.pop(self._obtener_indice(self, turno))
+    def eliminar_turno(self, dia:date, hora:int, cant_horas:int):
+        hora_fin_turno = hora + cant_horas
+        self.horarios_ocupados[dia] = self._aumentar_horario(dia, hora, hora_fin_turno)
             
     def _aumentar_horario(self, dia:date, hora_inicio: int, hora_fin:int):
         horarios_del_dia = self.horarios_ocupados.get(dia)
         for horario in horarios_del_dia:    #[] [] []
             if horario[0] >= hora_inicio and horario[0] < hora_fin:
                 horario[1] = horario[1] + 1 # aumentamos la disponibilidad en ese horario
-        
+     
+"""         
     def _obtener_indice(self, turno:turno.Turno):
         for i in range(len(self.turnos)):
             if self.turnos[i] == turno.get_id():
                 return i
         return -1
-        
+            
     def obtener_turnos_sin_tecnico(self) -> list:
         turnos_sin_tecnico = []
         for turno in self.turnos:
@@ -116,7 +121,7 @@ class Agenda:
             if turno.get_id() == id_turno:
                 return turno
         return None
-"""
+
     def asignar_tecnico(self, id_turno: int, dni_tecnico: str):
         turno = self.obtener_turno_por_id(id_turno)
         if turno != None:

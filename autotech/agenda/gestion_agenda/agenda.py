@@ -80,7 +80,7 @@ class Agenda:
     
     def eliminar_turno(self, dia:date, hora:int, cant_horas:int):
         hora_fin_turno = hora + cant_horas
-        self.horarios_ocupados[dia] = self._aumentar_horario(dia, hora, hora_fin_turno)
+        self._aumentar_horario(dia, hora, hora_fin_turno)
             
     def _aumentar_horario(self, dia:date, hora_inicio: int, hora_fin:int):
         horarios_del_dia = self.horarios_ocupados.get(dia)
@@ -88,43 +88,3 @@ class Agenda:
             if horario[0] >= hora_inicio and horario[0] < hora_fin:
                 horario[1] = horario[1] + 1 # aumentamos la disponibilidad en ese horario
      
-"""         
-    def _obtener_indice(self, turno:turno.Turno):
-        for i in range(len(self.turnos)):
-            if self.turnos[i] == turno.get_id():
-                return i
-        return -1
-            
-    def obtener_turnos_sin_tecnico(self) -> list:
-        turnos_sin_tecnico = []
-        for turno in self.turnos:
-            if turno.get_tecnico() == None:
-                turnos_sin_tecnico.append(turno)
-        return turnos_sin_tecnico
-               
-    def obtener_turnos_con_tecnico(self) -> list:
-        turnos_con_tecnico = []
-        for turno in self.turnos:
-            if turno.get_tecnico() != None:
-                turnos_con_tecnico.append(turno)
-        return turnos_con_tecnico
-        
-    def obtener_turnos_de_tecnico(self, dni_tecnico: str):
-        turnos_de_tecnico = []
-        for turno in self.turnos:
-            if turno.get_tecnico() == dni_tecnico:
-                turnos_de_tecnico.append(turno)
-        return turnos_de_tecnico
-    
-    def obtener_turno_por_id(self, id_turno:int) -> turno.Turno:
-        for turno in self.turnos:
-            if turno.get_id() == id_turno:
-                return turno
-        return None
-
-    def asignar_tecnico(self, id_turno: int, dni_tecnico: str):
-        turno = self.obtener_turno_por_id(id_turno)
-        if turno != None:
-            turno.asignar_tecnico(dni_tecnico) 
-"""        
-

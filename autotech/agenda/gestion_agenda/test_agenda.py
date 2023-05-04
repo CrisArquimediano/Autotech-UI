@@ -2,7 +2,6 @@ import pytest
 from datetime import date, timedelta
 
 from agenda  import *
-from turno  import *
 
 # ------------------------------------------------------------- esta disponible -------------------------------------------------------------
 def test_esta_disponible_1():
@@ -172,6 +171,35 @@ def test_disminuir_horarios():
     
     assert resultado == 2
 # ------------------------------------------------------------- eliminar turno -------------------------------------------------------------
+def test_eliminar_turno_1():
+    agenda = Agenda(123, 3)
+    hoy = date(2023, 5, 8) # lunes
+    agenda.cargar_turno(hoy, 9, 3)
+    agenda.eliminar_turno(hoy, 9, 3)
+    resultado = []
+    for i in range(8,17):
+        resultado.append([i,3])
+    
+    assert agenda.horarios_ocupados.get(hoy) == resultado
+    
+def test_eliminar_turno_2():
+    agenda = Agenda(123, 3)
+    hoy = date(2023, 5, 7) # domingo
+    agenda.cargar_turno(hoy, 9, 3)
+    agenda.eliminar_turno(hoy, 9, 3)
+    resultado = []
+    for i in range(8,12):
+        resultado.append([i,3])
+    
+    assert agenda.horarios_ocupados.get(hoy) == resultado
 
 # ------------------------------------------------------------- aumentar horarios -------------------------------------------------------------
-
+def test_aumentar_horarios():
+    agenda = Agenda(123, 3)
+    hoy = date(2023, 5, 8) # lunes
+    agenda.cargar_turno(hoy, 9, 3)
+    agenda.eliminar_turno(hoy, 9, 3)
+    horarios_ocupados_hoy = agenda.horarios_ocupados.get(hoy)
+    resultado = horarios_ocupados_hoy[1][1]
+    
+    assert resultado == 3

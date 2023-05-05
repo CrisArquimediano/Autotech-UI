@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 ""
 from pathlib import Path
 import os
+
+import environ
 import dj_database_url
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,13 +94,19 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
     }
 } """
 
-DATABASES = {
+""" DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
-}
+} """
 
+
+DATABASES = {
+
+    'default': dj_database_url.parse('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

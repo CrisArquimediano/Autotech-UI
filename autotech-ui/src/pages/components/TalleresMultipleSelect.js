@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import * as React from 'react';
-import styles from '@/styles/Home.module.css'
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -45,7 +43,7 @@ function getStyles(name, personName, theme) {
                 : theme.typography.fontWeightMedium,
     };
 }
-function MultipleSelectChip() {
+export default function MultipleSelectChip() {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
 
@@ -93,45 +91,3 @@ function MultipleSelectChip() {
         </div>
     );
 }
-
-
-export default function Talleres() {
-    return (
-        <>
-            <h1>Seleccione taller/es más cómodo/s</h1>
-            <h2>
-                <Link href="./turnos-cliente-motivo">Volver</Link>
-            </h2>
-
-            <MultipleSelectChip />
-
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-
-            <div className={styles.grid}>
-                <Link
-                    href="./turnos-cliente-calendario"
-                    className={styles.card}
-                >
-                    <h3>Calendario &rarr;</h3>
-                    <p>
-                        Elegir día de visita.
-                    </p>
-                </Link>
-            </div>
-        </>
-    );
-}
-

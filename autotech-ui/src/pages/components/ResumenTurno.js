@@ -5,37 +5,23 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 
-const products = [
+const turno = [
     {
-        name: 'Product 1',
-        desc: 'A nice thing',
-        price: '$9.99',
+        fecha: '8/05/2023',
+        hora: '10:00',
+        taller: 'San Miguel',
     },
-    {
-        name: 'Product 2',
-        desc: 'Another thing',
-        price: '$3.45',
-    },
-    {
-        name: 'Product 3',
-        desc: 'Something else',
-        price: '$6.51',
-    },
-    {
-        name: 'Product 4',
-        desc: 'Best thing of all',
-        price: '$14.11',
-    },
-    { name: 'Shipping', desc: '', price: 'Free' },
 ];
+const addresses = ['Av. Balbín', '99999', 'San Miguel', 'Buenos Aires', 'Argentina'];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
+
+/*const payments = [
     { name: 'Card type', detail: 'Visa' },
     { name: 'Card holder', detail: 'Mr John Smith' },
     { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
     { name: 'Expiry date', detail: '04/2024' },
 ];
+*/
 
 export default function ResumenTurno() {
     return (
@@ -44,29 +30,29 @@ export default function ResumenTurno() {
                 Resumen del turno
             </Typography>
             <List disablePadding>
-                {products.map((product) => (
-                    <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-                        <ListItemText primary={product.name} secondary={product.desc} />
-                        <Typography variant="body2">{product.price}</Typography>
+                {turno.map((turnoActual) => (
+                    <ListItem key={turnoActual.name} sx={{ py: 1, px: 0 }}>
+                        <ListItemText primary={turnoActual.fecha} secondary={turnoActual.hora} />
+                        <Typography variant="body2">{turnoActual.taller}</Typography>
                     </ListItem>
                 ))}
 
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        $34.06
+                        $00.00
                     </Typography>
                 </ListItem>
             </List>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                        Shipping
+                        Servicio
                     </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
+                    <Typography gutterBottom>Patente: AA111AA</Typography>
                     <Typography gutterBottom>{addresses.join(', ')}</Typography>
                 </Grid>
-                <Grid item container direction="column" xs={12} sm={6}>
+                {/*<Grid item container direction="column" xs={12} sm={6}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Payment details
                     </Typography>
@@ -82,7 +68,7 @@ export default function ResumenTurno() {
                             </React.Fragment>
                         ))}
                     </Grid>
-                </Grid>
+                </Grid> */} {/*Lp guardo porque me servirá de referencia para hacer algo */}
             </Grid>
         </React.Fragment>
     );

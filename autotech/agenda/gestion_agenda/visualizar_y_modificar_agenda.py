@@ -22,7 +22,7 @@ def dias_disponibles_desde_hoy_a_treinta_dias(id_taller: str):
     _cargar_turnos_desde_hoy_a_treinta_dias(agenda)
     dias_horarios_disponibles = {}
     dias_horarios_disponibles = agenda.dias_horarios_disponibles_de_treinta_dias(date.today())
-    return dias_horarios_disponibles # hay que devolver un JSON
+    return dias_horarios_disponibles
 
 def _crear_agenda(_id_taller: str):
     taller = Taller.objects.get(id_taller = _id_taller)

@@ -43,3 +43,4 @@ class Turno_taller(models.Model):
     fecha_fin = models.DateField(max_length=30)
     hora_fin = models.TimeField(max_length=30)
     papeles_en_regla = models.BooleanField(default=False)
+    

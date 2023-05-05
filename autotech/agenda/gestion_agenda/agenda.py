@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 class Agenda:
     
-    def __init__(self, taller_id:int, capacidad:int) -> None:
+    def __init__(self, taller_id:str, capacidad:int) -> None:
         self.horarios_ocupados = {} #date->[[8, capacidad], [9, capacidad], [10, capacidad],...]
         self.capacidad = capacidad
         self.taller_id = taller_id
@@ -32,9 +32,9 @@ class Agenda:
                 for i in range(self.comienzo_horario_de_trabajo,self.fin_horario_de_trabajo_domingos):
                     horarios_disponibles.append([i, self.capacidad])
         else:
-            for hora in horarios_del_dia: #[0,1][][]
+            for hora in horarios_del_dia: #[8,1][][]
                 if hora[1] > 0:
-                    horarios_disponibles.append(hora)
+                    horarios_disponibles.append(hora) # [8, 1]
         return horarios_disponibles
     
     def dias_horarios_disponibles_de_treinta_dias(self, dia:date) -> dict:

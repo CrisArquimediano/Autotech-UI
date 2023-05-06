@@ -17,6 +17,8 @@ urlpatterns = [
     # Definimos las posibles combinaciones de busquedas a realizar.
     path('filtro/', views.buscar_tecnicos, name='filtros'),
 
+    path('get_turnos/', views.getTurnos, name="get_turnos"),
     #Ruta para obtener los tecnicos por dni y nombre completo
     # path('tecnicosDniNombre/', views.busquedaTecnicos),
+    path('post_turno/', views.postTurno, name="post_turno")
 ]

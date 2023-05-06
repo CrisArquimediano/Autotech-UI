@@ -13,11 +13,9 @@ import json
 class TurnoTallerAPIView(APIView):
     
     @require_http_methods(["GET"])
-    def horarios_disponibles(request, taller_id: str):
-        print("1")
+    def dias_horarios_disponibles(request, taller_id: str):
         dias_horarios_data = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
-        print("2")
-        return JsonResponse({"dias_horarios":dias_horarios_data}, safe=False)
+        return JsonResponse(dias_horarios_data, safe=False)
     
     """
     def get(self, request, *args, **kwargs):

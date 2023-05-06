@@ -34,7 +34,7 @@ def detalle_tecnico(request, id_tecnico):
     tecnico_data = data.json()
     return JsonResponse(tecnico_data, safe=False)
 
-
+@require_http_methods(['GET'])
 def categorias(request):
     """Devuelve una lista de todas las categorías de técnico disponibles.
     """
@@ -118,7 +118,7 @@ def dni_es_valido(dni=None):
 
 #-----------------------------------------------------CAMI-----------------------------------------------------------------------         
 
-#Definimos una vista que solo permita peticiones HTTP de tipo GET
+""" #Definimos una vista que solo permita peticiones HTTP de tipo GET
 @require_http_methods(["GET"])
 def busquedaTecnicos(request):
     #Especificamos la URL a la cual queremos hacer la petición GET
@@ -137,7 +137,7 @@ def busquedaTecnicos(request):
     #Tecnicos_data es una lista de diccionarios, por lo que se establece safe=False para permitir que se serialice esta estructura de datos.
 
     tecnicos=[{'dni':tecnico['dni'],'nombre_completo':tecnico['nombre_completo']} for tecnico in data]
-    return JsonResponse({'tecnicos':tecnicos})
+    return JsonResponse({'tecnicos':tecnicos}) """
 
 
 #----------------------------------------------------MAITTE----------------------------------------------------------------------                     

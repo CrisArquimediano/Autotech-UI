@@ -14,11 +14,15 @@ from pathlib import Path
 import os
 
 import environ
+<<<<<<< HEAD
 import dj_database_url
 
 env = environ.Env()
 environ.Env.read_env()
 
+=======
+import os
+>>>>>>> origin/joaco
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,9 +41,22 @@ env.read_env()
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
 DEGUB = True
 
 ALLOWED_HOSTS = ['*']
+=======
+# DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER' not in os.environ
+
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+>>>>>>> origin/joaco
 
 # Application definition
 
@@ -50,8 +67,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'administracion',
     'rest_framework',
+=======
+    'rest_framework',
+    'busquedatecnicos',
+>>>>>>> origin/joaco
 ]
 
 MIDDLEWARE = [
@@ -94,6 +116,7 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+<<<<<<< HEAD
 } """
 
 """ DATABASES = {
@@ -102,6 +125,16 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
         conn_max_age=600
     )
 } """
+=======
+}
+
+DATABASES = {
+    'default': dj_database_url.config(
+    default='sqlite:///db.sqlite3',
+    conn_max_age=600)
+}
+'''
+>>>>>>> origin/joaco
 
 
 DATABASES = {
@@ -156,5 +189,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+if not DEBUG:    
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

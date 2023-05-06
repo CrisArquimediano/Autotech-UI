@@ -19,5 +19,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('', include('administracion.urls'))
+=======
+    path('buscar_tecnicos/', include('busquedatecnicos.urls')),
+>>>>>>> origin/joaco
 ]
+
+#comentario random para subir la rama joaco

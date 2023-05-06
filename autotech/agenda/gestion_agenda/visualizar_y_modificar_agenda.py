@@ -1,7 +1,7 @@
 from agenda import Agenda
 from datetime import date, timedelta, time
-from models import Taller
-from models import Turno_taller
+from administracion.models import Taller
+from administracion.models import Turno_taller
 
 def cargar_turno(id: int, tipo: str, estado: str, taller_id: str, patente: str, fecha_inicio: date, hora_inicio: time, fecha_fin: date, hora_fin: time):
     turno = Turno_taller( id_turno = id,

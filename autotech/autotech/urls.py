@@ -7,4 +7,3 @@ urlpatterns = [
     path('', include('administracion.urls')),
     path('buscar_tecnicos/', include('busquedatecnicos.urls')),
 ]
-#comentario random para subir la rama joaco

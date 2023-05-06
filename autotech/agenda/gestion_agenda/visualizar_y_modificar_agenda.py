@@ -1,4 +1,4 @@
-from agenda import Agenda
+from .agenda import Agenda
 from datetime import date, timedelta, time
 from administracion.models import Taller
 from administracion.models import Turno_taller

@@ -1,7 +1,7 @@
-from rest_framework import routers
+from django.urls import path
+from .views import TurnoTallerAPIView
 
 
-router = routers.DefaultRouter()
-#router.register('talleres', TallerViewSet, 'talleres')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('create/', TurnoTallerAPIView.as_view(), name='TurnoTaller'),
+]

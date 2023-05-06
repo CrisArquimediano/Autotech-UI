@@ -2,30 +2,57 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from administracion.models import Turno_taller
 from administracion.serializers import * 
-from gestion_agenda.visualizar_y_modificar_agenda import *
-
+import requests
+from .gestion_agenda.visualizar_y_modificar_agenda import *
+from django.views.decorators.csrf import csrf_exempt
 
 class TurnoTallerAPIView(APIView):
-    def get(self, request, id_taller:str):
-        products = dias_disponibles_desde_hoy_a_treinta_dias(id_taller)
+    def get(self, request):
+        taller = request.GET.get("taller_id")
+        products = dias_disponibles_desde_hoy_a_treinta_dias(taller)
         serializer = TurnoTallerSerializer(products, many=True)
         return Response(serializer.data)
     
+    @csrf_exempt
     def post(self, request):
-       id = request.GET.get("id")
-       tipo = request.GET.get("tipo")
-       estado = request.GET.get("estado")
-       taller = request.GET.get("taller")
-       patente = request.GET.get("patente")
-       fecha_inicio = request.GET.get("fecha_inicio")
-       hora_inicio = request.GET.get("hora_inicio")
-       fecha_fin = request.GET.get("fecha_inicio")
-       hora_fin = request.GET.get("hora_fin")
-       cargar_turno(id, tipo, estado, taller, patente, fecha_inicio, hora_inicio, fecha_fin, hora_fin)
-
+       id_turno = request.get("id_turno")
+       tipo = request.get("tipo")
+       estado = request.get("estado")
+       taller_id = request.get("taller_id")
+       tecnico_id = request.get("tecnico_id")
+       patente = request.get("patente")
+       fecha_inicio = request.get("fecha_inicio")
+       hora_inicio = request.get("hora_inicio")
+       fecha_fin = request.get("fecha_fin")
+       hora_fin = request.get("hora_fin")
+       papeles_en_regla = request.get("papeles_en_regla")
+       
+       #turno = Turno_taller(id_turno=id_turno, tipo=tipo, estado=estado, taller_id=taller_id, tecnico_id=tecnico_id,patente=patente, fecha_inicio=fecha_inicio, hora_inicio=hora_inicio, fecha_fin=fecha_fin, hora_fin=hora_fin, papeles_en_regla=papeles_en_regla)
+       #turno.save()
+       url = 'https://autotech.onrender.com/turnos/'
+       data = { "id_turno": id_turno,
+            "tipo": tipo,
+            "estado": estado,
+            "tecnico_id": tecnico_id,
+            "patente": patente,
+            "fecha_inicio": fecha_inicio,
+            "hora_inicio": hora_inicio,
+            "fecha_fin": fecha_fin,
+            "hora_fin": hora_fin,
+            "papeles_en_regla": papeles_en_regla,
+            "taller_id": taller_id
+        }
+       response = requests.post(url, json=data)
+       
+       if response.status_code == 201:
+            # El POST fue exitoso, haz algo con la respuesta si lo necesitas
+            print('Turno creado exitosamente')
+       else:
+        # El POST falló por alguna razón, maneja el error según corresponda
+            print('Hubo un problema al crear el turno')
 
 class TurnoTallerCambioEstadoPapelesAPIView(APIView):
-    # cambair el estao de los papeles
+    # cambair el estado de los papeles
     
     
     """

@@ -1,4 +1,5 @@
 # import json
+# from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import render
 # from django.shortcuts import redirect
 # from django.contrib import messages
@@ -114,7 +115,6 @@ def dni_es_valido(dni=None):
     if dni is not None and (not dni.isdigit() or (len(dni) <=0 or len(dni)>10)):
         return False           
     return True
-
 
 #-----------------------------------------------------CAMI-----------------------------------------------------------------------         
 

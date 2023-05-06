@@ -4,16 +4,37 @@ from administracion.models import Turno_taller
 from administracion.serializers import * 
 import requests
 from .gestion_agenda.visualizar_y_modificar_agenda import *
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponse
+#from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse#, HttpResponse
+from rest_framework import status
+from django.views.decorators.http import require_http_methods
+import json
 
 class TurnoTallerAPIView(APIView):
-    def get(self, request, taller_id:str):
+    
+    @require_http_methods(["GET"])
+    def horarios_disponibles(request, taller_id: str):
+        print("1")
+        dias_horarios_data = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
+        print("2")
+        return JsonResponse({"dias_horarios":dias_horarios_data}, safe=False)
+    
+    """
+    def get(self, request, *args, **kwargs):
+        print("1")
+        turnos = Turno_taller.objects.filter(user = request.data.get("id_turno"))
+        print("2")
+        serializer = TurnoTallerSerializer(turnos, many=True)
+        print("3")
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        print("llegue hasta aqui")
         products = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
         #serializer = TurnoTallerSerializer(products, many=True)
         #return Response(serializer.data)
         data = products.json()
         return JsonResponse(data)
+        """
     
     def post(self, request, *args, **kwargs):
        _id_turno = request.data.get("id_turno")

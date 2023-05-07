@@ -59,7 +59,7 @@ class Turno_taller(models.Model):
     class TiposTurno(models.TextChoices):
         SERVICE = "service",("Service")
         EVALUACION ="evaluacion",("Evaluacion")
-        EXTRAORDINARIO = "extraordinacio",("Extraordinario")
+        EXTRAORDINARIO = "extraordinario",("Extraordinario")
 
 
     id_turno = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(99999999)])

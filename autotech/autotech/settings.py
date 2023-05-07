@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import dj_database_url
-import environ
+
 import os
 from pathlib import Path
-""
+import dj_database_url
+import environ
 
 
 env = environ.Env()
@@ -24,11 +24,6 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Pra las variables de entorno
-env = environ.Env()
-env.read_env()
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -36,13 +31,14 @@ env.read_env()
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEGUB = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'turnos.apps.TurnosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,8 +90,8 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
-} """
-
+}
+ """
 
 DATABASES = {
 

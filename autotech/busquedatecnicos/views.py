@@ -1,74 +1,13 @@
-# import json
-# from django.shortcuts import render
-# from django.shortcuts import redirect
-# from django.contrib import messages
-# from django.http import HttpRequest
-from typing import Any
-from django import http
 import requests
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 import json
-from administracion.models import Turno_taller
-from administracion.serializers import TurnoTallerSerializer
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views import View
-from django.utils.decorators import method_decorator
-
-@api_view(['GET'])
-def getTurnos(request):
-    turnos= Turno_taller.objects.all()
-    serializer = TurnoTallerSerializer(turnos, many=True)
-    return Response(serializer.data)
-    
-    
-@api_view(['POST'])
-def postTurno(request):
-    data=request.data
-    turno= Turno_taller.objects.create(
-                id_turno=data['id_turno'],
-                tipo=data['tipo'],
-                estado=data['estado'],
-                tecnico_id=data['tecnico_id'],
-                patente=data['patente'],
-                fecha_inicio=data['fecha_inicio'],
-                hora_inicio=data['hora_inicio'],
-                fecha_fin=data['fecha_fin'],
-                hora_fin=data['hora_fin'],
-                papeles_en_regla=data['papeles_en_regla'],
-                taller_id=data['taller_id']
-            )   
-    serializer=TurnoTallerSerializer(turno, many=False)
-    return Response(serializer.data)
 
 
 
-""""
-    @csrf_exempt
-    def crear_turno(request):
-        if request.method == 'POST':
-            data = json.loads(request.body)
-            print(data)
-            Turno_taller.objects.create(
-                id_turno=data['id_turno'],
-                tipo=data['tipo'],
-                estado=data['estado'],
-                tecnico_id=data['tecnico_id'],
-                patente=data['patente'],
-                fecha_inicio=data['fecha_inicio'],
-                hora_inicio=data['hora_inicio'],
-                fecha_fin=data['fecha_fin'],
-                hora_fin=data['hora_fin'],
-                papeles_en_regla=data['papeles_en_regla'],
-                taller_id=data['taller_id']
-            )
-            datos = {'mensaje': 'Success'}
-            return JsonResponse(datos)
-        return JsonResponse({'mensaje': 'Este método solo permite peticiones POST.'})
-"""
+
 # ------------------------------------------------------MEL Y JOA-----------------------------------------------------------------------
 # ---------------------
 # Funciones principales

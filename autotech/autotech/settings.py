@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
 
 DATABASES = {
 
-    'default': dj_database_url.config('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
+    'default': dj_database_url.parse('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
 
 }
 

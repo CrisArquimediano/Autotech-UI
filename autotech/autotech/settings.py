@@ -21,11 +21,6 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Pra las variables de entorno
-env = environ.Env()
-env.read_env()
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -33,7 +28,7 @@ env.read_env()
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEGUB = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -93,8 +88,8 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
-} """
-
+}
+ """
 
 DATABASES = {
 

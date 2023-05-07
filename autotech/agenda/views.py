@@ -1,3 +1,4 @@
+"""
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from administracion.models import Turno_taller
@@ -16,23 +17,6 @@ class TurnoTallerAPIView(APIView):
     def dias_horarios_disponibles(request, taller_id: str):
         dias_horarios_data = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
         return JsonResponse(dias_horarios_data, safe=False)
-    
-    """
-    def get(self, request, *args, **kwargs):
-        print("1")
-        turnos = Turno_taller.objects.filter(user = request.data.get("id_turno"))
-        print("2")
-        serializer = TurnoTallerSerializer(turnos, many=True)
-        print("3")
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        
-        print("llegue hasta aqui")
-        products = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
-        #serializer = TurnoTallerSerializer(products, many=True)
-        #return Response(serializer.data)
-        data = products.json()
-        return JsonResponse(data)
-        """
     
     def post(self, request, *args, **kwargs):
        _id_turno = request.data.get("id_turno")
@@ -68,13 +52,4 @@ class TurnoTallerAPIView(APIView):
 
 class TurnoTallerCambioEstadoPapelesAPIView(APIView):
     # cambair el estado de los papeles
-    
-    
-    """
-    def post(self, request): # el request es el json que manda cris
-        serializer = Turno_taller(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
    """

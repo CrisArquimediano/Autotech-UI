@@ -7,6 +7,7 @@ from administracion.models import Turno_taller
 from administracion.serializers import TurnoTallerSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from agenda.gestion_agenda.visualizar_y_modificar_agenda import *
 
 
 @api_view(['GET'])
@@ -32,6 +33,13 @@ def turnoDetalle(request,id):
     serializer= TurnoTallerSerializer(turno,many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def diasHorariosDisponibles(request, taller_id: str):
+    dias_horarios_data = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
+    
+    resultado = [{'dia': dia, 'horarios y capacidad':dias_horarios_data.get(dia)} for dia in dias_horarios_data]
+    
+    return JsonResponse({'dias y capacidades':resultado})
 
 @api_view(['POST'])
 def crearTurno(request):

@@ -5,15 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from rest_framework.response import Response
 
-
-
-
-# ------------------------------------------------------MEL Y JOA-----------------------------------------------------------------------
-# ---------------------
-# Funciones principales
-# ---------------------
-
-
 @require_http_methods(["GET"])
 def lista_tecnicos(request):
     """Devuelve un listado de todos los técnicos, con su ID, nombre completo y categoría.
@@ -122,64 +113,3 @@ def dni_es_valido(dni=None):
     if dni is not None and (not dni.isdigit() or (len(dni) <= 0 or len(dni) > 10)):
         return False
     return True
-
-
-# -----------------------------------------------------CAMI-----------------------------------------------------------------------
-
-""" #Definimos una vista que solo permita peticiones HTTP de tipo GET
-@require_http_methods(["GET"])
-def busquedaTecnicos(request):
-    #Especificamos la URL a la cual queremos hacer la petición GET
-    url = 'https://api-rest-pp1.onrender.com/api/tecnicos/'
-
-    #Realizamos la petición GET a la URL especificada y almacenamos los datos obtenidos en la variable 'data'
-    data= requests.get(url)
-
-    #Verificamos si la respuesta de la API fue exitosa (status_code==200)
-    if data.status_code!=200:
-        #Si no fue exitosa, regresamos una respuesta HTTP con un mensaje de error
-        return HttpResponse(f"Error: {data.status_code}")
-    
-    #Si la respuesta fue exitosa, convertimos los datos obtenidos en un objeto JSON y lo regresamos como una respuesta HTTP
-    data= data.json()
-    #Tecnicos_data es una lista de diccionarios, por lo que se establece safe=False para permitir que se serialice esta estructura de datos.
-
-    tecnicos=[{'dni':tecnico['dni'],'nombre_completo':tecnico['nombre_completo']} for tecnico in data]
-    return JsonResponse({'tecnicos':tecnicos}) """
-
-
-# ----------------------------------------------------MAITTE----------------------------------------------------------------------
-""" def busquedaTecnicos(request):
-    """
-#  errores = []
-
-#  if request.method == 'GET':
-#      dni = request.GET.get('dni')
-#      nombre_completo = request.GET.get('nombre_completo')
-#      if not (dni or nombre_completo):
-#          errores.append('Ingresa un valor para la búsqueda.')
-#          print("hola soy un error")
-#          return errores
-"""
-    print("REQUEST: ", request)
-
-    datos = requests.get(url)
-    resultados = datos.json()
-
-    if (datos.status_code == 200):
-
-        resultados_formateados = []
-        for resultado in resultados:
-
-            #if (request.get("dni") == resultado["dni"] or request.get("nombre_completo") == resultado["nombre_completo"]): #no me reconoce el get :c
-                
-                resultado_formateado = {
-                    "dni": resultado["dni"],
-                    "nombre_completo": resultado["nombre_completo"],
-                    "categoria": resultado["categoria"],
-                    "brach": resultado["branch"]
-                }
-                resultados_formateados.append(resultado_formateado)
-
-        # devuelve los resultados
-        return resultados_formateados  """

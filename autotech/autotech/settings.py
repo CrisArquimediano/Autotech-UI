@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import dj_database_url
 import environ
+import re
 
 
 env = environ.Env()
@@ -44,11 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'administracion',
     'agenda',
+
     'rest_framework',
+    'corsheaders',
+    'administracion',
     'busquedatecnicos',
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -142,3 +149,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://192.168.0.4:3000"
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.*\.com$",
+    r"^http://\w+\.*\.com$",
+    r"^https:\/\/",
+    r"^http:\/\/"
+]

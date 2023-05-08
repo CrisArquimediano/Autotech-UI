@@ -1,6 +1,3 @@
-#from rest_framework import routers
-#from .api import TecnicoViewSet
-
 from . import views
 from django.urls import path
 
@@ -9,7 +6,7 @@ urlpatterns = [
     path('tecnicos/', views.lista_tecnicos, name='listaTecnicos'),
     
     # Ruta para obtener un Tecnico específico por ID
-    path('tecnico/<int:id_tecnico>/', views.detalle_tecnico, name='detalleTecnico'),
+    path('tecnico/<int:id_tecnico>/', views.detalle_trabajos_tecnico, name='detalleTecnico'),
 
     # Ruta para obtener las categorías
     path('categorias/', views.categorias, name='categorias'), 

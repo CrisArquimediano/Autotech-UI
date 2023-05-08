@@ -11,7 +11,7 @@ export default function TallerSelect() {
     const handleChange = (event) => {
         setTaller(event.target.value);
     };
-
+    //Los talleres se deberían obtener del back, un jason que se pueda actualizar fácilmente
     return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>

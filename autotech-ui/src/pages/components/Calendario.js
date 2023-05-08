@@ -5,17 +5,18 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { format } from 'date-fns';
 
+const today = dayjs();
 
-const lastMonday = dayjs().startOf('week');
-const nextSunday = dayjs().endOf('week').startOf('day');
-
-const isWeekend = (date) => {
-    const month = date.month();
-    const day = date.day();
-
-    return day === 0 || day === 6;
+const isFeriado = (date) => {
+    const mayo25 = '25/05/2023';
+    const mayo26 = '26/05/2023';
+    const actual = format(new Date(date), 'dd/MM/yyyy');
+    return actual === mayo25 || actual === mayo26
 };
+
+//const isMas30Dias = (date) => {}
 
 function DateValidationShouldDisableDate() {
     return (
@@ -25,8 +26,10 @@ function DateValidationShouldDisableDate() {
             >
                 <DemoItem label="Disponibilidad">
                     <DatePicker
-                        defaultValue={nextSunday}
-                        shouldDisableDate={isWeekend}
+                        today
+                        disablePast
+                        defaultValue={today}
+                        shouldDisableDate={isFeriado}
                         views={['year', 'month', 'day']}
                     />
                 </DemoItem>

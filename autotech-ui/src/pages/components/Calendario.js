@@ -8,15 +8,16 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { format } from 'date-fns';
 
 const today = dayjs();
+const limite = dayjs().add(30, 'day');
 
-const isFeriado = (date) => {
+//Refactorizar consiguiendo los días con alguna API y no hardcodearlos
+const isFeriadoIsMas30Dias = (date) => {
     const mayo25 = '25/05/2023';
     const mayo26 = '26/05/2023';
     const actual = format(new Date(date), 'dd/MM/yyyy');
-    return actual === mayo25 || actual === mayo26
-};
+    return actual === mayo25 || actual === mayo26 || date > limite;
+}
 
-//const isMas30Dias = (date) => {}
 
 function DateValidationShouldDisableDate() {
     return (
@@ -29,7 +30,7 @@ function DateValidationShouldDisableDate() {
                         today
                         disablePast
                         defaultValue={today}
-                        shouldDisableDate={isFeriado}
+                        shouldDisableDate={isFeriadoIsMas30Dias}
                         views={['year', 'month', 'day']}
                     />
                 </DemoItem>

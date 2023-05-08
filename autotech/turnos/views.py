@@ -67,5 +67,5 @@ def turnoUpdate(request,id):
     return Response(serializer.data)
 
 def horarios_validos(hora_inicio: time, hora_fin:time):
-    return (hora_inicio.minute != 0 or hora_inicio.minute != 0) # and hora_inicio <= hora_fin
+    return (hora_inicio.minute != 0 or hora_fin.minute != 0) # and hora_inicio <= hora_fin
         

@@ -1,13 +1,10 @@
 import requests
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-import json
 from administracion.models import Turno_taller
 from administracion.serializers import TurnoTallerSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from agenda.gestion_agenda.visualizar_y_modificar_agenda import *
+from gestion_agenda.visualizar_y_modificar_agenda import *
 
 
 @api_view(['GET'])
@@ -43,6 +40,17 @@ def diasHorariosDisponibles(request, taller_id: str):
 
 @api_view(['POST'])
 def crearTurno(request):
+    dia = request.data.get("fecha_inicio")
+    horario_inicio = request.data.get("hora_inicio")
+    horario_fin = request.data.get("hora_fin")
+    taller_id = request.data.get("taller_id")
+    
+    if not horarios_validos(horario_inicio, horario_fin):
+        return HttpResponse("error: los horarios de comienzo y fin de un turno deben ser horas exactas", status=400)
+    
+    if not esta_disponible(dia, horario_inicio, horario_fin, taller_id):
+        return HttpResponse("error: ese dia no esta disponible en ese horario", status=400)
+        
     serializer=TurnoTallerSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -58,3 +66,6 @@ def turnoUpdate(request,id):
     
     return Response(serializer.data)
 
+def horarios_validos(hora_inicio: time, hora_fin:time):
+    return (hora_inicio.minute != 0 or hora_inicio.minute != 0) # and hora_inicio <= hora_fin
+        

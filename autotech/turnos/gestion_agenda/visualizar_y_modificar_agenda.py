@@ -2,20 +2,12 @@ from .agenda import Agenda
 from datetime import date, timedelta, time
 from administracion.models import Taller
 from administracion.models import Turno_taller
-
-def cargar_turno(id: int, tipo: str, estado: str, taller_id: str, patente: str, fecha_inicio: date, hora_inicio: time, fecha_fin: date, hora_fin: time):
-    turno = Turno_taller( id_turno = id,
-                         tipo = tipo,
-                         estado = estado,
-                         taller_id = taller_id,
-                         tecnico_id = None,
-                         patente = patente,
-                         fecha_inicio = fecha_inicio,
-                        hora_inicio = hora_inicio,
-                        fecha_fin = fecha_fin,
-                        hora_fin = hora_fin,
-                        papeles_en_regla = False)
-    turno.save()
+    
+def esta_disponible(dia:date, horario_inicio:time, horario_fin:time, id_taller:str) -> bool:
+    agenda = _crear_agenda(id_taller)
+    _cargar_turnos(dia, agenda)
+    duracion = horario_fin.hour - horario_inicio.hour
+    return agenda.esta_disponible(dia, horario_inicio.hour, duracion)
 
 def dias_disponibles_desde_hoy_a_treinta_dias(id_taller: str):
     agenda = _crear_agenda(id_taller)

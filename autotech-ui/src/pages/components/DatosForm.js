@@ -14,6 +14,13 @@ import InputLabel from '@mui/material/InputLabel';
 
 
 function RadioButtonsGroup() {
+
+    const [km, setKm] = React.useState('');
+
+    const handleClick = (event) => {
+        setKm(event.target.value);
+    };
+
     return (
         <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">Motivo</FormLabel>
@@ -22,8 +29,18 @@ function RadioButtonsGroup() {
                 defaultValue="evaluacion"
                 name="radio-buttons-group"
             >
-                <FormControlLabel value="service" control={<Radio />} label="Service" />
-                <FormControlLabel value="evaluacion" control={<Radio />} label="Evaluación" />
+                <FormControlLabel value="service" control={<Radio />} label="Service"
+                    onClick={handleClick}
+                />
+                <FormControlLabel value="evaluacion" control={<Radio />} label="Evaluación"
+                    onClick={handleClick}
+                />
+
+                {
+                    km === "service" && (
+                        < KmSelect />
+                    )
+                }
 
             </RadioGroup>
         </FormControl>
@@ -81,9 +98,6 @@ export default function DatosForm() {
                 </Grid>
                 <Grid item xs={12}>
                     <RadioButtonsGroup />
-                </Grid>
-                <Grid item xs={12}>
-                    <KmSelect />
                 </Grid>
             </Grid>
         </React.Fragment>

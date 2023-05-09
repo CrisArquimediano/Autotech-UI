@@ -35,20 +35,18 @@ function RadioButtonsGroup() {
                 <FormControlLabel value="evaluacion" control={<Radio />} label="Evaluación"
                     onClick={handleClick}
                 />
-
+                <br></br>
                 {
                     km === "service" && (
                         < KmSelect />
                     )
                 }
-
             </RadioGroup>
         </FormControl>
     );
 }
 
-//Esto debería mostrarlo solo en caso de que ponga service (debería estar visible solo cuando el botón)
-//de service está seleccionado
+//Esto se muestra solo en caso de que ponga service
 function KmSelect() {
     const [km, setKm] = React.useState('');
 

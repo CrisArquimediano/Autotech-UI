@@ -11,7 +11,9 @@ urlpatterns = [
 
     path('turnos-create/', views.crearTurno,name="turnos-create"),
 
-    path('turnos-update/<int:id>', views.turnoUpdate,name="turnos-update")
+    path('turnos-update/<int:id>', views.turnoUpdate,name="turnos-update"),
+    
+    path('horarios-disponibles/<str:taller_id>', views.diasHorariosDisponibles,name="horarios-disponibles")
 ]
 
 

@@ -1,35 +1,42 @@
+
 import requests
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-import json
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from administracion.models import Turno_taller
 
-@require_http_methods(["GET"])
+# ---------------------
+# Funciones principales
+# ---------------------
+
+
+@api_view(["GET"])
 def lista_tecnicos(request):
     """Devuelve un listado de todos los técnicos, con su ID, nombre completo y categoría.
     """
-    tecnicos_data = tecnicos_todos()
-    tecnicos = [{'id_empleado': tecnico['id_empleado'], 'nombre_completo': tecnico['nombre_completo'],
-                 'categoria': tecnico['categoria']} for tecnico in tecnicos_data]
+    tecnicos = tecnicos_todos()
     return JsonResponse({'tecnicos': tecnicos})
 
 
-@require_http_methods(["GET"])
-def detalle_tecnico(request, id_tecnico):
-    """Devuelve los detalles de un técnico en particular, especificado por su ID.
+@api_view(["GET"])
+def detalle_trabajos_tecnico(request, id_tecnico):
+    """Devuelve los detalles de los trabajos realizados por un tecnico particular.
     """
-    url = f"https://api-rest-pp1.onrender.com/api/tecnicos/{id_tecnico}"
-    data = requests.get(url)
+    turnos = Turno_taller.objects.filter(tecnico_id=id_tecnico) 
+    data = []
+    for turno in turnos:
+        data.append({
+            "patente": turno.patente,
+            "fecha_inicio": turno.fecha_inicio,
+            "hora_inicio": turno.hora_inicio,
+            "fecha_fin": turno.fecha_fin,
+            "hora_fin": turno.hora_fin,
+            "tipo": turno.tipo,
+        })
+    return Response(data)
 
-    if data.status_code != 200:
-        return HttpResponse(f"Error: {data.status_code}")
 
-    tecnico_data = data.json()
-    return JsonResponse(tecnico_data, safe=False)
-
-
-@require_http_methods(['GET'])
+@api_view(['GET'])
 def categorias(request):
     """Devuelve una lista de todas las categorías de técnico disponibles.
     """
@@ -37,7 +44,7 @@ def categorias(request):
     return JsonResponse(tipos_categorias, safe=False)
 
 
-@require_http_methods(['GET'])
+@api_view(['GET'])
 def buscar_tecnicos(request):
     """Busca y devuelve una lista de técnicos según los filtros especificados.
 
@@ -55,13 +62,15 @@ def buscar_tecnicos(request):
     if not dni_es_valido(dni=dni):
         return HttpResponse("error: DNI no válida", status=400)
     try:
-        tecnicos = obtener_tecnicos(
-            categoria=categoria, dni=dni, nombre=nombre)
+        tecnicos = obtener_tecnicos(categoria=categoria, dni=dni, nombre=nombre)     
         return JsonResponse({'tecnicos': tecnicos})
 
     except requests.HTTPError as e:
         return HttpResponse(str(e), status=e.response.status_code)
 
+# ---------------------
+# Funciones Auxiliares
+# ---------------------
 
 def obtener_tecnicos(categoria=None, dni=None, nombre=None):
     """Retorna una lista de diccionarios que contienen información de los técnicos que cumplen con los criterios de búsqueda especificados.
@@ -77,29 +86,32 @@ def obtener_tecnicos(categoria=None, dni=None, nombre=None):
             tecnicos = [
                 tecnico for tecnico in tecnicos if tecnico['dni'] == dni]
         if nombre is not None:
-            tecnicos = [tecnico for tecnico in tecnicos if nombre.lower(
-            ) in tecnico['nombre_completo'].lower()]
+            tecnicos = [tecnico for tecnico in tecnicos if nombre.lower() in tecnico['nombre_completo'].lower()]
 
         if not tecnicos:
             return []
     return tecnicos
 
 
-# ---------------------
-# Funciones Auxiliares
-# ---------------------
-
 def tecnicos_todos():
     """Realiza una solicitud GET a una API para obtener una lista de todos los técnicos y devuelve los datos como una lista de diccionarios.
     """
     url = "https://api-rest-pp1.onrender.com/api/tecnicos/"
-    data = requests.get(url)
+    tecnicos_data = requests.get(url)
 
-    if data.status_code != 200:
-        raise requests.HTTPError(f"Error: {data.status_code}")
+    if tecnicos_data.status_code != 200:
+        raise requests.HTTPError(f"Error: {tecnicos_data.status_code}")
 
-    data = data.json()
-    return data
+    tecnicos_data = tecnicos_data.json()
+    tecnicos = [{
+        'id_empleado': tecnico['id_empleado'],
+        'nombre_completo': tecnico['nombre_completo'], 
+        'dni': tecnico['dni'], 
+        'categoria': tecnico['categoria'], 
+        'branch': tecnico['branch']
+        } for tecnico in tecnicos_data]    
+   
+    return tecnicos
 
 
 def categoria_es_valida(categoria=None):

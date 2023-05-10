@@ -112,10 +112,10 @@ class Turno_taller(models.Model):
 
 # ----------------------------------------------------------------------------------------------------#
 
-class Checklist_evaluacion(models.Model):
+""" class Checklist_evaluacion(models.Model):
 
 
 class Registro_evaluaciones(models.Model):
     id_turno = models.ForeignKey(Turno_taller, on_delete=models.PROTECT)
     id_tarea = models.ForeignKey(Checklist_evaluacion, on_delete=models.PROTECT)
-    puntaje_seleccionado = models.IntegerField(validators=[MinValueValidator(-)])
+    puntaje_seleccionado = models.IntegerField(validators=[MinValueValidator(-)]) """

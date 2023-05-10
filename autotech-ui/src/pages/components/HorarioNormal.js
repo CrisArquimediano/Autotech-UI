@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 
 const horaMinima = dayjs().set('hour', 8).startOf('hour');
-const horaMax = dayjs().set('hour', 17).startOf('hour');
+const horaMax = dayjs().set('hour', 16).startOf('hour');
 
 export default function HoraNormal() {
     return (
@@ -17,7 +17,6 @@ export default function HoraNormal() {
             <Stack spacing={3} width={200}>
                 <TimePicker
                     label="24 hours"
-                    isDomingo
                     defaultValue={horaMinima}
                     minTime={horaMinima}
                     maxTime={horaMax}

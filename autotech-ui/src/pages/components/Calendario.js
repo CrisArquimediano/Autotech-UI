@@ -11,7 +11,8 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import HoraNormal from './HorarioNormal';
 
 const today = dayjs();
-const limite = dayjs().add(30, 'day');
+const limite = dayjs().add(29, 'day');
+let diaElegido;
 
 const isFeriadoIsMas30Dias = (date) => {
     const mayo25 = '25/05/2023';
@@ -21,12 +22,7 @@ const isFeriadoIsMas30Dias = (date) => {
 }
 
 function DateValidationShouldDisableDate() {
-    const [hora, setHora] = React.useState('');
     const [value, setValue] = React.useState(dayjs());
-
-    const handleChange = (event) => {
-        setHora(event.target.value);
-    };
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
@@ -45,7 +41,6 @@ function DateValidationShouldDisableDate() {
                     />
                     <><br></br></>
                     {
-                        //console.log(value.day())
                         value.day() === 6 && (
                             <HoraDomingo />
                         )
@@ -63,7 +58,7 @@ function DateValidationShouldDisableDate() {
 
 const horaMinima = dayjs().set('hour', 8).startOf('hour');
 
-const horaMax = dayjs().set('hour', 12).startOf('hour');
+const horaMax = dayjs().set('hour', 11).startOf('hour');
 
 function HoraDomingo() {
     return (

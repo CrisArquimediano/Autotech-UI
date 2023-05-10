@@ -36,9 +36,9 @@ def turnoDetalle(request,id):
 def diasHorariosDisponibles(request, taller_id: str):
     dias_horarios_data = dias_disponibles_desde_hoy_a_treinta_dias(taller_id)
     
-    resultado = [{'dia': dia, 'horarios y capacidad':dias_horarios_data.get(dia)} for dia in dias_horarios_data]
+    resultado = [{'dia': dia, 'horarios_y_capacidad':dias_horarios_data.get(dia)} for dia in dias_horarios_data]
     
-    return JsonResponse({'dias y capacidades':resultado})
+    return JsonResponse({'dias_y_capacidades':resultado})
 
 @api_view(['POST'])
 def crearTurno(request):
@@ -49,11 +49,15 @@ def crearTurno(request):
 
     horario_inicio_time = datetime.strptime(horario_inicio, '%H:%M:%S').time()
     horario_fin_time = datetime.strptime(horario_fin, '%H:%M:%S').time()
-    dia_time = datetime.strptime(dia, '%Y-%m-%d').date()
+    dia_date = datetime.strptime(dia, '%Y-%m-%d').date()
     
     if not horarios_validos(horario_inicio_time, horario_fin_time):
         return HttpResponse("error: los horarios de comienzo y fin de un turno deben ser horas exactas", status=400)
-    if not esta_disponible(dia_time, horario_inicio_time, horario_fin_time, taller_id):
+    if not horarios_dentro_de_rango(dia_date, horario_inicio_time, horario_fin_time):
+        return HttpResponse("error: los horarios superan el limite de la jornada laboral", status=400)
+    if not dia_valido(dia_date):
+        return HttpResponse("error: no se puede sacar un turno para una fecha que ya paso.", status=400)
+    if not esta_disponible(dia_date, horario_inicio_time, horario_fin_time, taller_id):
         return HttpResponse("error: ese dia no esta disponible en ese horario", status=400)
     
     serializer=TurnoTallerSerializer(data=request.data)
@@ -71,6 +75,17 @@ def turnoUpdate(request,id):
     
     return Response(serializer.data)
 
-def horarios_validos(hora_inicio: time, hora_fin:time):
+def horarios_validos(hora_inicio:time, hora_fin:time):
     return hora_inicio.minute == 0 and hora_fin.minute == 0 and hora_inicio.second == 0 and hora_fin.second == 0 # and hora_inicio <= hora_fin
         
+def horarios_dentro_de_rango(dia:date, horario_inicio:time, horario_fin:time):
+    if dia.weekday() == 6: # domigo
+        horario_inicio_valido = horario_inicio.hour >= 8 and horario_inicio.hour <= 11 # podemos dar turnos de 8 a 11
+        horario_fin_valido = horario_fin.hour >= 9 and horario_fin.hour <= 12 # los turnos pueden terminar de 9 a 12
+    else:
+        horario_inicio_valido = horario_inicio.hour >= 8 and horario_inicio.hour <= 16 # podemos dar turnos de 8 a 16
+        horario_fin_valido = horario_fin.hour >= 9 and horario_fin.hour <= 17 # los turnos pueden terminar de 9 a 17
+    return horario_inicio_valido and horario_fin_valido
+    
+def dia_valido(dia: date):
+    return dia >= date.today()

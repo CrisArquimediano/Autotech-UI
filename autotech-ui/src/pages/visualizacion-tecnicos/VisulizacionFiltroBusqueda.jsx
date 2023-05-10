@@ -20,7 +20,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 
-const Formulario = () => {
+const Visualizacion = () => {
 
     const [listaTecnicos, setTecnicos] = useState([]);
     const [tablaTecnicos, setTablaTecnicos] = useState([]);
@@ -53,21 +53,21 @@ const Formulario = () => {
     const filtrarTecnicos = () => {
 
         return axios.get(`${endPoint}${(!(valoresBusqueda.nombre.length <= 0)) &&
-                (!(valoresBusqueda.dni.length <= 0)) &&
-                (!(valoresBusqueda.categoria.length <= 0)) ?
-                `nombre_completo=${valoresBusqueda.nombre}&dni=${valoresBusqueda.dni}&categoria=${valoresBusqueda.categoria}&` :
+            (!(valoresBusqueda.dni.length <= 0)) &&
+            (!(valoresBusqueda.categoria.length <= 0)) ?
+            `nombre_completo=${valoresBusqueda.nombre}&dni=${valoresBusqueda.dni}&categoria=${valoresBusqueda.categoria}&` :
 
-                (!(valoresBusqueda.nombre.length <= 0)) && (!(valoresBusqueda.dni.length <= 0)) ?
-                    `nombre_completo=${valoresBusqueda.nombre}&dni=${valoresBusqueda.dni}` :
-                    (!(valoresBusqueda.nombre.length <= 0)) && (!(valoresBusqueda.categoria.length <= 0)) ?
-                        `nombre_completo=${valoresBusqueda.nombre}&categoria=${valoresBusqueda.categoria}&` :
-                        (!(valoresBusqueda.dni.length <= 0)) && (!(valoresBusqueda.categoria.length <= 0)) ?
-                            `dni=${valoresBusqueda.dni}&categoria=${valoresBusqueda.categoria}` :
+            (!(valoresBusqueda.nombre.length <= 0)) && (!(valoresBusqueda.dni.length <= 0)) ?
+                `nombre_completo=${valoresBusqueda.nombre}&dni=${valoresBusqueda.dni}` :
+                (!(valoresBusqueda.nombre.length <= 0)) && (!(valoresBusqueda.categoria.length <= 0)) ?
+                    `nombre_completo=${valoresBusqueda.nombre}&categoria=${valoresBusqueda.categoria}&` :
+                    (!(valoresBusqueda.dni.length <= 0)) && (!(valoresBusqueda.categoria.length <= 0)) ?
+                        `dni=${valoresBusqueda.dni}&categoria=${valoresBusqueda.categoria}` :
 
-                            !(valoresBusqueda.nombre.length <= 0) ? `nombre_completo=${valoresBusqueda.nombre}&` :
-                                !(valoresBusqueda.dni.length <= 0) ? `dni=${valoresBusqueda.dni}` :
-                                    !(valoresBusqueda.categoria.length <= 0) ? `categoria=${valoresBusqueda.categoria}&` :
-                                        ""
+                        !(valoresBusqueda.nombre.length <= 0) ? `nombre_completo=${valoresBusqueda.nombre}&` :
+                            !(valoresBusqueda.dni.length <= 0) ? `dni=${valoresBusqueda.dni}` :
+                                !(valoresBusqueda.categoria.length <= 0) ? `categoria=${valoresBusqueda.categoria}&` :
+                                    ""
             }`)
             .then(response => {
                 setTecnicos(response.data);
@@ -227,4 +227,4 @@ const Formulario = () => {
     );
 }
 
-export default Formulario;
+export default Visualizacion;

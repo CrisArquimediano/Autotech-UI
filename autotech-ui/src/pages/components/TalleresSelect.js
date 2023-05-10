@@ -4,8 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import turno from '../turnos/turno'
+import { PatternTwoTone } from '@mui/icons-material';
 
-//Poner en un json general, juntar con los otros datos
+
+//Poner en un json general, juntar con los otros datos, se obtiene id del taller
 const tallerID =
     [
         {
@@ -49,6 +52,11 @@ const Taller = ({ T001, T002, T003 }) => {
         setTaller(event.target.value);
         tallerID.id = taller;
         console.log(tallerID.id);
+        turno.turno_id = taller;
+        console.log("Id del taller, json:", turno.turno_id)
+        console.log("Datos de otro lado, tipo de turno:", turno.tipo)
+        console.log("Datos de otro lado, kilometraje:", turno.kilometraje)
+        console.log("Datos de otro lado, patente:", turno.patente)
     };
 
     return (

@@ -37,13 +37,13 @@ export default function TallerAgendaForm() {
                 </Grid>
             </Grid>
             <div className="stock-container">
-                {posts.map((data, key) => {
+                {/*posts.map((data, key) => {
                     return (
                         <div key={key}>
                             {data.dia}
                         </div>
                     );
-                })}
+                })*/}
             </div>
         </React.Fragment>
     );

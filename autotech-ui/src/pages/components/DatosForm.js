@@ -11,7 +11,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { Input } from '@mui/material';
 
-
+//poner en un json general y juntar con los otros datos
 const inputCliente = {
     patente: '',
     tipoDeTurno: '',

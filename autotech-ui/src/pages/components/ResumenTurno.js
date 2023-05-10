@@ -30,24 +30,24 @@ export default function ResumenTurno() {
                 Resumen del turno
             </Typography>
             <List disablePadding>
-                {turno.map((turnoActual) => (
+                {/*turno.map((turnoActual) => (
                     <ListItem key={turnoActual.name} sx={{ py: 1, px: 0 }}>
                         <ListItemText primary={turnoActual.fecha} secondary={turnoActual.hora} />
                         <Typography variant="body2">{turnoActual.taller}</Typography>
                     </ListItem>
-                ))}
+                ))*/}
 
-                <ListItem sx={{ py: 1, px: 0 }}>
+                {/*<ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                         $00.00
                     </Typography>
-                </ListItem>
+                </ListItem>*/}
             </List>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                        Servicio
+
                     </Typography>
                     <Typography gutterBottom>Patente: AA111AA</Typography>
                     <Typography gutterBottom>{addresses.join(', ')}</Typography>

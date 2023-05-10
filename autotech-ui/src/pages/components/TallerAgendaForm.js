@@ -3,15 +3,26 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TallerSelect from './TalleresSelect';
 import Calendario from './Calendario';
-import dayjs from 'dayjs';
-import 'dayjs/locale/de';
-import 'dayjs/locale/en-gb';
-import Stack from '@mui/material/Stack';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { useState, useEffect } from "react"
+import axios from "axios";
+
+//Este sería mi componente padre, acá consigo los datos de la API y se los paso para que los muestren
+//los talleres y la disponibilidad
 
 export default function TallerAgendaForm() {
+
+    const [posts, setPosts] = useState([]);
+
+    const apiEndPoint = 'https://autotech.onrender.com/turnos/horarios-disponibles/T001'
+    useEffect(() => {
+        const getPosts = async () => {
+            const { data: res } = await axios.get(apiEndPoint)
+            setPosts(res)
+        }
+        getPosts()
+    }, [])
+
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -24,24 +35,16 @@ export default function TallerAgendaForm() {
                 <Grid item xs={12} md={10}>
                     <Calendario />
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <Horas />
-                </Grid>
             </Grid>
+            <div className="stock-container">
+                {/*posts.map((data, key) => {
+                    return (
+                        <div key={key}>
+                            {data.dia}
+                        </div>
+                    );
+                })*/}
+            </div>
         </React.Fragment>
-    );
-}
-
-function Horas() {
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Stack spacing={3} width={200}>
-                <TimePicker
-                    label="24 hours"
-                    defaultValue={dayjs('2022-04-17T18:30')}
-                    ampm={false}
-                />
-            </Stack>
-        </LocalizationProvider>
     );
 }

@@ -11,6 +11,10 @@
   "dependencies": {
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
+    "@fontsource/play": "^4.5.12",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@fullcalendar/core": "^6.1.6",
     "@fullcalendar/daygrid": "^6.1.6",
     "@fullcalendar/interaction": "^6.1.6",
@@ -21,7 +25,12 @@
     "@mui/material": "^5.12.2",
     "@mui/x-data-grid": "^6.3.0",
     "@mui/x-date-pickers": "^6.3.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/aria-query": "^5.0.1",
     "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
@@ -30,6 +39,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-pro-sidebar": "^1.0.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^3.3.1",
     "yup": "^1.1.1"
   }
 }

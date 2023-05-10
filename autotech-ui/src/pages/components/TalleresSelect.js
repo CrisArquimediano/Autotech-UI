@@ -4,39 +4,75 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import turno from '../turnos/turno'
+import { PatternTwoTone } from '@mui/icons-material';
 
+
+//Poner en un json general, juntar con los otros datos, se obtiene id del taller
+const tallerID =
+    [
+        {
+            id: '',
+        }
+    ]
+
+const talleres =
+    [
+        {
+            T001: 'San Miguel',
+            T002: 'Malvinas Argentinas',
+            T003: 'Belgrano',
+        }
+    ]
+
+//tiene que recibir de TallerAgendaForm los talleres (T001, T002, T003)
 export default function TallerSelect() {
+    return (
+        <Box sx={{ minWidth: 120 }}>
+            <div className="stock-container">
+                {talleres.map((data, key) => {
+                    return (
+                        <Taller key={key}
+                            T001={data.T001}
+                            T002={data.T002}
+                            T003={data.T003}
+                        />
+                    );
+                })}
+            </div>
+        </Box>
+    );
+}
+
+const Taller = ({ T001, T002, T003 }) => {
+
     const [taller, setTaller] = React.useState('');
 
     const handleChange = (event) => {
         setTaller(event.target.value);
+        tallerID.id = taller;
+        console.log(tallerID.id);
+        turno.turno_id = taller;
+        console.log("Id del taller, json:", turno.turno_id)
+        console.log("Datos de otro lado, tipo de turno:", turno.tipo)
+        console.log("Datos de otro lado, kilometraje:", turno.kilometraje)
+        console.log("Datos de otro lado, patente:", turno.patente)
     };
-    //Los talleres se deberían obtener del back, un jason que se pueda actualizar fácilmente
+
     return (
-        <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Talleres</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={taller}
-                    label="Talleres"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={10}>San Miguel</MenuItem>
-                    <MenuItem value={20}>Malvinas Argentinas</MenuItem>
-                    <MenuItem value={30}>Morón</MenuItem>
-                    <MenuItem value={40}>Ituizango</MenuItem>
-                    <MenuItem value={50}>Palermo</MenuItem>
-                    <MenuItem value={60}>Colegiales</MenuItem>
-                    <MenuItem value={70}>Belgrano</MenuItem>
-                    <MenuItem value={80}>Lanús</MenuItem>
-                    <MenuItem value={90}>Quilmes</MenuItem>
-                    <MenuItem value={100}>El Talar</MenuItem>
-                    <MenuItem value={110}>Escobar</MenuItem>
-                    <MenuItem value={120}>Pilar</MenuItem>
-                </Select>
-            </FormControl>
-        </Box>
-    );
+        <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Talleres</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={taller}
+                label="Talleres"
+                onChange={handleChange}
+            >
+                <MenuItem value={10}>{T001}</MenuItem>
+                <MenuItem value={20}>{T002}</MenuItem>
+                <MenuItem value={30}>{T003}</MenuItem>
+            </Select>
+        </FormControl>
+    )
 }

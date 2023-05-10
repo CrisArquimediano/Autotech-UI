@@ -86,19 +86,19 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+""" DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
-}
-
-
-""" DATABASES = {
-
-    'default': dj_database_url.parse('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
-
 } """
+
+
+DATABASES = {
+
+    'default': dj_database_url.config('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -150,8 +150,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     "http://localhost:3000",
     "http://localhost:5173",
     "http://192.168.0.4:3000"
-]
- """
+] """
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGIN_REGEXES = [

@@ -31,7 +31,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+""" ALLOWED_HOSTS = ['*'] """
+
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:    
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -91,13 +97,24 @@ WSGI_APPLICATION = 'autotech.wsgi.application'
         default='sqlite:///db.sqlite3',
         conn_max_age=600
     )
-}
- """
+} """
+
+
+""" DATABASES = {
+
+    'default': dj_database_url.config('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
+
+} """
 
 DATABASES = {
-
-    'default': dj_database_url.parse('postgres://insomniadb_itl0_user:i6J4uJVDJH1po9OQ84VWOirZWSag60B5@dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com/insomniadb_itl0')
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'insomniadb_itl0',
+        'USER': 'insomniadb_itl0_user',
+        'PASSWORD': 'i6J4uJVDJH1po9OQ84VWOirZWSag60B5',
+        'HOST': 'dpg-chakmuvdvk4ktc5c0a0g-a.ohio-postgres.render.com',
+        'PORT': '5432',
+    }
 }
 
 # Password validation
@@ -146,11 +163,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
+""" CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://192.168.0.4:3000"
-]
+] """
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://\w+\.*\.com$",

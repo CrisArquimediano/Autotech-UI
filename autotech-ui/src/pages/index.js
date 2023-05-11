@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import Header from './components/Header'
+
 import React from 'react';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,7 +20,7 @@ export default function Home() {
 
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.title}>
-          <Header title="Autotech" subtitle="" />
+          <h1 title="Autotech" subtitle=""></h1>
         </div>
 
         <div>
@@ -46,7 +46,7 @@ export default function Home() {
             <p>Detalle e información. <br></br></p>
           </Link>
         </div>
-      </main>
+      </main >
     </>
   )
 }

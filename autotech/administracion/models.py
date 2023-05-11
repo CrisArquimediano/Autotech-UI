@@ -97,7 +97,7 @@ class Turno_taller(models.Model):
         FREQ_195000 = 195000, '195.000 KM'
         FREQ_200000 = 200000, '200.000 KM'
 
-    id_turno = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(999999)])
+    id_turno = models.AutoField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(999999)])
     tipo = models.CharField(max_length=14, choices=TiposTurno.choices, default=TiposTurno.SERVICE)
     estado = models.CharField(max_length=10, choices=EstadoTurno.choices, default=EstadoTurno.EN_PROCESO)
     taller_id = models.ForeignKey(Taller, on_delete=models.DO_NOTHING)

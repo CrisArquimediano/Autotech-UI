@@ -97,7 +97,7 @@ class Turno_taller(models.Model):
         FREQ_195000 = 195000, '195.000 KM'
         FREQ_200000 = 200000, '200.000 KM'
 
-    id_turno = models.IntegerField(primary_key=True, validators=[MinValueValidator(0), MaxValueValidator(999999)])
+    id_turno = models.AutoField(primary_key=True)
     tipo = models.CharField(max_length=14, choices=TiposTurno.choices, default=TiposTurno.SERVICE)
     estado = models.CharField(max_length=10, choices=EstadoTurno.choices, default=EstadoTurno.EN_PROCESO)
     taller_id = models.ForeignKey(Taller, on_delete=models.DO_NOTHING)
@@ -111,11 +111,3 @@ class Turno_taller(models.Model):
     papeles_en_regla = models.BooleanField(default=False)
 
 # ----------------------------------------------------------------------------------------------------#
-
-""" class Checklist_evaluacion(models.Model):
-
-
-class Registro_evaluaciones(models.Model):
-    id_turno = models.ForeignKey(Turno_taller, on_delete=models.PROTECT)
-    id_tarea = models.ForeignKey(Checklist_evaluacion, on_delete=models.PROTECT)
-    puntaje_seleccionado = models.IntegerField(validators=[MinValueValidator(-)]) """

@@ -1,27 +1,10 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-
-const turno = [
-    {
-        fecha: '8/05/2023',
-        hora: '10:00',
-        taller: 'San Miguel',
-    },
-];
-const addresses = ['Av. Balbín', '99999', 'San Miguel', 'Buenos Aires', 'Argentina'];
+import turno from '../turnos/turno'
 
 
-/*const payments = [
-    { name: 'Card type', detail: 'Visa' },
-    { name: 'Card holder', detail: 'Mr John Smith' },
-    { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-    { name: 'Expiry date', detail: '04/2024' },
-];
-*/
 
 export default function ResumenTurno() {
     return (
@@ -29,28 +12,19 @@ export default function ResumenTurno() {
             <Typography variant="h6" gutterBottom>
                 Resumen del turno
             </Typography>
-            <List disablePadding>
-                {/*turno.map((turnoActual) => (
-                    <ListItem key={turnoActual.name} sx={{ py: 1, px: 0 }}>
-                        <ListItemText primary={turnoActual.fecha} secondary={turnoActual.hora} />
-                        <Typography variant="body2">{turnoActual.taller}</Typography>
-                    </ListItem>
-                ))*/}
+            <Typography variant="body1">{turno.hora_inicio} hs</Typography>
+            <Typography variant="body2">{turno.fecha_inicio}</Typography>
+            <Typography variant="body2">Taller: {turno.taller_id}</Typography>
 
-                {/*<ListItem sx={{ py: 1, px: 0 }}>
-                    <ListItemText primary="Total" />
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        $00.00
-                    </Typography>
-                </ListItem>*/}
-            </List>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
 
                     </Typography>
-                    <Typography gutterBottom>Patente: AA111AA</Typography>
-                    <Typography gutterBottom>{addresses.join(', ')}</Typography>
+                    <Typography gutterBottom>Patente: {turno.patente}</Typography>
+                    <Typography gutterBottom>Tipo de turno: {turno.tipo}</Typography>
+                    <Typography gutterBottom>Kilometraje: {turno.kilometraje}</Typography>
+
                 </Grid>
                 {/*<Grid item container direction="column" xs={12} sm={6}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
@@ -71,5 +45,6 @@ export default function ResumenTurno() {
                 </Grid> */} {/*Lp guardo porque me servirá de referencia para hacer algo */}
             </Grid>
         </React.Fragment>
+
     );
 }

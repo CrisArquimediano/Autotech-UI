@@ -8,6 +8,7 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { format } from 'date-fns';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import turno from '../turnos/turno';
 
 
 
@@ -49,6 +50,8 @@ function DateValidationShouldDisableDate() {
                             setDia(newValue);
                             diaYhora.dia = format(new Date(newValue), 'yyyy/MM/dd');
                             console.log(diaYhora.dia)
+                            turno.fecha_inicio = format(new Date(newValue), 'yyyy/MM/dd');
+                            console.log("Fecha inicio, en el json: ", turno.fecha_inicio)
                         }}
                     />
                     <><br></br></>
@@ -88,7 +91,9 @@ function HoraDomingo() {
                         setHora(newValue);
                         diaYhora.hora = format(new Date(newValue), 'kk');
                         diaYhora.hora = newValue;
-                        console.log(diaYhora.hora)
+                        console.log(diaYhora.hora);
+                        turno.hora_inicio = format(new Date(newValue), 'kk');
+                        console.log("Hora inicio en el json: ", turno.hora_inicio);
                     }}
                 />
             </Stack>
@@ -115,6 +120,8 @@ function HoraNormal() {
                         setHora(newValue);
                         diaYhora.hora = format(new Date(newValue), 'kk');
                         console.log(diaYhora.hora)
+                        turno.hora_inicio = format(new Date(newValue), 'kk');
+                        console.log("Hora inicio en el json: ", turno.hora_inicio);
                     }}
                 />
             </Stack>

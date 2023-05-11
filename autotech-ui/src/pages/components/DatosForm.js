@@ -11,30 +11,10 @@ import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { Input } from '@mui/material';
 import turno from '../turnos/turno'
-import { number } from 'yup';
 
 //Acá obtengo tipo de turno, kilometraje y patente
 
-//poner en un json general y juntar con los otros datos
-const inputCliente = {
-    patente: '', //string
-    tipoDeTurno: '', //string
-    kilometraje: '', //nro
-};
-
 function ControlledRadioButtonsGroup() {
-    //Tipo de turno
-    const [value, setValue] = React.useState('evaluacion');
-
-    //para guardar el input del cliente
-    const guardarTipoDeTurno = (event) => {
-        setValue(event.target.value);
-        inputCliente.tipoDeTurno = value;
-        console.log(inputCliente.tipoDeTurno)
-        turno.tipo = value;
-        console.log('Tipo de turno cargado en el json:', turno.tipo)
-    };
-
     //Para mostrar input de Kilometraje o no mostrarlo, según tipo de turno
     const [kmInput, setKmInput] = React.useState('');
 
@@ -42,6 +22,7 @@ function ControlledRadioButtonsGroup() {
         setKmInput(event.target.value);
     };
 
+    //Tipo de turno
 
     const [tipo, setTipo] = useState({
         tipoTurno: '',
@@ -52,9 +33,8 @@ function ControlledRadioButtonsGroup() {
             ...prevState,
             [name]: value,
         }));
-        console.log(value)
-        turno.kilometraje = value;
-        console.log('Kilometraje cargado en el json:', turno.kilometraje)
+        turno.tipo = value;
+        console.log('Tipo de turno cargado en el json:', turno.tipo)
     };
 
     return (
@@ -101,7 +81,6 @@ function Kilometraje() {
             ...prevState,
             [name]: value,
         }));
-        console.log(value)
         turno.kilometraje = value;
         console.log('Kilometraje cargado en el json:', turno.kilometraje)
     };
@@ -122,63 +101,6 @@ function Kilometraje() {
     );
 }
 
-
-/*export default function DatosForm() {
-    const [patente, setPatente] = React.useState('');
-
-    const handleChange = (event) => {
-        setPatente(event.target.value);
-        inputCliente.patente = patente;
-        console.log(inputCliente.patente);
-        turno.patente = patente;
-        console.log('Patente cargada en el json:', turno.patente)
-    };
-
-
-    const [valoresCampos, setValoresCampos] = useState({
-        campo1: '',
-        campo2: '',
-        campo3: '',
-    });
-
-    const manejarCambio = (event) => {
-        const { name, value } = event.target;
-        setValoresCampos((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-        console.log(value)
-    };
-
-    return (
-        <React.Fragment>
-            <Typography variant="h6" gutterBottom>
-                Patente y motivo del turno
-            </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        value={patente}
-                        id="patente"
-                        name="patente"
-                        label="Patente"
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <ControlledRadioButtonsGroup />
-                </Grid>
-                <input type="text" name="campo1" value={valoresCampos.campo1} onChange={manejarCambio} />
-                <input type="text" name="campo2" value={valoresCampos.campo2} onChange={manejarCambio} />
-                <input type="text" name="campo3" value={valoresCampos.campo3} onChange={manejarCambio} />
-            </Grid>
-        </React.Fragment>
-    );
-}*/
-
 export default function DatosForm() {
     const [patente, setPatente] = React.useState('');
 
@@ -189,9 +111,6 @@ export default function DatosForm() {
             ...prevState,
             [name]: value,
         }));
-        inputCliente.patente = value;
-
-        console.log(inputCliente.patente);
         turno.patente = value;
         console.log('Patente cargada en el json:', turno.patente)
     };

@@ -75,6 +75,7 @@ const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
 
 function HoraDomingo() {
     const [hora, setHora] = React.useState('');
+    let h;
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3} width={200}>
@@ -92,7 +93,9 @@ function HoraDomingo() {
                         console.log(diaYhora.hora);
                         turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
                         console.log("Hora inicio en el json: ", turno.hora_inicio);
-                        turno.hora_fin = format(new Date(newValue), 'kk:mm:ss');
+                        h = new Date(newValue);
+                        h.setHours(h.getHours() + 1);
+                        turno.hora_fin = format(h, 'kk:mm:ss');
                         console.log("Hora fin en el json: ", turno.hora_fin);
                     }}
                 />
@@ -106,6 +109,7 @@ const horaMax = dayjs().set('hour', 16).startOf('hour');
 
 function HoraNormal() {
     const [hora, setHora] = React.useState('');
+    let h;
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3} width={200}>
@@ -122,7 +126,9 @@ function HoraNormal() {
                         console.log(diaYhora.hora)
                         turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
                         console.log("Hora inicio en el json: ", turno.hora_inicio);
-                        turno.hora_fin = format(new Date(newValue), 'kk:mm:ss');
+                        h = new Date(newValue);
+                        h.setHours(h.getHours() + 1);
+                        turno.hora_fin = format(h, 'kk:mm:ss');
                         console.log("Hora fin en el json: ", turno.hora_fin);
                     }}
                 />

@@ -11,7 +11,7 @@ import axios from "axios";
 
 export default function TallerAgendaForm() {
 
-    const [posts, setPosts] = useState([]);
+    /*const [posts, setPosts] = useState([]);
 
     const apiEndPoint = 'https://autotech.onrender.com/turnos/horarios-disponibles/T001'
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function TallerAgendaForm() {
             setPosts(res)
         }
         getPosts()
-    }, [])
+    }, [])*/
 
 
     return (

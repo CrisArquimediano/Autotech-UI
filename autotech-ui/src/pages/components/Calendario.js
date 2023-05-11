@@ -87,6 +87,7 @@ function HoraDomingo() {
                     onChange={(newValue) => {
                         setHora(newValue);
                         diaYhora.hora = format(new Date(newValue), 'kk');
+                        diaYhora.hora = newValue;
                         console.log(diaYhora.hora)
                     }}
                 />

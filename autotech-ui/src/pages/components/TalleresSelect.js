@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import turno from '../turnos/turno'
 import { PatternTwoTone } from '@mui/icons-material';
+import { useState, useEffect } from "react"
 
 
 //Poner en un json general, juntar con los otros datos, se obtiene id del taller
@@ -59,15 +60,37 @@ const Taller = ({ T001, T002, T003 }) => {
         console.log("Datos de otro lado, patente:", turno.patente)
     };
 
+    /////////////////////////////////////////////////////////////// Nuevo
+
+    const [t, setT] = useState({
+        taller: '',
+    });
+
+    const guardarCambio = (event) => {
+        const { name, value } = event.target;
+        setT((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+        console.log(value)
+        turno.turno_id = value;
+        console.log("Id del taller, json:", turno.turno_id)
+    };
+    ////////////////////////////////////////////////////////////////////////////////
+
     return (
         <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Talleres</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={taller}
+                /*value={taller}
                 label="Talleres"
-                onChange={handleChange}
+                onChange={handleChange}*/
+                type='text'
+                name="taller"
+                value={t.taller}
+                onChange={guardarCambio}
             >
                 <MenuItem value={10}>{T001}</MenuItem>
                 <MenuItem value={20}>{T002}</MenuItem>

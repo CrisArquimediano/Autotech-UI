@@ -93,6 +93,7 @@ const Visualizacion = () => {
 
         if (value.length === 0) {
             traerTecnicos();
+            setMostrarInfo(!mostrarInfo);
         }
         console.log(value);
     };

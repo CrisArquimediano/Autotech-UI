@@ -4,11 +4,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { format } from 'date-fns';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import turno from '../turnos/turno';
+import { Box } from '@mui/material';
 
 
 
@@ -36,39 +36,35 @@ function DateValidationShouldDisableDate() {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
-            <DemoContainer
-                components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
-            >
-                <DemoItem label="Disponibilidad mensual">
-                    <DatePicker
-                        disablePast
-                        defaultValue={today}
-                        shouldDisableDate={isFeriadoIsMas30Dias}
-                        views={['year', 'month', 'day']}
-                        value={dia}
-                        onChange={(newValue) => {
-                            setDia(newValue);
-                            diaYhora.dia = format(new Date(newValue), 'yyyy-MM-dd');
-                            console.log(diaYhora.dia)
-                            turno.fecha_inicio = format(new Date(newValue), 'yyyy-MM-dd');
-                            console.log("Fecha inicio, en el json: ", turno.fecha_inicio)
-                            turno.fecha_fin = format(new Date(newValue), 'yyyy-MM-dd');
-                            console.log("Fecha fin, en el json: ", turno.fecha_fin)
-                        }}
-                    />
-                    <><br></br></>
-                    {
-                        dia.day() === 6 && (
-                            <HoraDomingo />
-                        )
-                    }
-                    {
-                        dia.day() != 6 && (
-                            <HoraNormal />
-                        )
-                    }
-                </DemoItem>
-            </DemoContainer>
+            <Box>
+                <DatePicker
+                    disablePast
+                    defaultValue={today}
+                    shouldDisableDate={isFeriadoIsMas30Dias}
+                    views={['year', 'month', 'day']}
+                    value={dia}
+                    onChange={(newValue) => {
+                        setDia(newValue);
+                        diaYhora.dia = format(new Date(newValue), 'yyyy-MM-dd');
+                        console.log(diaYhora.dia)
+                        turno.fecha_inicio = format(new Date(newValue), 'yyyy-MM-dd');
+                        console.log("Fecha inicio, en el json: ", turno.fecha_inicio)
+                        turno.fecha_fin = format(new Date(newValue), 'yyyy-MM-dd');
+                        console.log("Fecha fin, en el json: ", turno.fecha_fin)
+                    }}
+                />
+                <><br></br></>
+                {
+                    dia.day() === 6 && (
+                        <HoraDomingo />
+                    )
+                }
+                {
+                    dia.day() != 6 && (
+                        <HoraNormal />
+                    )
+                }
+            </Box>
         </LocalizationProvider>
     );
 }

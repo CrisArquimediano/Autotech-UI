@@ -48,10 +48,12 @@ function DateValidationShouldDisableDate() {
                         value={dia}
                         onChange={(newValue) => {
                             setDia(newValue);
-                            diaYhora.dia = format(new Date(newValue), 'yyyy/MM/dd');
+                            diaYhora.dia = format(new Date(newValue), 'yyyy-MM-dd');
                             console.log(diaYhora.dia)
-                            turno.fecha_inicio = format(new Date(newValue), 'yyyy/MM/dd');
+                            turno.fecha_inicio = format(new Date(newValue), 'yyyy-MM-dd');
                             console.log("Fecha inicio, en el json: ", turno.fecha_inicio)
+                            turno.fecha_fin = format(new Date(newValue), 'yyyy-MM-dd');
+                            console.log("Fecha fin, en el json: ", turno.fecha_fin)
                         }}
                     />
                     <><br></br></>
@@ -92,8 +94,10 @@ function HoraDomingo() {
                         diaYhora.hora = format(new Date(newValue), 'kk');
                         diaYhora.hora = newValue;
                         console.log(diaYhora.hora);
-                        turno.hora_inicio = format(new Date(newValue), 'kk');
+                        turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
                         console.log("Hora inicio en el json: ", turno.hora_inicio);
+                        turno.hora_fin = format(new Date(newValue), 'kk:mm:ss');
+                        console.log("Hora fin en el json: ", turno.hora_fin);
                     }}
                 />
             </Stack>
@@ -120,8 +124,10 @@ function HoraNormal() {
                         setHora(newValue);
                         diaYhora.hora = format(new Date(newValue), 'kk');
                         console.log(diaYhora.hora)
-                        turno.hora_inicio = format(new Date(newValue), 'kk');
+                        turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
                         console.log("Hora inicio en el json: ", turno.hora_inicio);
+                        turno.hora_fin = format(new Date(newValue), 'kk:mm:ss');
+                        console.log("Hora fin en el json: ", turno.hora_fin);
                     }}
                 />
             </Stack>

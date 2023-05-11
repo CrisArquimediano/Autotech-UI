@@ -1,6 +1,6 @@
 {
     "tipo": "",
-    "estado": "pendiente",
+    "estado": "",
     "taller_id": "",
     "tecnico_id": "",
     "patente": "",
@@ -9,5 +9,5 @@
     "fecha_fin": "",
     "hora_fin": "",
     "papeles_en_regla": "",
-    "frecuencia_km": null
+    "kilometraje": ""
 }

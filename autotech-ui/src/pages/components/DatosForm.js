@@ -81,8 +81,8 @@ function Kilometraje() {
             ...prevState,
             [name]: value,
         }));
-        turno.kilometraje = value;
-        console.log('Kilometraje cargado en el json:', turno.kilometraje)
+        turno.frecuencia_km = value;
+        console.log('frecuencia_km cargado en el json:', turno.frecuencia_km)
     };
 
     return (

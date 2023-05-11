@@ -94,7 +94,7 @@ function Kilometraje() {
                     name="km1"
                     value={km.km1}
                     onChange={guardarCambio}
-                    placeholder="Ejemplo: 4724 km"
+                    placeholder="Solo múltiplos de 5000, por favor."
                     className="form-control form-control-lg mb-2">Kilometraje</Input>
             </FormControl>
         </Box>

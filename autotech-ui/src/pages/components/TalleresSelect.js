@@ -75,7 +75,6 @@ const Taller = ({ San_Miguel, Malvinas_Argentinas, Belgrano, T001, T002, T003 })
             >
                 <MenuItem value={San_Miguel}>{T001}</MenuItem>
                 <MenuItem value={Malvinas_Argentinas}>{T002}</MenuItem>
-                <MenuItem value={Belgrano}>{T003}</MenuItem>
 
             </Select>
         </FormControl>

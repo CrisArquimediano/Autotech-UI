@@ -2,7 +2,7 @@ import Head from 'next/head'
 import * as React from 'react';
 import styles from '@/styles/Home.module.css'
 import { Inter } from 'next/font/google'
-import Visualizacion from './VisulizacionFiltroBusqueda';
+import Visualizacion from './VisualizacionFiltroBusqueda';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,24 +26,19 @@ export default function visualizacion() {
                     crossorigin="anonymous"></script>
 
                 <meta charset="utf-8" />
-                <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#000000" />
-                <meta name="description" content="Web site created using create-react-app" />
-                <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 
-                <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
-                <title>React App</title>
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
-                <body>
-                    <div>
-                        <a href="/"><h2>Volver</h2></a>
-                    </div>
+
+                <div>
+                    <a href="/"><h2>Volver</h2></a>
                     <div id="root"></div>
                     <Visualizacion />
-                </body>
+                </div>
+
+
             </main>
         </>
     );

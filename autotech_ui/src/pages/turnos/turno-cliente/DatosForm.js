@@ -10,7 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { Input } from '@mui/material';
-import turno from '../turnos/turno'
+import turno from '../turno'
 
 //Acá obtengo tipo de turno, kilometraje y patente
 

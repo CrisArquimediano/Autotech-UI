@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import turno from '../turnos/turno'
+import turno from '../turno'
 
 
 

@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DatosForm from './DatosForm';
 import TallerAgendaForm from './TallerAgendaForm';
 import ResumenTurno from './ResumenTurno';
-import turno from '../turnos/turno'
+import turno from '../turno'
 import axios from "axios";
 import { useState, useEffect } from "react"
 

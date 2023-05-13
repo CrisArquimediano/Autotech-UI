@@ -7,7 +7,7 @@ import 'dayjs/locale/es';
 import { format } from 'date-fns';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import turno from '../turnos/turno';
+import turno from '../turno'
 import { Box } from '@mui/material';
 
 

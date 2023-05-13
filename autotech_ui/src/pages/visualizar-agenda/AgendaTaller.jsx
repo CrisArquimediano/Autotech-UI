@@ -1,5 +1,5 @@
 import { Box, Typography, Divider} from "@mui/material";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../components/generales/Navbar";
 import Cards from './cards';
 
 

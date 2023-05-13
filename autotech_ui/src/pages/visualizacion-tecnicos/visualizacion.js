@@ -2,7 +2,7 @@ import Head from 'next/head'
 import * as React from 'react';
 import styles from '@/styles/Home.module.css'
 import { Inter } from 'next/font/google'
-import Visualizacion from './VisualizacionFiltroBusqueda';
+import VisualizacionBusquedaTecnicos from './VisualizacionFiltroBusqueda';
 import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -36,7 +36,7 @@ export default function visualizacion() {
                 <div>
                     <Link href="/"><h2>Volver</h2></Link>
                     <div id="root"></div>
-                    <Visualizacion />
+                    <VisualizacionBusquedaTecnicos />
                 </div>
 
 

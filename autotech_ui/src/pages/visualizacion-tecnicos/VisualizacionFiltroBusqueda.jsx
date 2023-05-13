@@ -19,10 +19,11 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
+import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
-const Visualizacion = () => {
+const VisualizacionBusquedaTecnicos = () => {
   const [listaTecnicos, setTecnicos] = useState([]);
-  const [tablaTecnicos, setTablaTecnicos] = useState([]);
+  //const [tablaTecnicos, setTablaTecnicos] = useState([]);
   const [detalleTrabajos, setDetalleTrabajos] = useState([]);
   const [mostrarInfo, setMostrarInfo] = useState(false);
   const [seleccionarFila, setSeleccionarFila] = useState(null);
@@ -68,7 +69,7 @@ const Visualizacion = () => {
       )
       .then((response) => {
         setTecnicos(response.data);
-        setTablaTecnicos(response.data);
+        //setTablaTecnicos(response.data);
 
         if (mostrarInfo) {
           setMostrarInfo(!mostrarInfo);
@@ -85,7 +86,7 @@ const Visualizacion = () => {
       .get(`${endPoint}${""}`)
       .then((response) => {
         setTecnicos(response.data);
-        setTablaTecnicos(response.data);
+        //setTablaTecnicos(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -102,7 +103,7 @@ const Visualizacion = () => {
 
     if (value.length === 0) {
       traerTecnicos();
-      setMostrarInfo(!mostrarInfo);
+      setMostrarInfo(false);
     }
     console.log(value);
   };
@@ -132,7 +133,8 @@ const Visualizacion = () => {
   }, []);
 
   return (
-    <Box className="background-color">
+
+      <Box className="background-color">
       <Typography variant="h1">Tecnicos</Typography>
       <Box className="row d-flex justify-content-center">
         <Box className="col-12 col-md-8 col-lg-6 col-xl-6">
@@ -321,4 +323,4 @@ const Visualizacion = () => {
   );
 };
 
-export default Visualizacion;
+export default VisualizacionBusquedaTecnicos;

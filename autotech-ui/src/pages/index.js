@@ -51,6 +51,12 @@ export default function Home() {
           >
             <h3>Visualizar turnos &rarr;</h3>
             <p>Agenda de taller. <br></br></p>
+            href="turnos/reparacion-para-venta/alta-reparacion"
+            className={styles.card}
+          </Link>
+          <Link>
+            <h3>Turnos para reparación para la venta &rarr;</h3>
+            <p>Dar alta. <br></br></p>
           </Link>
         </div>
       </main >

@@ -45,6 +45,13 @@ export default function Home() {
             <h3>Visualizar técnicos &rarr;</h3>
             <p>Detalle e información. <br></br></p>
           </Link>
+          <Link
+            href="visualizar-agenda/visualizacion-turnos"
+            className={styles.card}
+          >
+            <h3>Visualizar turnos &rarr;</h3>
+            <p>Agenda de taller. <br></br></p>
+          </Link>
         </div>
       </main >
     </>

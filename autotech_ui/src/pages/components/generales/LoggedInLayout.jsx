@@ -6,8 +6,9 @@ import MainBar from './MainBar';
 import SideBar from './SideBar';
 import { Toolbar } from '@mui/material';
 
+
 export default function LoggedInLayout({ children }) {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -18,7 +19,8 @@ export default function LoggedInLayout({ children }) {
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <MainBar drawerWidth={240} open={open} toggleDrawer={toggleDrawer} />
-                <SideBar drawerWidth={240} open={open} toggleDrawer={toggleDrawer} />
+                <SideBar drawerWidth={240} open={open} toggleDrawer={toggleDrawer} /> 
+
                 <Box
                     component="main"
                     sx={{

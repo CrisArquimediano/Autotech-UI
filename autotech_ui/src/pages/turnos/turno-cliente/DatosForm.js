@@ -130,8 +130,3 @@ export default function DatosForm() {
         </React.Fragment>
     );
 }
-
-function transformarKm(km) {
-    return Math.ceil(km / 5000) * 5000
-}
-

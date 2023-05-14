@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import turno from '../turno'
+import feriados from './feriados'
 import { Box } from '@mui/material';
 
 
@@ -25,17 +26,21 @@ const diaYhora =
     ]
 
 const isFeriadoIsMas30Dias = (date) => {
-    const mayo25 = '25/05/2023';
-    const mayo26 = '26/05/2023';
     const actual = format(new Date(date), 'dd/MM/yyyy');
-    return actual === mayo25 || actual === mayo26 || date > limite;
+    let isFeriado = false;
+
+    for (let dia in feriados) { if (actual === feriados[dia]) { isFeriado = true; } }
+    return isFeriado || date > limite;
 }
 
 function DateValidationShouldDisableDate() {
     const [dia, setDia] = React.useState(today);
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+        //Para que ponga las cosas del calendario en español
+        //Problema: desfasa el calendario, porque arranca desde L y está para arrancar desde Sunday
+        //adapterLocale="es"
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box>
                 <DatePicker
                     disablePast

@@ -71,7 +71,7 @@ class Kilometraje extends React.Component {
 
         if (e.target.validity.valid) {
             this.setState({ kilometros: e.target.value });
-            turno.frecuencia_km = val;
+            turno.frecuencia_km = Math.ceil(val / 5000) * 5000;
             console.log('frecuencia_km cargado en el json:', turno.frecuencia_km)
         }
         else if (val === '') this.setState({ kilometros: val });
@@ -130,3 +130,8 @@ export default function DatosForm() {
         </React.Fragment>
     );
 }
+
+function transformarKm(km) {
+    return Math.ceil(km / 5000) * 5000
+}
+

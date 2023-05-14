@@ -4,11 +4,18 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Copyright from '../components/generales/Copyright';
 import LoggedInLayout from '../components/generales/LoggedInLayout';
+import Header from '../components/generales/Header'
+import { Box } from '@mui/material';
 
 
 const Home = () => {
   return (
     <LoggedInLayout>
+      <Box m='5px'>
+        <Box display='flex'>
+          <Header titulo='Dashboard' subtitulo='Inicio'/>
+        </Box>
+      </Box>
       <Container maxWidth="xl" sx={{ mt: 4, mb: 4, padding: 2}}>
         <Grid container spacing={3} >
           <Grid item xs={12} md={4} lg={3}>

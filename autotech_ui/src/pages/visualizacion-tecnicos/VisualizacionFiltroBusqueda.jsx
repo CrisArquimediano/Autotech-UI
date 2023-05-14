@@ -34,7 +34,7 @@ const VisualizacionBusquedaTecnicos = () => {
     categoria: "",
   });
 
-  let endPoint = `https://autotech2.onrender.com/busquedatecnicos/filtro/?branch=S001&`;
+  let endPoint = `https://autotech2.onrender.com/tecnicos/filtro/?branch=S001&`;
 
   const filtrarTecnicos = () => {
     return axios
@@ -109,7 +109,7 @@ const VisualizacionBusquedaTecnicos = () => {
   };
 
   /*Se muestra el detalle de trabajos realizados*/
-  let endPointDetalle = `https://autotech2.onrender.com/busquedatecnicos/tecnico`;
+  let endPointDetalle = `https://autotech2.onrender.com/tecnicos/detalle`;
   const mostrarDetalle = (id, index) => (event) => {
     let ruta = `${endPointDetalle}${`/${id}/?branch=S001`}`;
     return axios

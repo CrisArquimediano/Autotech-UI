@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Copyright from '../components/generales/Copyright';
 import LoggedInLayout from '../components/generales/LoggedInLayout';
 import Header from '../components/generales/Header'
-import { Box } from '@mui/material';
+import { Box, CardContent} from '@mui/material';
 
 
 const Home = () => {
@@ -16,23 +16,26 @@ const Home = () => {
           <Header titulo='Dashboard' subtitulo='Inicio'/>
         </Box>
       </Box>
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4, padding: 2}}>
-        <Grid container spacing={3} >
-          <Grid item xs={12} md={4} lg={3}>
+      <Container maxWidth="xl" sx={{mb: 2, padding: 2}}>
+        <Grid container spacing={2} >
+          <Grid item xs={6} sm={3} md={3} lg={3}>
             <Paper
+            className='mb-2' 
               sx={{
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
                 height: 200,
+                borderRadius: '15px'
               }}
               elevation={5}
-              style={{borderRadius: 15}}
             >
-              
+              <CardContent>
+
+              </CardContent>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={8} lg={9}>
+          <Grid item xs={6} sm={3} md={3} lg={3}>
             <Paper
               sx={{
                 p: 2,
@@ -44,11 +47,20 @@ const Home = () => {
               elevation={5}
               style={{borderRadius: 15}}
             >
+            </Paper>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} lg={3} >
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 200}} elevation={5}  style={{borderRadius: 15}}>
+              
+            </Paper>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} lg={3} >
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 200}} elevation={5}  style={{borderRadius: 15}}>
               
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }} elevation={5}  style={{borderRadius: 15}}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 200}} elevation={5}  style={{borderRadius: 15}}>
               
             </Paper>
           </Grid>

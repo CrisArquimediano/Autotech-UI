@@ -10,7 +10,7 @@ const navLinksSupervisor = [
   },
   {
     title: "Turnos",
-    path: "/turnos",
+    path: "/agendaTaller",
     icon: <ArticleIcon />,
   },
   {

@@ -137,7 +137,7 @@ const VisualizacionBusquedaTecnicos = () => {
       <Box className="row d-flex justify-content-center" >
         <Box className="col-12 col-md-8 col-lg-6 col-xl-6">
           <Box className="card shadow-2-strong" sx={{ borderRadius: "1rem" }}>
-            <Box className="card-body p-5 text-center row">
+            <Box className="card-body p-5 text-center row" elevation={5}>
               <Typography variant="6" sx={{mb:'10px'}} fontWeight='bold'>Búsqueda:</Typography>
 
               <Input

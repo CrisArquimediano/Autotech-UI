@@ -19,7 +19,6 @@ import turno from '../turno'
 import axios from "axios";
 import { useState, useEffect } from "react"
 
-//creería que acá tengo que traerme la API y acá disparar una función crear el turnoooooooooooooooooooooooooooooooooo
 const crearTurnoApi = 'https://autotech2.onrender.com/turnos/turnos-create/'
 
 function Copyright() {
@@ -65,84 +64,6 @@ export default function TurnoForm() {
         setActiveStep(activeStep - 1);
     };
 
-
-    /*Referencia
-    const Home = () => {
-
-    const [posts, setPosts] = useState([]);
-
-    const apiEndPoint = 'https://api-rest-pp1.onrender.com/api/tecnicos/'
-    useEffect(() => {
-        const getPosts = async () => {
-            const { data: res } = await axios.get(apiEndPoint)
-            setPosts(res)
-        }
-        getPosts()
-    }, [])
-
-    return (<>
-        <div>
-            <h2>Hay {posts.length} técnicos en el taller</h2>
-        </div>
-
-    </>)
-} */
-
-    /*Ejemplo de POST
-    function asdd(patient){
-        return axios.post('url',
-        {nombre: patient.nom
-        apellido: patient.ap
-    
-    })
-        .then(res => {
-            return res.data
-        })
-    } */
-    /*Lo que le paso al back (lo que toma)
-        dia = request.data.get("fecha_inicio")
-        dia_fin = request.data.get("fecha_fin")
-        horario_inicio = request.data.get("hora_inicio")
-        horario_fin = request.data.get("hora_fin")
-        taller_id = request.data.get("taller_id") */
-    //Está vacía, lista para mí para usarla, qué bueeeeeeeno
-    /*function handleSubmit() {
-        console.log("SE ejecuta handleSubmit.")
-        return axios.post(crearTurnoApi,
-            {
-                fecha_inicio: turno.fecha_inicio,
-                fecha_fin: turno.fecha_fin,
-                hora_inicio: turno.hora_inicio,
-                hora_fin: turno.hora_fin,
-                taller_id: turno.taller_id
-            })
-            .then(res => {
-                return res.data
-            })
-    }*/
-    /*const handleSubmit = async () => {
-
-        const sendData = async () => {
-            const { data: res } = await axios.post(crearTurnoApi, turno)
-            sendData(res)
-        }
-        sendData()
-        console.log("Se crea el turno")
-    }*/
-
-    /*async function handleSubmit() {
-        try {
-            const response = await axios({
-                method: 'post',
-                url: 'https://autotech2.onrender.com/turnos/turnos-create/',
-                data: turno,
-            })
-            console.log("Se crea el turno con:", turno)
-            return response
-        } catch (e) {
-            console.log(e)
-        }
-    }*/
     async function handleSubmit() {
         try {
             const response = await axios({
@@ -166,14 +87,7 @@ export default function TurnoForm() {
             console.log(e.response.data)
         }
     }
-    /**axios({
-  method: 'post',
-  url: '/user/12345',
-  data: {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  }
-}); */
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />

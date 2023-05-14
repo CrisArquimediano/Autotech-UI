@@ -8,8 +8,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Box from '@mui/material/Box';
-import { Input } from '@mui/material';
 import turno from '../turno'
 
 //Acá obtengo tipo de turno, kilometraje y patente
@@ -24,9 +22,7 @@ function ControlledRadioButtonsGroup() {
 
     //Tipo de turno
 
-    const [tipo, setTipo] = useState({
-        tipoTurno: '',
-    });
+    const [tipo, setTipo] = useState();
     const guardarCambio = (event) => {
         const { name, value } = event.target;
         setTipo((prevState) => ({
@@ -43,7 +39,6 @@ function ControlledRadioButtonsGroup() {
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="tipo"
-                value={tipo.tipoTurno}
                 onChange={guardarCambio}
             >
                 <FormControlLabel
@@ -67,38 +62,35 @@ function ControlledRadioButtonsGroup() {
     );
 }
 
-
 //Esto se muestra solo en caso de que ponga service
-function Kilometraje() {
+class Kilometraje extends React.Component {
+    state = { kilometros: '' };
 
-    const [km, setKm] = useState({
-        km1: '',
-    });
+    updateNumber = (e) => {
+        const val = e.target.value;
 
-    const guardarCambio = (event) => {
-        const { name, value } = event.target;
-        setKm((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-        turno.frecuencia_km = value;
-        console.log('frecuencia_km cargado en el json:', turno.frecuencia_km)
-    };
+        if (e.target.validity.valid) {
+            this.setState({ kilometros: e.target.value });
+            turno.frecuencia_km = val;
+            console.log('frecuencia_km cargado en el json:', turno.frecuencia_km)
+        }
+        else if (val === '') this.setState({ kilometros: val });
 
-    return (
-        <Box sx={{ minWidth: 120 }}>
+    }
+
+    render() {
+        return (
             <FormControl fullWidth>
-                <FormLabel id="demo-radio-buttons-group-label">Kilometraje</FormLabel>
-                <Input
-                    type='number'
-                    name="km1"
-                    value={km.km1}
-                    onChange={guardarCambio}
-                    placeholder="Solo múltiplos de 5000, por favor."
-                    className="form-control form-control-lg mb-2">Kilometraje</Input>
+                <FormLabel id="demo-radio-buttons-group-label">Kilometraje actual:</FormLabel>
+                <input
+                    type='tel'
+                    value={this.state.kilometros}
+                    onChange={this.updateNumber}
+                    pattern="[1-9][0-9]*"
+                />
             </FormControl>
-        </Box>
-    );
+        );
+    }
 }
 
 export default function DatosForm() {

@@ -15,7 +15,7 @@ const navLinksSupervisor = [
   },
   {
     title: "Tecnicos",
-    path: "/visualizarTecnicos",
+    path: "/controlTecnicos",
     icon: <PersonIcon />,
   },
 ];

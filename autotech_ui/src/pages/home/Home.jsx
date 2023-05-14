@@ -9,8 +9,8 @@ import LoggedInLayout from '../components/generales/LoggedInLayout';
 const Home = () => {
   return (
     <LoggedInLayout>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Grid container spacing={3}>
+      <Container maxWidth="xl" sx={{ mt: 4, mb: 4, padding: 2}}>
+        <Grid container spacing={3} >
           <Grid item xs={12} md={4} lg={3}>
             <Paper
               sx={{
@@ -20,6 +20,7 @@ const Home = () => {
                 height: 200,
               }}
               elevation={5}
+              style={{borderRadius: 15}}
             >
               
             </Paper>
@@ -31,14 +32,16 @@ const Home = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 height: 200,
+                
               }}
               elevation={5}
+              style={{borderRadius: 15}}
             >
               
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }} elevation={5}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }} elevation={5}  style={{borderRadius: 15}}>
               
             </Paper>
           </Grid>

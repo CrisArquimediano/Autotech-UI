@@ -1,8 +1,9 @@
 import {Route, Routes} from 'react-router-dom'
 import './App.css';
-import VisualizacionBusquedaTecnicos from './pages/visualizacion-tecnicos/VisualizacionFiltroBusqueda'
+
 import TurnoForm from './pages/turnos/turno-cliente/TurnoForm'
 import Home from './pages/home/Home'
+import ControlTecnicos from './pages/visualizacion-tecnicos/ControlTecnicos.jsx';
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/turnoForm' element={<TurnoForm />} />
-        <Route path='/visualizarTecnicos' element={<VisualizacionBusquedaTecnicos />} />
+        <Route path='/controlTecnicos' element={<ControlTecnicos />} />
       </Routes>
     </div>
   );

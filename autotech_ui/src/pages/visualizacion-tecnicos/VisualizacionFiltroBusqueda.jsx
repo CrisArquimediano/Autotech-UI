@@ -19,7 +19,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
-import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
+//import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
 const VisualizacionBusquedaTecnicos = () => {
   const [listaTecnicos, setTecnicos] = useState([]);
@@ -133,14 +133,12 @@ const VisualizacionBusquedaTecnicos = () => {
   }, []);
 
   return (
-
       <Box className="background-color">
-      <Typography variant="h1">Tecnicos</Typography>
       <Box className="row d-flex justify-content-center">
         <Box className="col-12 col-md-8 col-lg-6 col-xl-6">
           <Box className="card shadow-2-strong" sx={{ borderRadius: "1rem" }}>
             <Box className="card-body p-5 text-center row">
-              <Typography variant="6">Búsqueda:</Typography>
+              <Typography variant="6" sx={{mb:'10px'}} fontWeight='bold'>Búsqueda:</Typography>
 
               <Input
                 type="search"
@@ -168,11 +166,11 @@ const VisualizacionBusquedaTecnicos = () => {
               </Typography>
 
               <FormControl sx={{ ml: 1 }}>
-                <Typography variant="6">Categoría</Typography>
+                <Typography variant="6" sx={{mb:'10px'}} fontWeight='bold'>Categoría</Typography>
                 <Select
                   value={valoresBusqueda.categoria}
                   onChange={handleChange}
-                  sx={{ height: 30, marginRight: 2 }}
+                  sx={{ height: 30, marginRight: 2, mb:2 }}
                   name="categoria"
                 >
                   <MenuItem value="">

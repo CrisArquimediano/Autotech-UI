@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import MainBar from './MainBar';
 import SideBar from './SideBar';
 import { Toolbar } from '@mui/material';
+import Theme from '../../../theme';
+
+// createTheme, 
+
 
 
 export default function LoggedInLayout({ children }) {
@@ -12,10 +16,11 @@ export default function LoggedInLayout({ children }) {
     const toggleDrawer = () => {
         setOpen(!open);
     };
-    const mdTheme = createTheme();
+    
+    /*const mdTheme = createTheme();*/
 
     return (
-        <ThemeProvider theme={mdTheme}>
+        <ThemeProvider theme={Theme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <MainBar drawerWidth={240} open={open} toggleDrawer={toggleDrawer} />
@@ -31,7 +36,6 @@ export default function LoggedInLayout({ children }) {
                         flexGrow: 1,
                         height: '100vh',
                         overflow: 'auto',
-
                     }}
                 >
                     <Toolbar />

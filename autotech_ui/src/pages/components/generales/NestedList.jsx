@@ -11,7 +11,7 @@ import CarRepairIcon from "@mui/icons-material/CarRepair";
 
 
 import MenuSideBar from './MenuSideBar'
-import navLinks from '../../../constants'
+import navLinksSupervisor from '../../../constants'
 
 
 export default function NestedList() {
@@ -33,7 +33,7 @@ export default function NestedList() {
       </ListItemButton>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <MenuSideBar navLinks={navLinks}/>
+        <MenuSideBar navLinks={navLinksSupervisor}/>
       </Collapse>
     </React.Fragment>
   );

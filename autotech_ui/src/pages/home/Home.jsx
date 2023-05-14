@@ -19,6 +19,7 @@ const Home = () => {
                 flexDirection: 'column',
                 height: 200,
               }}
+              elevation={5}
             >
               
             </Paper>
@@ -31,12 +32,13 @@ const Home = () => {
                 flexDirection: 'column',
                 height: 200,
               }}
+              elevation={5}
             >
               
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }} elevation={5}>
               
             </Paper>
           </Grid>

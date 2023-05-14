@@ -2,7 +2,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 
-const navLinks = [
+const navLinksSupervisor = [
   {
     title: "Home",
     path: "/",
@@ -20,4 +20,4 @@ const navLinks = [
   },
 ];
 
-export default navLinks;
+export default navLinksSupervisor;

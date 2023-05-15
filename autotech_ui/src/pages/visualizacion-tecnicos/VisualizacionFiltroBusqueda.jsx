@@ -19,11 +19,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
-import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
+import SearchIcon from "@mui/icons-material/Search";
+import Alerts from "../components/generales/Alerts";
+//import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
 const VisualizacionBusquedaTecnicos = () => {
   const [listaTecnicos, setTecnicos] = useState([]);
-  //const [tablaTecnicos, setTablaTecnicos] = useState([]);
   const [detalleTrabajos, setDetalleTrabajos] = useState([]);
   const [mostrarInfo, setMostrarInfo] = useState(false);
   const [seleccionarFila, setSeleccionarFila] = useState(null);
@@ -34,7 +35,13 @@ const VisualizacionBusquedaTecnicos = () => {
     categoria: "",
   });
 
-  let endPoint = `https://autotech2.onrender.com/tecnicos/filtro/?branch=S001&`;
+
+  //alertas de la API
+  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertTitle, setAlertTitle] = useState(''); 
+
+  let endPoint = `https://autotech2.onrender.com/tecnicos/filtro/?branch=S002&`;
 
   const filtrarTecnicos = () => {
     return axios
@@ -69,13 +76,25 @@ const VisualizacionBusquedaTecnicos = () => {
       )
       .then((response) => {
         setTecnicos(response.data);
-        //setTablaTecnicos(response.data);
+
+        let cantidadTecnicos = response.data.tecnicos.length;
+        console.log(cantidadTecnicos);
+
+        if (cantidadTecnicos === 0) {
+          console.log("sin coincidenciaaaaa: " + cantidadTecnicos);
+          setAlertMessage("No se ha encontrado coincidencias sobre la búsqueda realizada.");
+          setAlertType("warning");
+          setAlertTitle("Sin coincidencias");          
+        }
 
         if (mostrarInfo) {
           setMostrarInfo(!mostrarInfo);
         }
       })
       .catch((error) => {
+        setAlertMessage("Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.");
+        setAlertType("error");
+        setAlertTitle("Error");
         console.log(error);
       });
   };
@@ -86,9 +105,12 @@ const VisualizacionBusquedaTecnicos = () => {
       .get(`${endPoint}${""}`)
       .then((response) => {
         setTecnicos(response.data);
-        //setTablaTecnicos(response.data);
+        setAlertType("");
       })
       .catch((error) => {
+        setAlertMessage("Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.");
+        setAlertType("error");
+        setAlertTitle("Error");
         console.log(error);
       });
   };
@@ -111,7 +133,7 @@ const VisualizacionBusquedaTecnicos = () => {
   /*Se muestra el detalle de trabajos realizados*/
   let endPointDetalle = `https://autotech2.onrender.com/tecnicos/detalle`;
   const mostrarDetalle = (id, index) => (event) => {
-    let ruta = `${endPointDetalle}${`/${id}/?branch=S001`}`;
+    let ruta = `${endPointDetalle}${`/${id}/?branch=S002`}`;
     return axios
       .get(ruta)
       .then((response) => {
@@ -128,19 +150,21 @@ const VisualizacionBusquedaTecnicos = () => {
       });
   };
 
+
   useEffect(() => {
     filtrarTecnicos();
   }, []);
-
+  let bool
   return (
-
       <Box className="background-color">
-      <Typography variant="h1">Tecnicos</Typography>
-      <Box className="row d-flex justify-content-center">
+      <span className="d-flex justify-content-center">
+        {<Alerts alertType={alertType} description={alertMessage} title={alertTitle}/>}
+      </span>
+      <Box className="row d-flex justify-content-center" >
         <Box className="col-12 col-md-8 col-lg-6 col-xl-6">
           <Box className="card shadow-2-strong" sx={{ borderRadius: "1rem" }}>
-            <Box className="card-body p-5 text-center row">
-              <Typography variant="6">Búsqueda:</Typography>
+            <Box className="card-body p-5 text-center row" elevation={5}>
+              <Typography variant="6" sx={{mb:'10px'}} fontWeight='bold'>Búsqueda:</Typography>
 
               <Input
                 type="search"
@@ -167,12 +191,12 @@ const VisualizacionBusquedaTecnicos = () => {
                 y 8 como máximo.
               </Typography>
 
-              <FormControl sx={{ ml: 1 }}>
-                <Typography variant="6">Categoría</Typography>
+              <FormControl>
+                <Typography variant="h6" sx={{mb:'10px'}} fontWeight='bold'>Categoría</Typography>
                 <Select
                   value={valoresBusqueda.categoria}
                   onChange={handleChange}
-                  sx={{ height: 30, marginRight: 2 }}
+                  sx={{ height: 30, mb:2 }}
                   name="categoria"
                 >
                   <MenuItem value="">
@@ -189,10 +213,10 @@ const VisualizacionBusquedaTecnicos = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClickCapture={filtrarTecnicos}
+                  onClick={filtrarTecnicos}
+                  startIcon={<SearchIcon/>}
                 >
                   Buscar
-                  <FontAwesomeIcon icon={faSearch} />
                 </Button>
               </Box>
             </Box>

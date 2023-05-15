@@ -76,13 +76,13 @@ const VisualizacionBusquedaTecnicos = () => {
       )
       .then((response) => {
         setTecnicos(response.data);
+        setAlertType("");
 
         let cantidadTecnicos = response.data.tecnicos.length;
         console.log(cantidadTecnicos);
 
         if (cantidadTecnicos === 0) {
-          console.log("sin coincidenciaaaaa: " + cantidadTecnicos);
-          setAlertMessage("No se ha encontrado coincidencias sobre la búsqueda realizada.");
+          setAlertMessage("No se han encontrado coincidencias sobre la búsqueda realizada.");
           setAlertType("warning");
           setAlertTitle("Sin coincidencias");          
         }
@@ -209,7 +209,7 @@ const VisualizacionBusquedaTecnicos = () => {
                 </Select>
               </FormControl>
 
-              <Box className="m-2">
+              <Box>
                 <Button
                   variant="contained"
                   color="secondary"

@@ -9,7 +9,7 @@ const ControlTecnicos = () => {
         <LoggedInLayout>
         <Box>
             <Box display="flex">
-                <Header titulo="Tecnicos" subtitulo="Busqueda y Filtrado" />
+                <Header titulo="Tecnicos" subtitulo="Búsqueda y Filtrado" />
             </Box>
         </Box>
         <Container maxWidth="xl" sx={{ mb: 2 }}>

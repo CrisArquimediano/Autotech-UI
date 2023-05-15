@@ -21,6 +21,7 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import SearchIcon from "@mui/icons-material/Search";
 import Alerts from "../components/generales/Alerts";
+import Theme from "../../theme";
 //import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
 const VisualizacionBusquedaTecnicos = () => {
@@ -154,7 +155,7 @@ const VisualizacionBusquedaTecnicos = () => {
   useEffect(() => {
     filtrarTecnicos();
   }, []);
-  let bool
+
   return (
       <Box className="background-color">
       <span className="d-flex justify-content-center">
@@ -173,6 +174,7 @@ const VisualizacionBusquedaTecnicos = () => {
                 onChange={handleChange}
                 placeholder="Buscar por Nombre"
                 className="form-control form-control-lg mb-2"
+                color="secondary"
               ></Input>
               <Input
                 type="text"
@@ -184,6 +186,7 @@ const VisualizacionBusquedaTecnicos = () => {
                 onChange={handleChange}
                 placeholder="Buscar por DNI"
                 className="form-control form-control-lg mb-2"
+                color="secondary"
               ></Input>
 
               <Typography variant="p" sx={{ fontSize: 13 }} className="mb-3">
@@ -198,6 +201,7 @@ const VisualizacionBusquedaTecnicos = () => {
                   onChange={handleChange}
                   sx={{ height: 30, mb:2 }}
                   name="categoria"
+                  color="secondary"
                 >
                   <MenuItem value="">
                     <em>None</em>

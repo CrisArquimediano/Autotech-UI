@@ -5,26 +5,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { format } from 'date-fns';
-import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import turno from '../turno'
 import feriados from './feriados'
 import { Box } from '@mui/material';
-
+import Grid from '@mui/material/Grid';
+import axios from "axios";
+import Stack from '@mui/material/Stack';
 
 
 const today = dayjs();
 const limite = dayjs().add(29, 'day');
 
-//poner en un jason general y juntar con los otros datos
-const diaYhora =
-    [
-        {
-            dia: '',
-            hora: '',
-        }
-    ]
-
+//acá debería agregar disponibilidad según el taller
 const isFeriadoIsMas30Dias = (date) => {
     const actual = format(new Date(date), 'dd/MM/yyyy');
     let isFeriado = false;
@@ -32,6 +25,34 @@ const isFeriadoIsMas30Dias = (date) => {
     for (let dia in feriados) { if (actual === feriados[dia]) { isFeriado = true; } }
     return isFeriado || date > limite;
 }
+
+
+/////////////////////////////referencia para armar lo de la disponibilidad
+
+async function disponibilidad() {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: 'https://autotech2.onrender.com/turnos/turnos-create/',
+            data: {
+                fecha_inicio: turno.fecha_inicio,
+                fecha_fin: turno.fecha_fin,
+                hora_inicio: turno.hora_inicio,
+                hora_fin: turno.hora_fin,
+                taller_id: turno.taller_id,
+                patente: turno.patente,
+                tipo: turno.tipo,
+                frecuencia_km: turno.frecuencia_km,
+                estado: turno.estado,
+            }
+        })
+        console.log("Se crea el turno con:", turno)
+        return response
+    } catch (e) {
+        console.log(e.response.data)
+    }
+}
+/////////////////////////////////////////////////////////////////////////////
 
 function DateValidationShouldDisableDate() {
     const [dia, setDia] = React.useState(today);
@@ -42,33 +63,30 @@ function DateValidationShouldDisableDate() {
         //adapterLocale="es"
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box>
-                <DatePicker
-                    disablePast
-                    defaultValue={today}
-                    shouldDisableDate={isFeriadoIsMas30Dias}
-                    views={['year', 'month', 'day']}
-                    value={dia}
-                    onChange={(newValue) => {
-                        setDia(newValue);
-                        diaYhora.dia = format(new Date(newValue), 'yyyy-MM-dd');
-                        console.log(diaYhora.dia)
-                        turno.fecha_inicio = format(new Date(newValue), 'yyyy-MM-dd');
-                        console.log("Fecha inicio, en el json: ", turno.fecha_inicio)
-                        turno.fecha_fin = format(new Date(newValue), 'yyyy-MM-dd');
-                        console.log("Fecha fin, en el json: ", turno.fecha_fin)
-                    }}
-                />
-                <><br></br></>
-                {
-                    dia.day() === 6 && (
-                        <HoraDomingo />
-                    )
-                }
-                {
-                    dia.day() != 6 && (
-                        <HoraNormal />
-                    )
-                }
+                <Stack spacing={3} width={300}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={10}>
+                            <DatePicker
+                                disablePast
+                                defaultValue={today}
+                                shouldDisableDate={isFeriadoIsMas30Dias}
+                                views={['year', 'month', 'day']}
+                                value={dia}
+                                onChange={(newValue) => {
+                                    setDia(newValue);
+                                    turno.fecha_inicio = format(new Date(newValue), 'yyyy-MM-dd');
+                                    turno.fecha_fin = format(new Date(newValue), 'yyyy-MM-dd');
+                                    console.log("Fecha inicio:", turno.fecha_inicio, "| Fecha fin:", turno.fecha_fin)
+                                }}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} md={10}>
+                            {dia.day() === 0 && (<HoraDomingo />)}
+                            {dia.day() != 0 && (<HoraNormal />)}
+                        </Grid>
+                    </Grid>
+                </Stack>
             </Box>
         </LocalizationProvider>
     );
@@ -83,28 +101,22 @@ function HoraDomingo() {
     let h;
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Stack spacing={3} width={200}>
-                <TimePicker
-                    label="24 hours"
-                    defaultValue={horaMinimaDomingo}
-                    minTime={horaMinimaDomingo}
-                    maxTime={horaMaxDomingo}
-                    ampm={false}
-                    value={hora}
-                    onChange={(newValue) => {
-                        setHora(newValue);
-                        diaYhora.hora = format(new Date(newValue), 'kk');
-                        diaYhora.hora = newValue;
-                        console.log(diaYhora.hora);
-                        turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
-                        console.log("Hora inicio en el json: ", turno.hora_inicio);
-                        h = new Date(newValue);
-                        h.setHours(h.getHours() + 1);
-                        turno.hora_fin = format(h, 'kk:mm:ss');
-                        console.log("Hora fin en el json: ", turno.hora_fin);
-                    }}
-                />
-            </Stack>
+            <TimePicker
+                label="24 hours"
+                defaultValue={horaMinimaDomingo}
+                minTime={horaMinimaDomingo}
+                maxTime={horaMaxDomingo}
+                ampm={false}
+                value={hora}
+                onChange={(newValue) => {
+                    setHora(newValue);
+                    turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
+                    h = new Date(newValue);
+                    h.setHours(h.getHours() + 1);
+                    turno.hora_fin = format(h, 'kk:mm:ss');
+                    console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
+                }}
+            />
         </LocalizationProvider>
     );
 }
@@ -117,27 +129,22 @@ function HoraNormal() {
     let h;
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Stack spacing={3} width={200}>
-                <TimePicker
-                    label="24 hours"
-                    defaultValue={horaMinima}
-                    minTime={horaMinima}
-                    maxTime={horaMax}
-                    ampm={false}
-                    value={hora}
-                    onChange={(newValue) => {
-                        setHora(newValue);
-                        diaYhora.hora = format(new Date(newValue), 'kk');
-                        console.log(diaYhora.hora)
-                        turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
-                        console.log("Hora inicio en el json: ", turno.hora_inicio);
-                        h = new Date(newValue);
-                        h.setHours(h.getHours() + 1);
-                        turno.hora_fin = format(h, 'kk:mm:ss');
-                        console.log("Hora fin en el json: ", turno.hora_fin);
-                    }}
-                />
-            </Stack>
+            <TimePicker
+                label="24 hours"
+                defaultValue={horaMinima}
+                minTime={horaMinima}
+                maxTime={horaMax}
+                ampm={false}
+                value={hora}
+                onChange={(newValue) => {
+                    setHora(newValue);
+                    turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
+                    h = new Date(newValue);
+                    h.setHours(h.getHours() + 1);
+                    turno.hora_fin = format(h, 'kk:mm:ss');
+                    console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
+                }}
+            />
         </LocalizationProvider>
     );
 }

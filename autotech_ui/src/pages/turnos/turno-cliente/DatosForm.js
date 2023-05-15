@@ -9,6 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import turno from '../turno'
+import Stack from '@mui/material/Stack';
 
 //Acá obtengo tipo de turno, kilometraje y patente
 
@@ -36,28 +37,30 @@ function ControlledRadioButtonsGroup() {
     return (
         <FormControl>
             <FormLabel id="demo-controlled-radio-buttons-group">Tipo de turno</FormLabel>
-            <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="tipo"
-                onChange={guardarCambio}
-            >
-                <FormControlLabel
-                    value="evaluacion"
-                    control={<Radio />}
-                    label="Evaluacion"
-                    onClick={handleClick} />
-                <FormControlLabel
-                    value="service"
-                    control={<Radio />}
-                    label="Service"
-                    onClick={handleClick} />
-                <br></br>
-                {
-                    kmInput === "service" && (
-                        < Kilometraje />
-                    )
-                }
-            </RadioGroup>
+            <Stack spacing={3} width={300}>
+                <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="tipo"
+                    onChange={guardarCambio}
+                >
+                    <FormControlLabel
+                        value="evaluacion"
+                        control={<Radio />}
+                        label="Evaluacion"
+                        onClick={handleClick} />
+                    <FormControlLabel
+                        value="service"
+                        control={<Radio />}
+                        label="Service"
+                        onClick={handleClick} />
+                    <br></br>
+                    {
+                        kmInput === "service" && (
+                            < Kilometraje />
+                        )
+                    }
+                </RadioGroup>
+            </Stack>
         </FormControl>
     );
 }
@@ -93,6 +96,7 @@ class Kilometraje extends React.Component {
     }
 }
 
+<Stack spacing={3} width={200}></Stack>
 export default function DatosForm() {
     const [patente, setPatente] = React.useState('');
 

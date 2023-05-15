@@ -13,6 +13,25 @@ import Grid from '@mui/material/Grid';
 import axios from "axios";
 import Stack from '@mui/material/Stack';
 
+//debería traer lo de taller select acá y mostrar solo el calendario cuando elige el taller
+
+
+//Traer talleres desde la API, de ahí obtengo id y nombre, etc.
+//https://autotech2.onrender.com/talleres_admin/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const today = dayjs();
 const limite = dayjs().add(29, 'day');

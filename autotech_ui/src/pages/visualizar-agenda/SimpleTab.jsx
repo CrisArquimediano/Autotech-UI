@@ -1,12 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
-import Typography from '@mui/material/Typography';
 import  {Box, Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
 
-
 import { useState } from 'react';
+import TablaTurnosPendientes from './TablaTurnosPendientes';
+import TablaTurnosEnProgreso from './TablaTurnosEnProgreso';
+import TablaTurnosTerminados from './TablaTurnosTerminados';
+import TablaTurnosPendientesDeAprobacion from './TablaTurnosPendientesAprobacion';
 
 function TabPanel(props){
     const {children, value, index, ...other}=props;
@@ -15,7 +16,7 @@ function TabPanel(props){
         {...other}>
             {value === index && (
             <Box sx={{p:3}}>
-                <Typography>{children}</Typography>
+                <Box>{children}</Box>
             </Box>
         )}
         </div>
@@ -48,21 +49,23 @@ export const SimpleTabTurnos = () => {
         <Box sx={{borderBottom:1 , borderColor: 'silver'}}>
             <Tabs value={value} onChange={handleChange} aria-label='basic tabs example' indicatorColor='secondary' >
                 <Tab label='Turnos Pendientes' {...allyProps(0)} />
-                <Tab label='Turnos en Progreso' {...allyProps(1)} />
-                <Tab label='Turnos Terminados' {...allyProps(2)} />
+                <Tab label='Turnos Pendientes de aprobación'{...allyProps(1)}/>
+                <Tab label='Turnos en Progreso' {...allyProps(2)} />
+                <Tab label='Turnos Terminados' {...allyProps(3)} />
             </Tabs>
         </Box>
             <TabPanel value={value} index={0}>
-            Tabla turnos pendientes
-
+                <TablaTurnosPendientes/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-            Tabla turnos en progreso
+                <TablaTurnosPendientesDeAprobacion/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-            Tabla turnos terminados
+                <TablaTurnosEnProgreso/>
             </TabPanel>
-
+            <TabPanel value={value} index={3}>
+                <TablaTurnosTerminados />
+            </TabPanel>
     </Box>
     ) 
 }

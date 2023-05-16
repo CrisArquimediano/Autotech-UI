@@ -67,6 +67,16 @@ const Talleres = () => {
                             </MenuItem>
                         ))}
                     </Select>
+                    {
+                        //Esto está bien, ahora tiene que recibir la disponibilidad
+                        t.taller !== '' && (
+                            <Stack spacing={3} width={300} padding={5}>
+                                <Grid item xs={12} md={10}>
+                                    <DateValidationShouldDisableDate />
+                                </Grid>
+                            </Stack>
+                        )
+                    }
                 </FormControl>
             </div>
         </Box>
@@ -80,20 +90,20 @@ const limite = dayjs().add(29, 'day');
 //acá debería agregar disponibilidad según el taller
 const isFeriadoIsMas30Dias = (date) => {
     const actual = format(new Date(date), 'dd/MM/yyyy');
+    const hoy = format(new Date(today), 'dd/MM/yyyy');
     let isFeriado = false;
 
     for (let dia in feriados) { if (actual === feriados[dia]) { isFeriado = true; } }
-    return isFeriado || date > limite;
+    return isFeriado || date > limite || actual === hoy;
 }
 /////////////////////////////////////////////////////////////////////////////
 
-function DateValidationShouldDisableDate() {
+function DateValidationShouldDisableDate({ id_taller }) {
     const [dia, setDia] = React.useState(today);
 
     return (
-        //Para que ponga las cosas del calendario en español
+        //Para que ponga las cosas del calendario en español: adapterLocale="es"
         //Problema: desfasa el calendario, porque arranca desde L y está para arrancar desde Sunday
-        //adapterLocale="es"
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box>
                 <Stack spacing={3} width={300}>
@@ -113,7 +123,6 @@ function DateValidationShouldDisableDate() {
                                 }}
                             />
                         </Grid>
-
                         <Grid item xs={12} md={10}>
                             {dia.day() === 0 && (<HoraDomingo />)}
                             {dia.day() !== 0 && (<HoraNormal />)}
@@ -189,9 +198,6 @@ export default function Calendario() {
                     <Grid item xs={12} md={10}>
                         <Talleres />
                     </Grid>
-                </Grid>
-                <Grid item xs={12} md={10}>
-                    <DateValidationShouldDisableDate />
                 </Grid>
             </div>
         </>

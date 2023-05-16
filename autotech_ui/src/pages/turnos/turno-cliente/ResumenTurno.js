@@ -2,9 +2,6 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import turno from '../turno'
-import Stack from '@mui/material/Stack';
-
-
 
 export default function ResumenTurno() {
     return (

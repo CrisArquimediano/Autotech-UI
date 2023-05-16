@@ -59,29 +59,45 @@ export default function TurnoForm() {
         setActiveStep(activeStep - 1);
     };
 
-    //acá puedo verificar que estén todos los datos y mandar un alert...
-    async function handleSubmit() {
+    function isDatosCompletos() {
+        let completo = true;
+
+        if (turno.fecha_inicio === "" || turno.hora_inicio === "" || turno.taller_id === ""
+            || turno.patente === "" || turno.tipo === "" ||
+            (turno.tipo === "service" && turno.frecuencia_km === null)) {
+            completo = false;
+        }
+        return completo
+    }
+
+    async function handleSubmit(e) {
         try {
-            handleNext();
-            const response = await axios({
-                method: 'post',
-                url: 'https://autotech2.onrender.com/turnos/turnos-create/',
-                data: {
-                    fecha_inicio: turno.fecha_inicio,
-                    fecha_fin: turno.fecha_fin,
-                    hora_inicio: turno.hora_inicio,
-                    hora_fin: turno.hora_fin,
-                    taller_id: turno.taller_id,
-                    patente: turno.patente,
-                    tipo: turno.tipo,
-                    frecuencia_km: turno.frecuencia_km,
-                    estado: turno.estado,
-                }
-            })
-            console.log("Se crea el turno con:", turno)
-            return response
-        } catch (e) {
-            console.log(e.response.data)
+            if (isDatosCompletos()) {
+                e.preventDefault();
+                const response = await axios({
+                    method: 'post',
+                    url: 'https://autotech2.onrender.com/turnos/turnos-create/',
+                    data: {
+                        fecha_inicio: turno.fecha_inicio,
+                        fecha_fin: turno.fecha_fin,
+                        hora_inicio: turno.hora_inicio,
+                        hora_fin: turno.hora_fin,
+                        taller_id: turno.taller_id,
+                        patente: turno.patente,
+                        tipo: turno.tipo,
+                        frecuencia_km: turno.frecuencia_km,
+                        estado: turno.estado,
+                    }
+                })
+                console.log("Se crea el turno con:", turno);
+                handleNext();
+                return response
+            } else {
+                alert("Complete todos los campos, por favor.")
+            }
+        } catch (error) {
+            alert("Surgió un error, vuelva a intentar.")
+            console.log(error.response.data)
         }
     }
 
@@ -126,32 +142,33 @@ export default function TurnoForm() {
                         </React.Fragment>
                     ) : (
                         <React.Fragment>
-                            {getStepContent(activeStep)}
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                {activeStep !== 0 && (
-                                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                        Volver
-                                    </Button>
-                                )}
-                                {activeStep === steps.length - 1 && (
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleSubmit}
-                                        sx={{ mt: 3, ml: 1 }}>
-                                        Enviar Datos
-                                        {console.log(turno)}
-                                    </Button>
-                                )}
+                            <form onSubmit={handleSubmit}>
+                                {getStepContent(activeStep)}
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    {activeStep !== 0 && (
+                                        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                            Volver
+                                        </Button>
+                                    )}
+                                    {activeStep === steps.length - 1 && (
+                                        <Button
+                                            variant="contained"
+                                            type='submit'
+                                            sx={{ mt: 3, ml: 1 }}>
+                                            Enviar Datos
+                                            {console.log(turno)}
+                                        </Button>
+                                    )}
 
-                                {activeStep !== steps.length - 1 && (<Button
-                                    variant="contained"
-                                    onClick={handleNext}
-                                    sx={{ mt: 3, ml: 1 }}
-                                    onSubmit={handleSubmit}
-                                >
-                                    Siguiente
-                                </Button>)}
-                            </Box>
+                                    {activeStep !== steps.length - 1 && (<Button
+                                        variant="contained"
+                                        onClick={handleNext}
+                                        sx={{ mt: 3, ml: 1 }}
+                                    >
+                                        Siguiente
+                                    </Button>)}
+                                </Box>
+                            </form>
                         </React.Fragment>
                     )}
                 </Paper>

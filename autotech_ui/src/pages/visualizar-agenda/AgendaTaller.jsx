@@ -13,7 +13,7 @@ const AgendaTaller = () => {
             </Box>
         </Box>
         <Divider sx={{color:'silver'}}/>
-        <Container maxWidth="xl" sx={{mb: 2, padding: 2}}>
+        <Container maxWidth="xxl" sx={{mb: 2}}>
             <SimpleTabTurnos/>
         </Container>
     </LoggedInLayout>

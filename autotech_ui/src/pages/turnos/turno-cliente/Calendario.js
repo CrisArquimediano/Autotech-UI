@@ -19,7 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 
-//Taller select
+/////////////////////////////////////////////Taller select
 const tallerAPI = axios.create({
     baseURL: "https://autotech2.onrender.com/talleres_admin/"
 });
@@ -95,25 +95,17 @@ const fetchAgendaData = async (idTaller) => {
     try {
         const response = await axios.get(agendaEndPoint);
         disponibilidad = response.data;
-        // Process the data as needed
+
         console.log("El json:", disponibilidad);
     } catch (error) {
-        // Handle error
         console.error(error);
     }
 };
-
-// Example usage
+// Ejemplo:
+// fetchAgendaData(1); 
 // Fetch data from 'https://autotech2.onrender.com/turnos/dias-horarios-disponibles/1/'
-//fetchAgendaData(2); // Fetch data from 'https://autotech2.onrender.com/turnos/dias-horarios-disponibles/2/'
 
 
-
-
-
-
-
-//acá debería agregar disponibilidad según el taller
 const isFeriadoIsMas30Dias = (date) => {
     if (turno.taller_id === "") {
         return true;
@@ -131,7 +123,6 @@ const isFeriadoIsMas30Dias = (date) => {
 function DateValidationShouldDisableDate() {
     const [dia, setDia] = React.useState(tomorrow);
     fetchAgendaData(turno.taller_id);
-    //tengo que setear el disabled hours según la fecha con este id
 
     return (
         //Para que ponga las cosas del calendario en español: adapterLocale="es"
@@ -156,8 +147,8 @@ function DateValidationShouldDisableDate() {
                             />
                         </Grid>
                         <Grid item xs={12} md={10}>
-                            {dia.day() === 0 && (<HoraDomingo disabledHours={[9, 10]} />)}
-                            {dia.day() !== 0 && (<HoraNormal disabledHours={[9, 10]} />)}
+                            {dia.day() === 0 && (<HoraDomingo dias_y_horarios={disponibilidad.dias_y_horarios} />)}
+                            {dia.day() !== 0 && (<HoraNormal dias_y_horarios={disponibilidad.dias_y_horarios} />)}
                         </Grid>
                     </Grid>
                 </Stack>
@@ -166,13 +157,10 @@ function DateValidationShouldDisableDate() {
     );
 }
 
-//transformarlo en una función que devuelva un array así pero dependiendo la fecha
-//const disabledHours = [9, 10]; // Example array of disabled hours
-
 const horaMinimaDomingo = dayjs().set('hour', 8).startOf('hour');
 const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
 
-function HoraDomingo({ disabledHours }) {
+function HoraDomingo({ dias_y_horarios }) {
     const [hora, setHora] = React.useState('');
     let h;
 
@@ -192,13 +180,18 @@ function HoraDomingo({ disabledHours }) {
                     h.setHours(h.getHours() + 1);
                     turno.hora_fin = format(h, 'kk:mm:ss');
                     console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
-
                 }}
                 views={['hours']}
                 shouldDisableTime={(time) => {
                     const hour = new Date(time);
+                    const turnoFechaInicio = turno.fecha_inicio;
+                    const entry = dias_y_horarios && dias_y_horarios.find((item) => item.dia === turnoFechaInicio);
                     let hora = hour.getHours();
-                    return disabledHours.includes(hora);
+                    if (entry) {
+                        const horariosDisponibles = entry.horarios_disponibles;
+                        return !horariosDisponibles.includes(hora);
+                    }
+                    return false;
                 }}
             />
         </LocalizationProvider>
@@ -208,7 +201,7 @@ function HoraDomingo({ disabledHours }) {
 const horaMinima = dayjs().set('hour', 8).startOf('hour');
 const horaMax = dayjs().set('hour', 16).startOf('hour');
 
-function HoraNormal({ disabledHours }) {
+function HoraNormal({ dias_y_horarios }) {
     const [hora, setHora] = React.useState('');
     let h;
     return (
@@ -231,8 +224,14 @@ function HoraNormal({ disabledHours }) {
                 views={['hours']}
                 shouldDisableTime={(time) => {
                     const hour = new Date(time);
+                    const turnoFechaInicio = turno.fecha_inicio;
+                    const entry = dias_y_horarios && dias_y_horarios.find((item) => item.dia === turnoFechaInicio);
                     let hora = hour.getHours();
-                    return disabledHours.includes(hora);
+                    if (entry) {
+                        const horariosDisponibles = entry.horarios_disponibles;
+                        return !horariosDisponibles.includes(hora);
+                    }
+                    return false;
                 }}
             />
         </LocalizationProvider>

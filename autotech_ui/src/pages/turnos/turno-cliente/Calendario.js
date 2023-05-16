@@ -7,6 +7,7 @@ import 'dayjs/locale/es';
 import { format } from 'date-fns';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import turno from '../turno'
+import disponibilidad from './disponibilidad'
 import feriados from './feriados'
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -17,11 +18,9 @@ import { Select, MenuItem } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
-//debería traer lo de taller select acá y mostrar solo el calendario cuando elige el taller
-
 
 //Taller select
-const client = axios.create({
+const tallerAPI = axios.create({
     baseURL: "https://autotech2.onrender.com/talleres_admin/"
 });
 
@@ -29,7 +28,7 @@ const Talleres = () => {
     const [talleres, setTalleres] = useState([]);
 
     useEffect(() => {
-        client.get().then((response) => {
+        tallerAPI.get().then((response) => {
             setTalleres(response.data);
         });
     }, []);
@@ -85,10 +84,41 @@ const Talleres = () => {
 //////////////////////////////////////Fin taller select
 
 const today = dayjs();
-const limite = dayjs().add(29, 'day');
+const tomorrow = dayjs().add(1, 'day');
+const limite = dayjs().add(30, 'day');
+
+/////////////////////////Para traer la disponibilidad de un taller
+
+const fetchAgendaData = async (idTaller) => {
+    const agendaEndPoint = `https://autotech2.onrender.com/turnos/dias-horarios-disponibles/${idTaller}/`;
+
+    try {
+        const response = await axios.get(agendaEndPoint);
+        disponibilidad = response.data;
+        // Process the data as needed
+        console.log("El json:", disponibilidad);
+    } catch (error) {
+        // Handle error
+        console.error(error);
+    }
+};
+
+// Example usage
+// Fetch data from 'https://autotech2.onrender.com/turnos/dias-horarios-disponibles/1/'
+//fetchAgendaData(2); // Fetch data from 'https://autotech2.onrender.com/turnos/dias-horarios-disponibles/2/'
+
+
+
+
+
+
 
 //acá debería agregar disponibilidad según el taller
 const isFeriadoIsMas30Dias = (date) => {
+    if (turno.taller_id === "") {
+        return true;
+    }
+
     const actual = format(new Date(date), 'dd/MM/yyyy');
     const hoy = format(new Date(today), 'dd/MM/yyyy');
     let isFeriado = false;
@@ -98,8 +128,9 @@ const isFeriadoIsMas30Dias = (date) => {
 }
 /////////////////////////////////////////////////////////////////////////////
 
-function DateValidationShouldDisableDate({ id_taller }) {
-    const [dia, setDia] = React.useState(today);
+function DateValidationShouldDisableDate() {
+    const [dia, setDia] = React.useState(tomorrow);
+    fetchAgendaData(turno.taller_id);
 
     return (
         //Para que ponga las cosas del calendario en español: adapterLocale="es"
@@ -111,7 +142,7 @@ function DateValidationShouldDisableDate({ id_taller }) {
                         <Grid item xs={12} md={10}>
                             <DatePicker
                                 disablePast
-                                defaultValue={today}
+                                defaultValue={tomorrow}
                                 shouldDisableDate={isFeriadoIsMas30Dias}
                                 views={['year', 'month', 'day']}
                                 value={dia}
@@ -134,12 +165,16 @@ function DateValidationShouldDisableDate({ id_taller }) {
     );
 }
 
+//transformarlo en una función que devuelva un array así pero dependiendo la fecha
+const disabledHours = [9, 10]; // Example array of disabled hours
+
 const horaMinimaDomingo = dayjs().set('hour', 8).startOf('hour');
 const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
 
 function HoraDomingo() {
     const [hora, setHora] = React.useState('');
     let h;
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <TimePicker
@@ -156,6 +191,13 @@ function HoraDomingo() {
                     h.setHours(h.getHours() + 1);
                     turno.hora_fin = format(h, 'kk:mm:ss');
                     console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
+
+                }}
+                views={['hours']}
+                shouldDisableTime={(time) => {
+                    const hour = new Date(time);
+                    let hora = hour.getHours();
+                    return disabledHours.includes(hora);
                 }}
             />
         </LocalizationProvider>
@@ -185,6 +227,7 @@ function HoraNormal() {
                     turno.hora_fin = format(h, 'kk:mm:ss');
                     console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
                 }}
+                views={['hours']}
             />
         </LocalizationProvider>
     );

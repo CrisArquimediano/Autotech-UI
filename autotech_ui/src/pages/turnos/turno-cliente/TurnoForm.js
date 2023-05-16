@@ -13,13 +13,10 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DatosForm from './DatosForm';
-import TallerAgendaForm from './TallerAgendaForm';
 import ResumenTurno from './ResumenTurno';
 import turno from '../turno'
 import axios from "axios";
-import { useState, useEffect } from "react"
-
-const crearTurnoApi = 'https://autotech2.onrender.com/turnos/turnos-create/'
+import Calendario from './Calendario';
 
 function Copyright() {
     return (
@@ -41,7 +38,7 @@ function getStepContent(step) {
         case 0:
             return <DatosForm />;
         case 1:
-            return <TallerAgendaForm />;
+            return <Calendario />;
         case 2:
             return <ResumenTurno />;
         default:
@@ -55,17 +52,17 @@ export default function TurnoForm() {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
-        console.log("SE ejecuta handleNext.")
         setActiveStep(activeStep + 1);
     };
 
     const handleBack = () => {
-        console.log("SE ejecuta handleBack.")
         setActiveStep(activeStep - 1);
     };
 
+    //acá puedo verificar que estén todos los datos y mandar un alert...
     async function handleSubmit() {
         try {
+            handleNext();
             const response = await axios({
                 method: 'post',
                 url: 'https://autotech2.onrender.com/turnos/turnos-create/',
@@ -134,25 +131,26 @@ export default function TurnoForm() {
                                 {activeStep !== 0 && (
                                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                                         Volver
-                                        {console.log(turno)}
                                     </Button>
                                 )}
                                 {activeStep === steps.length - 1 && (
-                                    <Button onClick={handleSubmit} sx={{ mt: 3, ml: 1 }}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleSubmit}
+                                        sx={{ mt: 3, ml: 1 }}>
                                         Enviar Datos
                                         {console.log(turno)}
                                     </Button>
                                 )}
 
-                                <Button
+                                {activeStep !== steps.length - 1 && (<Button
                                     variant="contained"
                                     onClick={handleNext}
                                     sx={{ mt: 3, ml: 1 }}
                                     onSubmit={handleSubmit}
                                 >
-                                    {console.log(turno)}
-                                    {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
-                                </Button>
+                                    Siguiente
+                                </Button>)}
                             </Box>
                         </React.Fragment>
                     )}

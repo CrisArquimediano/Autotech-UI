@@ -10,28 +10,69 @@ import turno from '../turno'
 import feriados from './feriados'
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import axios from "axios";
+import axios from 'axios';
 import Stack from '@mui/material/Stack';
+import { useState, useEffect } from 'react';
+import { Select, MenuItem } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 //debería traer lo de taller select acá y mostrar solo el calendario cuando elige el taller
 
 
-//Traer talleres desde la API, de ahí obtengo id y nombre, etc.
-//https://autotech2.onrender.com/talleres_admin/
+//Taller select
+const client = axios.create({
+    baseURL: "https://autotech2.onrender.com/talleres_admin/"
+});
 
+const Talleres = () => {
+    const [talleres, setTalleres] = useState([]);
 
+    useEffect(() => {
+        client.get().then((response) => {
+            setTalleres(response.data);
+        });
+    }, []);
 
+    const [t, setT] = useState({
+        taller: '',
+    });
 
+    const guardarCambio = (event) => {
+        const { name, value } = event.target;
+        setT((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+        turno.taller_id = value;
+        console.log("Id del taller, json:", turno.taller_id)
+    };
 
-
-
-
-
-
-
-
-
-
+    return (
+        <Box sx={{ m: 1, minWidth: 80 }}>
+            <div className="stock-container">
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Talleres</InputLabel>
+                    <Select
+                        required
+                        label="Talleres"
+                        type='text'
+                        name="taller"
+                        value={t.taller}
+                        onChange={guardarCambio}
+                    >
+                        {talleres.map((taller) => (
+                            <MenuItem key={taller.id_taller} value={taller.id_taller}>
+                                {taller.localidad}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
+        </Box>
+    );
+};
+//////////////////////////////////////Fin taller select
 
 const today = dayjs();
 const limite = dayjs().add(29, 'day');
@@ -43,33 +84,6 @@ const isFeriadoIsMas30Dias = (date) => {
 
     for (let dia in feriados) { if (actual === feriados[dia]) { isFeriado = true; } }
     return isFeriado || date > limite;
-}
-
-
-/////////////////////////////referencia para armar lo de la disponibilidad
-
-async function disponibilidad() {
-    try {
-        const response = await axios({
-            method: 'post',
-            url: 'https://autotech2.onrender.com/turnos/turnos-create/',
-            data: {
-                fecha_inicio: turno.fecha_inicio,
-                fecha_fin: turno.fecha_fin,
-                hora_inicio: turno.hora_inicio,
-                hora_fin: turno.hora_fin,
-                taller_id: turno.taller_id,
-                patente: turno.patente,
-                tipo: turno.tipo,
-                frecuencia_km: turno.frecuencia_km,
-                estado: turno.estado,
-            }
-        })
-        console.log("Se crea el turno con:", turno)
-        return response
-    } catch (e) {
-        console.log(e.response.data)
-    }
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -102,7 +116,7 @@ function DateValidationShouldDisableDate() {
 
                         <Grid item xs={12} md={10}>
                             {dia.day() === 0 && (<HoraDomingo />)}
-                            {dia.day() != 0 && (<HoraNormal />)}
+                            {dia.day() !== 0 && (<HoraNormal />)}
                         </Grid>
                     </Grid>
                 </Stack>
@@ -112,7 +126,6 @@ function DateValidationShouldDisableDate() {
 }
 
 const horaMinimaDomingo = dayjs().set('hour', 8).startOf('hour');
-
 const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
 
 function HoraDomingo() {
@@ -172,7 +185,14 @@ export default function Calendario() {
     return (
         <>
             <div>
-                <DateValidationShouldDisableDate />
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={10}>
+                        <Talleres />
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} md={10}>
+                    <DateValidationShouldDisableDate />
+                </Grid>
             </div>
         </>
     );

@@ -131,6 +131,7 @@ const isFeriadoIsMas30Dias = (date) => {
 function DateValidationShouldDisableDate() {
     const [dia, setDia] = React.useState(tomorrow);
     fetchAgendaData(turno.taller_id);
+    //tengo que setear el disabled hours según la fecha con este id
 
     return (
         //Para que ponga las cosas del calendario en español: adapterLocale="es"
@@ -155,8 +156,8 @@ function DateValidationShouldDisableDate() {
                             />
                         </Grid>
                         <Grid item xs={12} md={10}>
-                            {dia.day() === 0 && (<HoraDomingo />)}
-                            {dia.day() !== 0 && (<HoraNormal />)}
+                            {dia.day() === 0 && (<HoraDomingo disabledHours={[9, 10]} />)}
+                            {dia.day() !== 0 && (<HoraNormal disabledHours={[9, 10]} />)}
                         </Grid>
                     </Grid>
                 </Stack>
@@ -166,12 +167,12 @@ function DateValidationShouldDisableDate() {
 }
 
 //transformarlo en una función que devuelva un array así pero dependiendo la fecha
-const disabledHours = [9, 10]; // Example array of disabled hours
+//const disabledHours = [9, 10]; // Example array of disabled hours
 
 const horaMinimaDomingo = dayjs().set('hour', 8).startOf('hour');
 const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
 
-function HoraDomingo() {
+function HoraDomingo({ disabledHours }) {
     const [hora, setHora] = React.useState('');
     let h;
 
@@ -207,7 +208,7 @@ function HoraDomingo() {
 const horaMinima = dayjs().set('hour', 8).startOf('hour');
 const horaMax = dayjs().set('hour', 16).startOf('hour');
 
-function HoraNormal() {
+function HoraNormal({ disabledHours }) {
     const [hora, setHora] = React.useState('');
     let h;
     return (
@@ -228,6 +229,11 @@ function HoraNormal() {
                     console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
                 }}
                 views={['hours']}
+                shouldDisableTime={(time) => {
+                    const hour = new Date(time);
+                    let hora = hour.getHours();
+                    return disabledHours.includes(hora);
+                }}
             />
         </LocalizationProvider>
     );

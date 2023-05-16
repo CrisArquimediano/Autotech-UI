@@ -34,7 +34,7 @@ const MainBar = ({ open, drawerWidth, toggleDrawer }) => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h5" color="inherit" noWrap sx={{ flexGrow: 0 }}>
-            Area Técnica
+            Área Técnica
           </Typography>
           {/**Se podría agregar un logout aca */}
         </Toolbar>

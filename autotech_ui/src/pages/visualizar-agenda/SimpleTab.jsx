@@ -13,9 +13,9 @@ function TabPanel(props){
     const {children, value, index, ...other}=props;
     return (
         <div role='tabpanel' hidden={value!==index} id={`simple-tabpanel-${index}`}
-        {...other}>
+        {...other} >
             {value === index && (
-            <Box sx={{p:3}}>
+            <Box sx={{p:3}} >
                 <Box>{children}</Box>
             </Box>
         )}
@@ -47,15 +47,15 @@ export const SimpleTabTurnos = () => {
     return (
     <Box sx={{width: '100%'}}>
         <Box sx={{borderBottom:1 , borderColor: 'silver'}}>
-            <Tabs value={value} onChange={handleChange} aria-label='basic tabs example' indicatorColor='secondary' >
-                <Tab label='Turnos Pendientes' {...allyProps(0)} />
-                <Tab label='Turnos Pendientes de aprobación'{...allyProps(1)}/>
-                <Tab label='Turnos en Progreso' {...allyProps(2)} />
-                <Tab label='Turnos Terminados' {...allyProps(3)} />
+            <Tabs value={value} onChange={handleChange} aria-label='scrollable auto tabs example' indicatorColor='secondary' variant='scrollable' scrollButtons='auto'>
+                <Tab label='Pendientes' {...allyProps(0)} />
+                <Tab label='Pendientes de aprobación'{...allyProps(1)}/>
+                <Tab label='En Progreso' {...allyProps(2)} />
+                <Tab label='Terminados' {...allyProps(3)} />
             </Tabs>
         </Box>
             <TabPanel value={value} index={0}>
-                <TablaTurnosPendientes/>
+                <TablaTurnosPendientes />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <TablaTurnosPendientesDeAprobacion/>

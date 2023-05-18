@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 /////////////////////////////Lo de MUI + ChatGPT
+//Integrar con lo de Cami, hacer que reciba el id del turno como prop
 const AsignacionDeTecnicos = () => {
     const [tecnicosData, setTecnicosData] = useState([]);
 
@@ -17,7 +18,7 @@ const AsignacionDeTecnicos = () => {
     const [tecnicosDisponibles, setTecnicosDisponibles] = useState([]);
 
     useEffect(() => {
-        fetchTecnicosDisponibles(25)
+        fetchTecnicosDisponibles(29)
             .then(data => {
                 if (typeof data === 'object' && Array.isArray(data.tecnicos_disponibles)) {
                     const ids = data.tecnicos_disponibles.map(item => item.id_tecnico);
@@ -40,7 +41,7 @@ const AsignacionDeTecnicos = () => {
 
     useEffect(() => {
         // Fetch turno data from API
-        fetchTurnoData(25)
+        fetchTurnoData(29)
             .then(data => {
                 setTurnoInfo(data);
             })
@@ -94,17 +95,53 @@ const AsignacionDeTecnicos = () => {
         setSelectedItem(selectedItem);
     };
 
-    //Ahora tengo que llamar a la API y asignarle el turno al técnico,
+    //Ahora tengo que llamar a la API y asignarle el turno al técnico (¿se hace solo?),
     //asignar el técnico al turno (la otra parte de lo de arriba) y cambiar el estado del turno
     //endpoint para asignar técnico al turno: turnos/asignar-tecnico/<int: id_tecnico>/<int: id_turno>/
+    //endpoint para modificar el estado del turno: turnos/turnos-update/<int: id_turno>/
 
     const asignarTecnico = () => {
         if (selectedItem) {
-            console.log("Asignar Tecnico: ", selectedItem.id);
-            alert("Se ha asignado al técnico seleccionado.")
-            console.log("Técnico asignado: ", selectedItem.id);
-        } else { alert("Debe seleccionar un técnico.") }
-    }
+            const idTecnico = selectedItem.id;
+            const idTurno = 29; // Replace with the actual ID of the turno
+
+            const urlAsignarTecnico = `https://autotech2.onrender.com/turnos/asignar-tecnico/${idTecnico}/${idTurno}/`;
+            const urlModificarTurno = `https://autotech2.onrender.com/turnos/turnos-update/${idTurno}/`;
+
+            axios
+                .post(urlAsignarTecnico)
+                .then(response => {
+                    // Handle the response
+                    console.log(response);
+                    alert("Se ha asignado al técnico seleccionado.");
+                    console.log("Técnico asignado:", selectedItem.id);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error.response);
+                });
+
+            const payload = {
+                estado: 'en proceso' // Replace 'nuevoEstado' with the desired updated value
+            };
+
+            axios
+                .post(urlModificarTurno, payload)
+                .then(response => {
+                    // Handle the response
+                    console.log(response);
+                    alert("Se ha asignado al técnico seleccionado.");
+                    console.log("Técnico asignado:", selectedItem.id);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error.response);
+                });
+        } else {
+            alert("Debe seleccionar un técnico.");
+        }
+    };
+
 
     return (
         <div>
@@ -134,7 +171,7 @@ const AsignacionDeTecnicos = () => {
                     rows={tecnicosData.filter(item => tecnicosDisponibles.includes(item.id))}
                     columns={[
                         { field: 'id', headerName: 'ID', width: 70 },
-                        { field: 'nombre', headerName: 'Nombre', width: 260 },
+                        { field: 'nombre', headerName: 'Nombre', width: 280 },
                         { field: 'dni', headerName: 'DNI', width: 130 },
                         { field: 'categoria', headerName: 'Categoría', width: 130 },
                         { field: 'taller', headerName: 'Taller', width: 130 },

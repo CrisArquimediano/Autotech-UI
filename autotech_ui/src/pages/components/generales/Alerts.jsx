@@ -14,8 +14,8 @@ export default function Alerts({alertType, description, title}) {
         return (
 				
         <Collapse in={!open}>
-					<Alert severity="success" className='mb-3' variant="outlined">
-						<AlertTitle>{title}</AlertTitle>
+					<Alert severity="success" className='mb-3' variant="outlined" >
+						<AlertTitle className='text-center'>{title}</AlertTitle>
 						{description}
           </Alert>
         </Collapse>
@@ -25,7 +25,7 @@ export default function Alerts({alertType, description, title}) {
         return (
 				<Collapse in={!open}>
 				  <Alert severity="error" className='mb-3' variant="outlined">
-						<AlertTitle>{title}</AlertTitle>
+						<AlertTitle className='text-center'>{title}</AlertTitle>
 						{description}
           </Alert>
 				</Collapse>
@@ -45,7 +45,7 @@ export default function Alerts({alertType, description, title}) {
         return (
           <Collapse in={!open}>
 						<Alert severity="info" className='mb-3' variant="outlined">
-							<AlertTitle>{title}</AlertTitle>
+							<AlertTitle className='text-center'>{title}</AlertTitle>
 							{description}
 						</Alert>
 					</Collapse>

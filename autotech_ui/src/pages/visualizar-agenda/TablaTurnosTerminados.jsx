@@ -1,34 +1,49 @@
 import { useState, useEffect, useMemo } from "react";
-import { getTurnosTodos } from "../../services/services-Turnos";
-import { Box, Button, Typography } from "@mui/material";
+import { getTurnosTerminados } from "../../services/services-Turnos";
+import { Box, Button} from "@mui/material";
 import MaterialReactTable from "material-react-table";
+import DialogActions from "@mui/material/DialogActions";
+import Alerts from "../components/generales/Alerts";
+import { getDetalleTurno } from "../../services/services-Turnos";
+import Popup from './Popup';
 
-//const id_taller=1;
+const id_taller='S001';
 
 const TablaTurnosTerminados = () => {
   const [turnosTerminados, setTurnosTerminados] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errorServidor, setErrorServidor]= useState(false);
+  const [detalleTurno, setDetalleTurno] = useState([]);
+  const [openVerMas, setVerMas] = useState(false);
 
   const traerTurnos = () => {
-    getTurnosTodos().then((response) => {
+    getTurnosTerminados(id_taller).then((response) => {
       setTurnosTerminados(response.data);
       setLoading(false);
     });
   };
 
   useEffect(() => {
-    traerTurnos();
+    try{
+      traerTurnos();
+    }catch(error){
+      console.error("Error al traer los turnos", error);
+      setErrorServidor(true);
+    }
   }, []);
+
+  const obtenerDetalle = (idTurno) => {
+    getDetalleTurno(idTurno).then((response) => {
+    setDetalleTurno(response.data);
+    console.log(detalleTurno);
+  });
+};
 
   const columnas = useMemo(
     () => [
       {
         accessorKey: "id_turno",
         header: "Turno id",
-      },
-      {
-        accessorKey: "tipo",
-        header: "Tipo de Turno",
       },
       {
         accessorKey: "patente",
@@ -39,16 +54,32 @@ const TablaTurnosTerminados = () => {
         header: "Estado",
       },
       {
+        accessorKey: "tipo",
+        header: "Tipo de Turno",
+      },
+      {
+        accessorKey: "fecha_inicio",
+        header: "Fecha Inicio",
+      },
+      {
+        accessorKey: "hora_inicio",
+        header: "Hora Inicio",
+      },
+      {
+        accessorKey: "fecha_fin",
+        header: "Fecha Fin",
+      },
+      {
+        accessorKey: "hora_fin",
+        header: "Hora fin",
+      },
+      {
         accessorKey: "tecnico_id",
         header: "Tecnico id",
       },
       {
-        accessorKey: "fecha_inicio",
-        header: "Fecha",
-      },
-      {
-        accessorKey: "hora_inicio",
-        header: "Hora",
+        accessorKey: "nombre_completo",
+        header: "Nombre del Tecnico",
       },
     ],
     []
@@ -65,6 +96,8 @@ const TablaTurnosTerminados = () => {
         sx={{fontSize:'1em'}} 
         onClick={() => {
           console.log("Ver mas", row.original.id_turno);
+          obtenerDetalle(row.original.id_turno);
+          setVerMas(true);
         }}
       >
         Ver más
@@ -73,19 +106,55 @@ const TablaTurnosTerminados = () => {
   );
 
   const noData = () => (
-    <Typography>No hay datos (Aca va el componente alerta de maite)</Typography>
+    <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+      <Alerts title='No hay datos' description='No hay datos disponibles en este momento' alertType='info'/>
+    </Box>
   );
 
   return (
-    <MaterialReactTable
+    <>
+      <MaterialReactTable
       columns={columnas}
       data={turnosTerminados}
-      state={{ isLoading: loading }}
+      muiToolbarAlertBannerProps={errorServidor? {color:'error', children: 'Error en servidor.'}: undefined}
+      state={{ isLoading: loading, showAlertBanner: errorServidor  }}
       positionActionsColumn="last"
       enableRowActions
       renderRowActions={renderRowActions}
       renderEmptyRowsFallback={noData}
+      defaultColumn={{minSize:10, maxSize:120}}
+      muiTopToolbarProps={
+        {sx: 
+          {display:'flex', flexWrap:'inherit', justifyContent:'flex-end', overflow: 'auto', maxHeight: '200px'}
+        }
+      }
     />
+    <Popup title='Detalle del Turno' openDialog={openVerMas} setOpenDialog={setVerMas}>
+      {
+        Object.entries(detalleTurno).map(([key, value]) => (
+          <div key={key}>
+            <span><strong>{key}: </strong></span>
+            <span>{value} </span>
+          </div>
+        ))
+      }
+      <Box>
+          <DialogActions>
+          <Button
+              color="primary"
+              variant="outlined"
+              sx={{marginTop:'10px'}}
+              onClick={() => {
+                setVerMas(false);
+              }}
+            >
+              Atras
+            </Button>
+          </DialogActions>
+        </Box>
+    </Popup>
+    </>
+
   );
 };
 

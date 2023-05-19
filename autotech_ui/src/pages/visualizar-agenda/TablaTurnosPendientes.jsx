@@ -1,15 +1,20 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { Box, Button} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Snackbar from "@mui/material/Snackbar";
 import DialogActions from "@mui/material/DialogActions";
 import Alerts from "../components/generales/Alerts";
-import Popup from './Popup';
-import {getDetalleTurno, getCancelarTurno, getTurnosPendientes} from "../../services/services-Turnos";
+import Popup from "../components/generales/DialogPopup";
 
-const id_taller='S001';
+import {
+  getDetalleTurno,
+  getCancelarTurno,
+  getTurnosPendientes,
+} from "../../services/services-Turnos";
+
+const id_taller = "S002";
 
 const TablaTurnosPendientes = () => {
   const [turnosPendientes, setTurnosPendientes] = useState([]);
@@ -17,12 +22,16 @@ const TablaTurnosPendientes = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openVerMas, setVerMas] = useState(false);
   const [detalleTurno, setDetalleTurno] = useState([]);
-  const [errorServidor, setErrorServidor]= useState(false);
   const [resCancelar, setResCancelar] = useState([]);
-  const [idTurnoCancelar, setIdTurnoCancelar]= useState(0);
+  const [idTurnoCancelar, setIdTurnoCancelar] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [actualizarTabla, setActualizarTabla] = useState(false);
-  
+
+  //alertas de la API
+  const [alertType, setAlertType] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertTitle, setAlertTitle] = useState("");
+
   const columnas = useMemo(
     () => [
       {
@@ -53,49 +62,66 @@ const TablaTurnosPendientes = () => {
     []
   );
 
-
   const traerTurnos = useCallback(() => {
-    getTurnosPendientes(id_taller).then((response) => {
-      setTurnosPendientes(response.data);
-      setLoading(false);
-    });
+    getTurnosPendientes(id_taller)
+      .then((response) => {
+        setTurnosPendientes(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setAlertType("error");
+        setAlertTitle("Error de servidor");
+        setAlertMessage(
+          "Error en el servidor. Por favor, recargue la página y vuelva a intentarlo nuevamente."
+        );
+      });
   }, []);
 
   useEffect(() => {
     try {
       traerTurnos();
       setActualizarTabla(false); //Reiniciar el estado de actualizarTabla
-    }catch (error){
-      console.error("Error al traer los turnos", error);
-      setErrorServidor(true);
+    } catch (error) {
+      setAlertType("error");
+      setAlertTitle("Error de servidor");
+      setAlertMessage(
+        "Error al traer los turnos. Por favor, recargue la página y vuelva a intentarlo nuevamente."
+      );
     }
   }, [traerTurnos, actualizarTabla]);
 
   const obtenerDetalle = (idTurno) => {
-      getDetalleTurno(idTurno).then((response) => {
-      setDetalleTurno(response.data);
-      console.log(detalleTurno);
-    });
+    getDetalleTurno(idTurno)
+      .then((response) => {
+        setDetalleTurno(response.data);
+      })
+      .catch((error) => {
+        setVerMas(false);
+        setAlertType("error");
+        setAlertTitle("Error de servidor");
+        setAlertMessage(
+          "Error al mostrar el detalle. Por favor, reacargue la página y vuelva a intentarlo nuevamente."
+        );
+      });
   };
 
   const cancelarTurno = (idTurno) => {
-    try{
-        getCancelarTurno(idTurno).then ((response)=>{
+    getCancelarTurno(idTurno)
+      .then((response) => {
         setResCancelar(response.data);
         setActualizarTabla(true); //Para actualizar la tabla despues de cancelar turno
       })
-    }catch(error){
-      setResCancelar(error.message);
-    }
+      .catch((error) => {
+        setResCancelar(error.message);
+      });
   };
 
-  const handleCloseSnackbar = (event, reason)=> {
-    if (reason === 'clickaway'){
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
   };
-
 
   const renderRowActions = ({ row }) => (
     <Box
@@ -126,7 +152,7 @@ const TablaTurnosPendientes = () => {
         variant="contained"
         color="error"
         sx={{ fontSize: "0.9em" }}
-        onClick={()=> {
+        onClick={() => {
           setOpenDialog(true);
           setIdTurnoCancelar(row.original.id_turno);
         }}
@@ -137,8 +163,14 @@ const TablaTurnosPendientes = () => {
   );
 
   const noData = () => (
-    <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-      <Alerts title='No hay datos' description='No hay datos disponibles en este momento' alertType='info'/>
+    <Box
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <Alerts
+        title="No hay datos"
+        description="No hay datos disponibles en este momento"
+        alertType="info"
+      />
     </Box>
   );
 
@@ -146,10 +178,14 @@ const TablaTurnosPendientes = () => {
     <Tooltip title="Agregar turno" placement="right">
       <Button
         variant="contained"
-        startIcon={<AddCircleIcon sx={{ height: "2rem"}} />}
-        sx={{fontSize: {
-          sm: '0.7rem', maxWidth:'300px', maxHeight:'40px',
-        }}}
+        startIcon={<AddCircleIcon sx={{ height: "2rem" }} />}
+        sx={{
+          fontSize: {
+            sm: "0.7rem",
+            maxWidth: "300px",
+            maxHeight: "40px",
+          },
+        }}
         onClick={() => {
           console.log("Agregar turno");
         }}
@@ -159,61 +195,96 @@ const TablaTurnosPendientes = () => {
     </Tooltip>
   );
 
-
   return (
-		<>
-		<MaterialReactTable
-		columns={columnas}
-		data={turnosPendientes}
-    muiToolbarAlertBannerProps={errorServidor? {color:'error', children: 'Error en servidor.'}: undefined}
-		state={{ isLoading: loading, showAlertBanner: errorServidor}}
-		renderTopToolbarCustomActions={agregarTurno}
-    muiTopToolbarProps={
-      {sx: 
-        {display:'flex', flexWrap:'inherit', justifyContent:'flex-end', overflow: 'auto', maxHeight: '200px'}
-      }
-    }
-		positionActionsColumn="last"
-		enableRowActions
-		renderRowActions={renderRowActions}
-		renderEmptyRowsFallback={noData}
-    defaultColumn={{minSize:10, maxSize:100}}
-    />
-    
-		<Popup title='Cancelar Turno' openDialog={openDialog} setOpenDialog={setOpenDialog} description='¿Está seguro que desea cancelar el turno? No se podrá modificar la acción una vez realizada.'>
-    <Box>
-      <DialogActions>
-          <Button color='primary' variant='outlined'onClick={() => 
-            {
-              cancelarTurno(idTurnoCancelar);
-              setOpenDialog(false);
-              setOpenSnackbar(true);
-            }}>Aceptar</Button>
-		      <Button color='error' variant="outlined" onClick={() => {setOpenDialog(false)}}>Cancelar</Button>
-      </DialogActions>
-    </Box>
-    </Popup>
-    <Snackbar 
-      message={resCancelar} 
-      autoHideDuration={4000}
-      open={openSnackbar}
-      onClose={handleCloseSnackbar}
-    />
-    <Popup title='Detalle del Turno' openDialog={openVerMas} setOpenDialog={setVerMas}>
-      {
-        Object.entries(detalleTurno).map(([key, value]) => (
-          <div key={key}>
-            <span><strong>{key}: </strong></span>
-            <span>{value} </span>
-          </div>
-        ))
-      }
+    <>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        {
+          <Alerts
+            alertType={alertType}
+            description={alertMessage}
+            title={alertTitle}
+          />
+        }
+      </Box>
+      <MaterialReactTable
+        columns={columnas}
+        data={turnosPendientes}
+        state={{ isLoading: loading }}
+        renderTopToolbarCustomActions={agregarTurno}
+        muiTopToolbarProps={{
+          sx: {
+            display: "flex",
+            flexWrap: "inherit",
+            justifyContent: "flex-end",
+            overflow: "auto",
+            maxHeight: "200px",
+          },
+        }}
+        positionActionsColumn="last"
+        enableRowActions
+        renderRowActions={renderRowActions}
+        renderEmptyRowsFallback={noData}
+        defaultColumn={{ minSize: 10, maxSize: 100 }}
+      />
+
+      <Popup
+        title="Cancelar Turno"
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        description="¿Está seguro que desea cancelar el turno? No se podrá modificar la acción una vez realizada."
+      >
         <Box>
           <DialogActions>
-          <Button
+            <Button
               color="primary"
               variant="outlined"
-              sx={{marginTop:'10px'}}
+              onClick={() => {
+                cancelarTurno(idTurnoCancelar);
+                setOpenDialog(false);
+                setOpenSnackbar(true);
+              }}
+            >
+              Aceptar
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              onClick={() => {
+                setOpenDialog(false);
+              }}
+            >
+              Cancelar
+            </Button>
+          </DialogActions>
+        </Box>
+      </Popup>
+      <Snackbar
+        message={resCancelar}
+        autoHideDuration={4000}
+        open={openSnackbar}
+        onClose={handleCloseSnackbar}
+      />
+      <Popup
+        title="Detalle del Turno"
+        openDialog={openVerMas}
+        setOpenDialog={setVerMas}
+      >
+        {Object.entries(detalleTurno).map(([key, value]) => (
+          <div key={key}>
+            <span>
+              <strong>{key}: </strong>
+            </span>
+            <span>{value} </span>
+          </div>
+        ))}
+        <Box>
+          <DialogActions>
+            <Button
+              color="primary"
+              variant="outlined"
+              sx={{ marginTop: "10px" }}
               onClick={() => {
                 setVerMas(false);
               }}
@@ -222,8 +293,8 @@ const TablaTurnosPendientes = () => {
             </Button>
           </DialogActions>
         </Box>
-    </Popup>
-		</>
+      </Popup>
+    </>
   );
 };
 

@@ -33,6 +33,7 @@ const TablaTurnosPendientes = () => {
   const [idTurnoAsignar, setIdTurnoAsignar] = useState(0);
   const [openAsignacion, setOpenAsignacion] = useState(false);
 
+
   //alertas de la API
   const [alertType, setAlertType] = useState("");
   const [alertMessage, setAlertMessage] = useState("");

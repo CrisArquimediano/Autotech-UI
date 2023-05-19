@@ -16,7 +16,7 @@ import {
 
 import PanelDeAsignacion from '../asignacion-de-tecnico/PanelDeAsignacion'
 
-const id_taller = "S002";
+const id_taller = "S001";
 
 const TablaTurnosPendientes = () => {
   const [turnosPendientes, setTurnosPendientes] = useState([]);
@@ -32,6 +32,7 @@ const TablaTurnosPendientes = () => {
   //Para abrir el formulario de asignacion
   const [idTurnoAsignar, setIdTurnoAsignar] = useState(0);
   const [openAsignacion, setOpenAsignacion]= useState(false);
+
 
   //alertas de la API
   const [alertType, setAlertType] = useState("");
@@ -304,7 +305,7 @@ const TablaTurnosPendientes = () => {
       <Popup title="Asignar Turno a un Técnico"
         openDialog={openAsignacion}
         setOpenDialog={setOpenAsignacion}>
-          <PanelDeAsignacion idTurnoPadre={idTurnoAsignar} open={openAsignacion} setOpen={setOpenAsignacion}/>
+        <PanelDeAsignacion idTurnoPadre={idTurnoAsignar} open={openAsignacion} setOpen={setOpenAsignacion} />
       </Popup>
     </>
   );

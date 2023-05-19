@@ -4,11 +4,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button, Box } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Snackbar from "@mui/material/Snackbar";
 
 /////////////////////////////Lo de MUI + ChatGPT
 //Integrar con lo de Cami, hacer que reciba el id del turno como prop
 const AsignacionDeTecnicos = (props) => {
   const { idTurnoPadre, open, setOpen } = props;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [resAsignar, setResAsginar] = useState([]);
 
   const [tecnicosData, setTecnicosData] = useState([]);
 
@@ -18,6 +21,13 @@ const AsignacionDeTecnicos = (props) => {
   const [turnoInfo, setTurnoInfo] = useState(null);
 
   const [tecnicosDisponibles, setTecnicosDisponibles] = useState([]);
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   useEffect(() => {
     fetchTecnicosDisponibles(idTurnoPadre)
@@ -123,9 +133,11 @@ const AsignacionDeTecnicos = (props) => {
         .then((response) => {
           // Handle the response
           console.log(response);
-          alert("Se ha asignado al técnico seleccionado.");
-          console.log("Técnico asignado:", selectedItem.id);
+          //alert("Se ha asignado al técnico seleccionado.");
+          setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
+          setOpenSnackbar(true);
           setOpen(false);
+          console.log("Técnico asignado:", selectedItem.id);
         })
         .catch((error) => {
           // Handle the error
@@ -141,7 +153,10 @@ const AsignacionDeTecnicos = (props) => {
         .then((response) => {
           // Handle the response
           console.log(response);
-          alert("Se ha asignado al técnico seleccionado.");
+          //Estaba un alert de cris aca
+          setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
+          setOpenSnackbar(true);
+          setOpen(false);
           console.log("Técnico asignado:", selectedItem.id);
         })
         .catch((error) => {
@@ -226,6 +241,12 @@ const AsignacionDeTecnicos = (props) => {
             Cancelar
           </Button>
         </Box>
+        <Snackbar
+        message={resAsignar}
+        autoHideDuration={4000}
+        open={openSnackbar}
+        onClose={handleCloseSnackbar}
+      />
       </div>
     </div>
   );

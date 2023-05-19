@@ -6,6 +6,7 @@ import Home from './pages/home/Home'
 import ControlTecnicos from './pages/visualizacion-tecnicos/ControlTecnicos.jsx';
 import AgendaTaller from './pages/visualizar-agenda/AgendaTaller';
 import AsignacionDeTecnicos from './pages/asignacion-de-tecnico/PanelDeAsignacion'
+import ChecklistEvaluacion from './pages/checklist-evaluacion/Checklist';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/controlTecnicos' element={<ControlTecnicos />} />
         <Route path='/agendaTaller' element={<AgendaTaller />} />
         <Route path='/asignarTecnico' element={<AsignacionDeTecnicos />} />
+        <Route path='/evaluacioneaChecklist' element={<ChecklistEvaluacion />} />
       </Routes>
     </div>
   );

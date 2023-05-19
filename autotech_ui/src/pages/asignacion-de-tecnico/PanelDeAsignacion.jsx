@@ -7,11 +7,13 @@ import Typography from "@mui/material/Typography";
 //import Snackbar from "@mui/material/Snackbar";
 
 import Popup from "../components/generales/DialogPopup";
+const id_taller='S002'
 
-const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen }) => {
+const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActualizar}) => {
+   //actualizar y setActualizar son variables del padre para poder actualizar la tabla de turnos pendientes
+    const [openPopupNoSeleccion, setOpenPopupNoSeleccion] = useState(false);
+    const [openPopupSeleccion, setOpenPopupSeleccion] = useState(false);
 
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [resAsignar, setResAsginar] = useState([]);
 
     const [tecnicosData, setTecnicosData] = useState([]);
 
@@ -100,7 +102,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen }) => {
     const fetchTecnicosData = async () => {
         try {
             const response = await axios.get(
-                "https://autotech2.onrender.com/tecnicos/listar/?branch=S001"
+                "https://autotech2.onrender.com/tecnicos/listar/?branch="+id_taller
             );
             return response.data;
         } catch (error) {
@@ -142,8 +144,9 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen }) => {
             axios
                 .post(urlModificarTurno, nuevoEstado)
                 .then((response) => {
-                    setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
-                    setOpenSnackbar(true);
+                    //setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
+                    setOpenPopupSeleccion(true);
+                    setActualizar(true);
                     // setOpen(false);
                 })
                 .catch((error) => {
@@ -151,8 +154,8 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen }) => {
                 });
             return true;
         } else {
-            setResAsginar("Debe seleccionar un técnico.");
-            setOpenSnackbar(true);
+            //setResAsginar("Debe seleccionar un técnico.");
+            setOpenPopupNoSeleccion(true);
         }
     };
 
@@ -233,13 +236,27 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen }) => {
                     open={openSnackbar}
                     onClose={handleCloseSnackbar}
                 />} */}
-                <Popup title="Estado de asignación"
-                    description={resAsignar}
-                    openDialog={openSnackbar}
-                    setOpenDialog={setOpenSnackbar}
+                <Popup title="Error en Asignación"
+                    description='No ha seleccionado un técnico. Por favor, seleccione uno antes de terminar con el proceso.'
+                    openDialog={openPopupNoSeleccion}
+                    setOpenDialog={setOpenPopupNoSeleccion}
                 >
                     <Box
-                        sx={{ margin: '15px' }}>
+                        sx={{ margin: '15px', display: "flex", justifyContent: "center"  }}>
+                        <Button
+                        color='error'
+                            onClick={() => setOpenPopupNoSeleccion(false)}>
+                            Aceptar
+                        </Button>
+                    </Box>
+                </Popup>
+                <Popup title="Asignación completada"
+                    description='La asignación del turno al técnico correspondiente hay sido exitosa. Recargue la página para ver los cambios correspondientes.'
+                    openDialog={openPopupSeleccion}
+                    setOpenDialog={setOpenPopupSeleccion}
+                >
+                    <Box
+                        sx={{ margin: '15px' , display: "flex", justifyContent: "center" }}>
                         <Button
                             onClick={() => setOpen(false)}>
                             Aceptar

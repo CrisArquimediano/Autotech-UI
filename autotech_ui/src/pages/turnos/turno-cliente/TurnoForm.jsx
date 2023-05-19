@@ -129,13 +129,12 @@ export default function TurnoForm() {
                         </React.Fragment>
                     ) : (
                         <React.Fragment>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 {getContent()}
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <Button
                                         variant="contained"
-                                        type='button'
-                                        onClick={handleSubmit}
+                                        type='submit'
                                         sx={{ mt: 3, ml: 1 }}>
                                         Enviar Datos
                                         {console.log(turno)}

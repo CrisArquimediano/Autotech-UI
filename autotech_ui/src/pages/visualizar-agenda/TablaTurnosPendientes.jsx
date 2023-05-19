@@ -31,7 +31,8 @@ const TablaTurnosPendientes = () => {
 
   //Para abrir el formulario de asignacion
   const [idTurnoAsignar, setIdTurnoAsignar] = useState(0);
-  const [openAsignacion, setOpenAsignacion] = useState(false);
+  const [openAsignacion, setOpenAsignacion]= useState(false);
+
 
   //alertas de la API
   const [alertType, setAlertType] = useState("");

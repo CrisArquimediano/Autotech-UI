@@ -5,7 +5,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { format } from 'date-fns';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import turno from '../turno'
 import disponibilidad from './disponibilidad'
 import feriados from './feriados'
@@ -67,7 +66,6 @@ const Talleres = () => {
                         ))}
                     </Select>
                     {
-                        //Esto está bien, ahora tiene que recibir la disponibilidad
                         t.taller !== '' && (
                             <Stack spacing={3} width={300} padding={5}>
                                 <Grid item xs={12} md={10}>
@@ -101,10 +99,6 @@ const fetchAgendaData = async (idTaller) => {
         console.error(error);
     }
 };
-// Ejemplo:
-// fetchAgendaData(1); 
-// Fetch data from 'https://autotech2.onrender.com/turnos/dias-horarios-disponibles/1/'
-
 
 const isFeriadoIsMas30Dias = (date) => {
     if (turno.taller_id === "") {
@@ -147,8 +141,8 @@ function DateValidationShouldDisableDate() {
                             />
                         </Grid>
                         <Grid item xs={12} md={10}>
-                            {dia.day() === 0 && (<HoraDomingo dias_y_horarios={disponibilidad.dias_y_horarios} />)}
-                            {dia.day() !== 0 && (<HoraNormal dias_y_horarios={disponibilidad.dias_y_horarios} />)}
+                            {turno.fecha_inicio !== '' &&
+                                (<Hora fecha={turno.fecha_inicio} dias_y_horarios={disponibilidad.dias_y_horarios} />)}
                         </Grid>
                     </Grid>
                 </Stack>
@@ -157,84 +151,35 @@ function DateValidationShouldDisableDate() {
     );
 }
 
-const horaMinimaDomingo = dayjs().set('hour', 8).startOf('hour');
-const horaMaxDomingo = dayjs().set('hour', 11).startOf('hour');
-
-function HoraDomingo({ dias_y_horarios }) {
+function Hora({ dias_y_horarios, fecha }) {
     const [hora, setHora] = React.useState('');
+
+    const handleHoraChange = (event) => {
+        const selectedValue = event.target.value;
+        setHora(selectedValue);
+        turno.hora_inicio = parseInt(selectedValue) + ':00:00';
+        h = parseInt(selectedValue) + 1;
+        turno.hora_fin = h + ':00:00';
+        console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
+    };
+
     let h;
 
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-                label="24 hours"
-                defaultValue={horaMinimaDomingo}
-                minTime={horaMinimaDomingo}
-                maxTime={horaMaxDomingo}
-                ampm={false}
-                value={hora}
-                onChange={(newValue) => {
-                    setHora(newValue);
-                    turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
-                    h = new Date(newValue);
-                    h.setHours(h.getHours() + 1);
-                    turno.hora_fin = format(h, 'kk:mm:ss');
-                    console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
-                }}
-                views={['hours']}
-                shouldDisableTime={(time) => {
-                    const hour = new Date(time);
-                    const turnoFechaInicio = turno.fecha_inicio;
-                    const entry = dias_y_horarios && dias_y_horarios.find((item) => item.dia === turnoFechaInicio);
-                    let hora = hour.getHours();
-                    if (entry) {
-                        const horariosDisponibles = entry.horarios_disponibles;
-                        return !horariosDisponibles.includes(hora);
-                    }
-                    return false;
-                }}
-            />
-        </LocalizationProvider>
-    );
-}
+    const horariosDisponibles = dias_y_horarios?.find((item) => item.dia === fecha)?.horarios_disponibles;
 
-const horaMinima = dayjs().set('hour', 8).startOf('hour');
-const horaMax = dayjs().set('hour', 16).startOf('hour');
-
-function HoraNormal({ dias_y_horarios }) {
-    const [hora, setHora] = React.useState('');
-    let h;
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-                label="24 hours"
-                defaultValue={horaMinima}
-                minTime={horaMinima}
-                maxTime={horaMax}
-                ampm={false}
-                value={hora}
-                onChange={(newValue) => {
-                    setHora(newValue);
-                    turno.hora_inicio = format(new Date(newValue), 'kk:mm:ss');
-                    h = new Date(newValue);
-                    h.setHours(h.getHours() + 1);
-                    turno.hora_fin = format(h, 'kk:mm:ss');
-                    console.log("Hora inicio:", turno.hora_inicio, "| Hora fin:", turno.hora_fin);
-                }}
-                views={['hours']}
-                shouldDisableTime={(time) => {
-                    const hour = new Date(time);
-                    const turnoFechaInicio = turno.fecha_inicio;
-                    const entry = dias_y_horarios && dias_y_horarios.find((item) => item.dia === turnoFechaInicio);
-                    let hora = hour.getHours();
-                    if (entry) {
-                        const horariosDisponibles = entry.horarios_disponibles;
-                        return !horariosDisponibles.includes(hora);
-                    }
-                    return false;
-                }}
-            />
-        </LocalizationProvider>
+        <FormControl fullWidth>
+            <InputLabel>Horarios Disponibles</InputLabel>
+            <Select value={hora} onChange={handleHoraChange} width='50px' label="Horarios Disponibles">
+                <MenuItem value="">Elija una hora, por favor</MenuItem>
+                {horariosDisponibles &&
+                    horariosDisponibles.map((horaItem) => (
+                        <MenuItem key={horaItem} value={horaItem}>
+                            {horaItem}
+                        </MenuItem>
+                    ))}
+            </Select>
+        </FormControl>
     );
 }
 

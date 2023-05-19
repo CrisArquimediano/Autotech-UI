@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -74,7 +74,11 @@ class Kilometraje extends React.Component {
 
         if (e.target.validity.valid) {
             this.setState({ kilometros: e.target.value });
-            turno.frecuencia_km = Math.ceil(val / 5000) * 5000;
+            if (val > 200000) {
+                turno.frecuencia_km = 200000;
+            } else {
+                turno.frecuencia_km = Math.ceil(val / 5000) * 5000;
+            }
             console.log('frecuencia_km cargado en el json:', turno.frecuencia_km)
         }
         else if (val === '') this.setState({ kilometros: val });

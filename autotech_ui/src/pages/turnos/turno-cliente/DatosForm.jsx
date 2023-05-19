@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from "react"
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -13,25 +12,17 @@ import Stack from '@mui/material/Stack';
 
 //Acá obtengo tipo de turno, kilometraje y patente
 
-function ControlledRadioButtonsGroup() {
-    //Para mostrar input de Kilometraje o no mostrarlo, según tipo de turno
+function TipoDeTurno() {
     const [kmInput, setKmInput] = React.useState('');
 
     const handleClick = (event) => {
         setKmInput(event.target.value);
     };
 
-    //Tipo de turno
-
-    const [tipo, setTipo] = useState();
     const guardarCambio = (event) => {
-        const { name, value } = event.target;
-        setTipo((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        const { value } = event.target;
         turno.tipo = value;
-        console.log('Tipo de turno cargado en el json:', turno.tipo)
+        console.log('Tipo de turno cargado en el json:', turno.tipo);
     };
 
     return (
@@ -47,18 +38,16 @@ function ControlledRadioButtonsGroup() {
                         value="evaluacion"
                         control={<Radio />}
                         label="Evaluacion"
-                        onClick={handleClick} />
+                        onClick={handleClick}
+                    />
                     <FormControlLabel
                         value="service"
                         control={<Radio />}
                         label="Service"
-                        onClick={handleClick} />
+                        onClick={handleClick}
+                    />
                     <br></br>
-                    {
-                        kmInput === "service" && (
-                            < Kilometraje />
-                        )
-                    }
+                    {kmInput === 'service' && <Kilometraje />}
                 </RadioGroup>
             </Stack>
         </FormControl>
@@ -100,20 +89,28 @@ class Kilometraje extends React.Component {
     }
 }
 
-<Stack spacing={3} width={200}></Stack>
-export default function DatosForm() {
-    const [patente, setPatente] = React.useState('');
-
+function Patente() {
     const handleChange = (event) => {
-
-        const { name, value } = event.target;
-        setPatente((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        const { value } = event.target;
         turno.patente = value;
-        console.log('Patente cargada en el json:', turno.patente)
+        console.log('Patente cargada en el json:', turno.patente);
     };
+
+    return (
+        <TextField
+            required
+            id="patente"
+            name="patente"
+            label="Patente"
+            fullWidth
+            variant="outlined"
+            inputProps={{ minLength: 6, maxLength: 7 }}
+            onChange={handleChange}
+        />
+    )
+}
+
+export default function DatosForm() {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -121,18 +118,10 @@ export default function DatosForm() {
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="patente"
-                        name="patente"
-                        label="Patente"
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleChange}
-                    />
+                    <Patente />
                 </Grid>
                 <Grid item xs={12}>
-                    <ControlledRadioButtonsGroup />
+                    <TipoDeTurno />
                 </Grid>
             </Grid>
         </React.Fragment>

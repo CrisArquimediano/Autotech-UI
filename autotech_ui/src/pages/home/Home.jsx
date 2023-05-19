@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Copyright from "../components/generales/Copyright";
 import LoggedInLayout from "../components/generales/LoggedInLayout";
 import Header from "../components/generales/Header";
-import { Box, Button, CardContent, Divider, Typography } from "@mui/material";
+import { Box, CardContent } from "@mui/material";
 import TablaTurnosEnProgreso from "../visualizar-agenda/TablaTurnosEnProgreso";
 import ArticleIcon from '@mui/icons-material/Article';
 import LittleTitle from "../components/generales/LittleTitle";
@@ -34,9 +34,9 @@ const Home = () => {
               }}
               elevation={5}
             >
-              <LittleTitle title='Clientes Atendidos'/>
+              <LittleTitle title='Clientes Atendidos' />
               <CardContent>
-                
+
               </CardContent>
             </Paper>
           </Grid>
@@ -53,9 +53,9 @@ const Home = () => {
               elevation={5}
               style={{ borderRadius: 15 }}
             >
-              <LittleTitle title='Turnos Pendientes'/>
+              <LittleTitle title='Turnos Pendientes' />
               <CardContent>
-                
+
               </CardContent>
             </Paper>
           </Grid>
@@ -72,9 +72,9 @@ const Home = () => {
               elevation={5}
               style={{ borderRadius: 15 }}
             >
-              <LittleTitle title='Evaluaciones Hechas'/>
+              <LittleTitle title='Evaluaciones Hechas' />
               <CardContent>
-                
+
               </CardContent>
             </Paper>
           </Grid>
@@ -91,9 +91,9 @@ const Home = () => {
               elevation={5}
               style={{ borderRadius: 15 }}
             >
-              <LittleTitle title='Tecnicos '/>
+              <LittleTitle title='Tecnicos ' />
               <CardContent>
-              
+
               </CardContent>
             </Paper>
           </Grid>
@@ -109,7 +109,7 @@ const Home = () => {
               elevation={5}
               style={{ borderRadius: 15 }}
             >
-              <LittleTitle title='Turnos en progreso' icon={<ArticleIcon sx={{marginRight:'10px', color:'darkgray'}} />}/>
+              <LittleTitle title='Turnos en progreso' icon={<ArticleIcon sx={{ marginRight: '10px', color: 'darkgray' }} />} />
               <TablaTurnosEnProgreso />
             </Paper>
           </Grid>

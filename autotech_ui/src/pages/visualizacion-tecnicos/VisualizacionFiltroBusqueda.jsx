@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Typography from "@mui/material/Typography";
 import { Input, Box, Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,7 +19,6 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import SearchIcon from "@mui/icons-material/Search";
 import Alerts from "../components/generales/Alerts";
-import Theme from "../../theme";
 //import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
 const VisualizacionBusquedaTecnicos = () => {

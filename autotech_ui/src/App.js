@@ -19,7 +19,7 @@ function App() {
         <Route path='/controlTecnicos' element={<ControlTecnicos />} />
         <Route path='/agendaTaller' element={<AgendaTaller />} />
         <Route path='/asignarTecnico' element={<AsignacionDeTecnicos />} />
-        <Route path='/evaluacioneaChecklist' element={<ChecklistEvaluacion />} />
+        <Route path='/evaluacionesChecklist' element={<ChecklistEvaluacion />} />
         <Route path='/misTurnos' element={<MisTurnos />} />
       </Routes>
     </div>

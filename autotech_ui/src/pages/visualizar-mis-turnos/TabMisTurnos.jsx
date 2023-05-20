@@ -45,15 +45,22 @@ export const TabMisTurnos = () => {
     <Box sx={{width: '100%'}}>
         <Box sx={{borderBottom:1 , borderColor: 'silver'}}>
             <Tabs value={value} onChange={handleChange} aria-label='scrollable auto tabs example' indicatorColor='secondary' variant='scrollable' scrollButtons='auto'>
-                <Tab label='Asignados' {...allyProps(0)} />
-                <Tab label='Terminados'{...allyProps(1)}/>
-
+                <Tab label='Evaluacion' {...allyProps(0)} />
+                <Tab label='Reparacion'{...allyProps(1)}/>
+                <Tab label='Service'{...allyProps(2)}/>
+                <Tab label='Terminado'{...allyProps(3)}/>
             </Tabs>
         </Box>
             <TabPanel value={value} index={0}>
-                Tabla turnos asignados
+                Tabla turnos por evaluacion
             </TabPanel>
             <TabPanel value={value} index={1}>
+                Tabla turnos por reparacion
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                Tabla turnos por service
+            </TabPanel>
+            <TabPanel value={value} index={3}>
                 Tabla turnos terminados
             </TabPanel>
     </Box>

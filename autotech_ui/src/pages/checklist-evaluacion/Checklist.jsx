@@ -145,37 +145,7 @@ const ChecklistEvaluacion = () => {
       {/* Se debe verificar que haya completado todos los items antes de crearla */}
       <Button>Crear evaluación</Button>
 
-      <Popup
-        title='Finalizar Turno'
-        //openDialog={openFinalizar}
-        //setOpenDialog={setOpenFinalizar}
-        description='¿Está seguro que desea enviar la evaluación? No se podrá modificar una vez enviada.'
-      >
-        <Box>
-          <DialogActions>
-            <Button
-              color='primary'
-              variant='outlined'
-              //onClick={() => {
-              //finalizarTurno(idTurnoFinalizar);
-              //setOpenFinalizar(false);
-              //setOpenSnackbar(true);
-              //}}
-            >
-              Aceptar
-            </Button>
-            <Button
-              color='error'
-              variant='outlined'
-              //</DialogActions>onClick={() => {
-              //setOpenFinalizar(false);
-              //}}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Box>
-      </Popup>
+      
     </LoggedInLayout>
   );
 };

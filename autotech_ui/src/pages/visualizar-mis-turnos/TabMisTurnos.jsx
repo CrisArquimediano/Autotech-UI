@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import { useState } from 'react';
 
 import TablaTurnosEvaluacion from './TablaTurnosEvaluacion';
+import TablaTurnosReparacion from './TablaTurnosReparacion';
 
 
 function TabPanel(props){
@@ -58,7 +59,7 @@ export const TabMisTurnos = () => {
                 <TablaTurnosEvaluacion />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Tabla turnos por reparacion
+                <TablaTurnosReparacion/>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Tabla turnos por service

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { DataGrid } from "@mui/x-data-grid";
-import { Button, Box } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-//import Snackbar from "@mui/material/Snackbar";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
+import { Button, Box } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+//import Snackbar from '@mui/material/Snackbar';
 
-import Popup from "../components/generales/DialogPopup";
+import Popup from '../components/generales/DialogPopup';
 const id_taller='S002'
 
 const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActualizar}) => {
@@ -25,7 +25,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
     const [tecnicosDisponibles, setTecnicosDisponibles] = useState([]);
 
     // const handleCloseSnackbar = (event, reason) => {
-    //     if (reason === "clickaway") {
+    //     if (reason === 'clickaway') {
     //         return;
     //     }
     //     setOpenSnackbar(false);
@@ -35,13 +35,13 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
         fetchTecnicosDisponibles(idTurnoPadre)
             .then((data) => {
                 if (
-                    typeof data === "object" &&
+                    typeof data === 'object' &&
                     Array.isArray(data.tecnicos_disponibles)
                 ) {
                     const ids = data.tecnicos_disponibles.map((item) => item.id_tecnico);
                     setTecnicosDisponibles(ids);
                 } else {
-                    console.error("Invalid tecnicos_disponibles data format:", data);
+                    console.error('Invalid tecnicos_disponibles data format:', data);
                 }
             })
             .catch((error) => console.error(error));
@@ -82,7 +82,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
         // Fetch tecnicos data from API
         fetchTecnicosData()
             .then((data) => {
-                if (typeof data === "object" && Array.isArray(data.tecnicos)) {
+                if (typeof data === 'object' && Array.isArray(data.tecnicos)) {
                     const rows = data.tecnicos.map((tecnicosItem) => ({
                         id: tecnicosItem.id_empleado,
                         nombre: tecnicosItem.nombre_completo,
@@ -93,7 +93,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                     }));
                     setTecnicosData(rows);
                 } else {
-                    console.error("Invalid tecnicos data format:", data);
+                    console.error('Invalid tecnicos data format:', data);
                 }
             })
             .catch((error) => console.error(error));
@@ -102,7 +102,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
     const fetchTecnicosData = async () => {
         try {
             const response = await axios.get(
-                "https://autotech2.onrender.com/tecnicos/listar/?branch="+id_taller
+                'https://autotech2.onrender.com/tecnicos/listar/?branch='+id_taller
             );
             return response.data;
         } catch (error) {
@@ -128,23 +128,23 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
             axios
                 .post(urlAsignarTecnico)
                 .then((response) => {
-                    // setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
+                    // setResAsginar('Se ha asignado el turno al tecnico seleccionado.');
                     // setOpenSnackbar(true);
                     // setOpen(false);
-                    console.log("Técnico asignado:", selectedItem.id);
+                    console.log('Técnico asignado:', selectedItem.id);
                 })
                 .catch((error) => {
                     console.error(error.response);
                 });
 
             const nuevoEstado = {
-                estado: "en proceso",
+                estado: 'en proceso',
             };
 
             axios
                 .post(urlModificarTurno, nuevoEstado)
                 .then((response) => {
-                    //setResAsginar("Se ha asignado el turno al tecnico seleccionado.");
+                    //setResAsginar('Se ha asignado el turno al tecnico seleccionado.');
                     setOpenPopupSeleccion(true);
                     setActualizar(true);
                     // setOpen(false);
@@ -154,27 +154,27 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                 });
             return true;
         } else {
-            //setResAsginar("Debe seleccionar un técnico.");
+            //setResAsginar('Debe seleccionar un técnico.');
             setOpenPopupNoSeleccion(true);
         }
     };
 
     return (
         <div>
-            <EnhancedTableToolbar titulo="Turno" />
+            <EnhancedTableToolbar titulo='Turno' />
             <DataGrid
                 rows={turnoInfo ? [turnoInfo] : []}
                 columns={[
-                    { field: "id_turno", headerName: "ID", width: 70 },
-                    { field: "tipo", headerName: "Tipo", width: 130 },
-                    { field: "estado", headerName: "Estado", width: 130 },
-                    { field: "fecha_inicio", headerName: "Fecha de inicio", width: 150 },
-                    { field: "hora_inicio", headerName: "Hora de inicio", width: 150 },
-                    { field: "hora_fin", headerName: "Hora de fin", width: 130 },
-                    { field: "frecuencia_km", headerName: "Frecuencia (km)", width: 160 },
+                    { field: 'id_turno', headerName: 'ID', width: 70 },
+                    { field: 'tipo', headerName: 'Tipo', width: 130 },
+                    { field: 'estado', headerName: 'Estado', width: 130 },
+                    { field: 'fecha_inicio', headerName: 'Fecha de inicio', width: 150 },
+                    { field: 'hora_inicio', headerName: 'Hora de inicio', width: 150 },
+                    { field: 'hora_fin', headerName: 'Hora de fin', width: 130 },
+                    { field: 'frecuencia_km', headerName: 'Frecuencia (km)', width: 160 },
                     {
-                        field: "papeles_en_regla",
-                        headerName: "Papeles en regla",
+                        field: 'papeles_en_regla',
+                        headerName: 'Papeles en regla',
                         width: 160,
                     },
                 ]}
@@ -182,26 +182,26 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                 getRowId={(row) => row.id_turno}
             />
             <br></br>
-            <EnhancedTableToolbar titulo="Técnicos" />
-            <div style={{ height: 400, width: "100%" }}>
+            <EnhancedTableToolbar titulo='Técnicos' />
+            <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={tecnicosData.filter((item) =>
                         tecnicosDisponibles.includes(item.id)
                     )}
                     columns={[
-                        { field: "id", headerName: "ID", width: 70 },
-                        { field: "nombre", headerName: "Nombre", width: 280 },
-                        { field: "dni", headerName: "DNI", width: 130 },
-                        { field: "categoria", headerName: "Categoría", width: 130 },
-                        { field: "taller", headerName: "Taller", width: 130 },
+                        { field: 'id', headerName: 'ID', width: 70 },
+                        { field: 'nombre', headerName: 'Nombre', width: 280 },
+                        { field: 'dni', headerName: 'DNI', width: 130 },
+                        { field: 'categoria', headerName: 'Categoría', width: 130 },
+                        { field: 'taller', headerName: 'Taller', width: 130 },
                         {
-                            field: "fullName",
-                            headerName: "Filtro",
+                            field: 'fullName',
+                            headerName: 'Filtro',
                             description:
-                                "This column has a value getter and is not sortable.",
+                                'This column has a value getter and is not sortable.',
                             sortable: false,
                             width: 300,
-                            valueGetter: (params) => `${params.row.nombre || ""}`,
+                            valueGetter: (params) => `${params.row.nombre || ''}`,
                         },
                     ]}
                     disableMultipleSelection
@@ -210,11 +210,11 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                     selectionModel={selectedItem ? [selectedItem.id] : []} // Set the selected item ID as the selectionModel
                     pageSize={5}
                 />
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
-                        variant="outlined"
-                        color="primary"
-                        sx={{ fontSize: "1em", marginTop: "10px", margin: "10px" }}
+                        variant='outlined'
+                        color='primary'
+                        sx={{ fontSize: '1em', marginTop: '10px', margin: '10px' }}
                         onClick={() => {
                             asignarTecnico();
                         }}
@@ -222,9 +222,9 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                         Asignar
                     </Button>
                     <Button
-                        variant="outlined"
-                        color="error"
-                        sx={{ fontSize: "1em", margin: "10px" }}
+                        variant='outlined'
+                        color='error'
+                        sx={{ fontSize: '1em', margin: '10px' }}
                         onClick={() => setOpen(false)}
                     >
                         Cancelar
@@ -236,13 +236,13 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                     open={openSnackbar}
                     onClose={handleCloseSnackbar}
                 />} */}
-                <Popup title="Error en Asignación"
+                <Popup title='Error en Asignación'
                     description='No ha seleccionado un técnico. Por favor, seleccione uno antes de terminar con el proceso.'
                     openDialog={openPopupNoSeleccion}
                     setOpenDialog={setOpenPopupNoSeleccion}
                 >
                     <Box
-                        sx={{ margin: '15px', display: "flex", justifyContent: "center"  }}>
+                        sx={{ margin: '15px', display: 'flex', justifyContent: 'center'  }}>
                         <Button
                         color='error'
                             onClick={() => setOpenPopupNoSeleccion(false)}>
@@ -256,7 +256,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                     setOpenDialog={setOpenPopupSeleccion}
                 >
                     <Box
-                        sx={{ margin: '15px' , display: "flex", justifyContent: "center" }}>
+                        sx={{ margin: '15px' , display: 'flex', justifyContent: 'center' }}>
                         <Button
                             onClick={() => setOpen(false)}>
                             Aceptar
@@ -272,16 +272,16 @@ function EnhancedTableToolbar({ titulo }) {
     return (
         <Toolbar>
             <Typography
-                sx={{ flex: "1 1 100%" }}
-                color="inherit"
-                variant="subtitle1"
-                component="div"
+                sx={{ flex: '1 1 100%' }}
+                color='inherit'
+                variant='subtitle1'
+                component='div'
             ></Typography>
             <Typography
-                sx={{ flex: "1 1 100%" }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
+                sx={{ flex: '1 1 100%' }}
+                variant='h6'
+                id='tableTitle'
+                component='div'
             >
                 {titulo}
             </Typography>

@@ -13,10 +13,9 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DatosForm from './DatosForm';
-import ResumenTurno from './ResumenTurno';
 import turno from '../turno'
 import axios from "axios";
-import Calendario from './Calendario';
+
 
 function Copyright() {
     return (
@@ -31,19 +30,11 @@ function Copyright() {
     );
 }
 
-const steps = ['Datos', 'Disponibilidad', 'Su turno'];
+const steps = ['Formulario para sacar un turno'];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <DatosForm />;
-        case 1:
-            return <Calendario />;
-        case 2:
-            return <ResumenTurno />;
-        default:
-            throw new Error('Unknown step');
-    }
+function getContent() {
+    return <DatosForm />;
+
 }
 
 const theme = createTheme();
@@ -53,10 +44,6 @@ export default function TurnoForm() {
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
     };
 
     function isDatosCompletos() {
@@ -143,30 +130,15 @@ export default function TurnoForm() {
                     ) : (
                         <React.Fragment>
                             <form onSubmit={handleSubmit}>
-                                {getStepContent(activeStep)}
+                                {getContent()}
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                            Volver
-                                        </Button>
-                                    )}
-                                    {activeStep === steps.length - 1 && (
-                                        <Button
-                                            variant="contained"
-                                            type='submit'
-                                            sx={{ mt: 3, ml: 1 }}>
-                                            Enviar Datos
-                                            {console.log(turno)}
-                                        </Button>
-                                    )}
-
-                                    {activeStep !== steps.length - 1 && (<Button
+                                    <Button
                                         variant="contained"
-                                        onClick={handleNext}
-                                        sx={{ mt: 3, ml: 1 }}
-                                    >
-                                        Siguiente
-                                    </Button>)}
+                                        type='submit'
+                                        sx={{ mt: 3, ml: 1 }}>
+                                        Enviar Datos
+                                        {console.log(turno)}
+                                    </Button>
                                 </Box>
                             </form>
                         </React.Fragment>

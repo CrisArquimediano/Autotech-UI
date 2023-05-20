@@ -18,6 +18,7 @@ const getCancelarTurno = async (turnoId) => await axios.patch(url+`/cancelar-tur
 
 const patchFinalizarTurno = async (turnoId) => await axios.patch(url+`/actualizar-estado/${turnoId}/`);
 
+
 export {
     getTurnosTodos,
     getDetalleTurno,

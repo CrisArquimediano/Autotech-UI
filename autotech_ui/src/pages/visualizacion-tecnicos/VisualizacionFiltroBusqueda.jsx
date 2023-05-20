@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
-import { Input, Box, Button } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import axios from "axios";
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import SearchIcon from "@mui/icons-material/Search";
-import Alerts from "../components/generales/Alerts";
+import { useState, useEffect } from 'react';
+import Typography from '@mui/material/Typography';
+import { Input, Box, Button } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import axios from 'axios';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import SearchIcon from '@mui/icons-material/Search';
+import Alerts from '../components/generales/Alerts';
 //import {Desktop, Tablet, Mobile} from "../components/generales/Responsive"
 
 const VisualizacionBusquedaTecnicos = () => {
@@ -28,16 +28,15 @@ const VisualizacionBusquedaTecnicos = () => {
   const [seleccionarFila, setSeleccionarFila] = useState(null);
 
   const [valoresBusqueda, setValoresBusqueda] = useState({
-    nombre: "",
-    dni: "",
-    categoria: "",
+    nombre: '',
+    dni: '',
+    categoria: '',
   });
-
 
   //alertas de la API
   const [alertType, setAlertType] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
-  const [alertTitle, setAlertTitle] = useState(''); 
+  const [alertTitle, setAlertTitle] = useState('');
 
   let endPoint = `https://autotech2.onrender.com/tecnicos/filtro/?branch=S002&`;
 
@@ -69,20 +68,22 @@ const VisualizacionBusquedaTecnicos = () => {
             ? `dni=${valoresBusqueda.dni}`
             : !(valoresBusqueda.categoria.length <= 0)
             ? `categoria=${valoresBusqueda.categoria}&`
-            : ""
+            : ''
         }`
       )
       .then((response) => {
         setTecnicos(response.data);
-        setAlertType("");
+        setAlertType('');
 
         let cantidadTecnicos = response.data.tecnicos.length;
         console.log(cantidadTecnicos);
 
         if (cantidadTecnicos === 0) {
-          setAlertMessage("No se han encontrado coincidencias sobre la búsqueda realizada.");
-          setAlertType("warning");
-          setAlertTitle("Sin coincidencias");          
+          setAlertMessage(
+            'No se han encontrado coincidencias sobre la búsqueda realizada.'
+          );
+          setAlertType('warning');
+          setAlertTitle('Sin coincidencias');
         }
 
         if (mostrarInfo) {
@@ -90,9 +91,11 @@ const VisualizacionBusquedaTecnicos = () => {
         }
       })
       .catch((error) => {
-        setAlertMessage("Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.");
-        setAlertType("error");
-        setAlertTitle("Error");
+        setAlertMessage(
+          'Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.'
+        );
+        setAlertType('error');
+        setAlertTitle('Error');
         console.log(error);
       });
   };
@@ -100,15 +103,17 @@ const VisualizacionBusquedaTecnicos = () => {
   /*Trae todos los tecnicos, cuando los campos estan vacios*/
   const traerTecnicos = () => {
     return axios
-      .get(`${endPoint}${""}`)
+      .get(`${endPoint}${''}`)
       .then((response) => {
         setTecnicos(response.data);
-        setAlertType("");
+        setAlertType('');
       })
       .catch((error) => {
-        setAlertMessage("Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.");
-        setAlertType("error");
-        setAlertTitle("Error");
+        setAlertMessage(
+          'Ha ocurrido un error, disculpe las molestias. Intente nuevamente más tarde.'
+        );
+        setAlertType('error');
+        setAlertTitle('Error');
         console.log(error);
       });
   };
@@ -148,21 +153,28 @@ const VisualizacionBusquedaTecnicos = () => {
       });
   };
 
-
   useEffect(() => {
     filtrarTecnicos();
   }, []);
 
   return (
-      <Box className="background-color">
+    <Box className="background-color">
       <span className="d-flex justify-content-center">
-        {<Alerts alertType={alertType} description={alertMessage} title={alertTitle}/>}
+        {
+          <Alerts
+            alertType={alertType}
+            description={alertMessage}
+            title={alertTitle}
+          />
+        }
       </span>
-      <Box className="row d-flex justify-content-center" >
+      <Box className="row d-flex justify-content-center">
         <Box className="col-12 col-md-8 col-lg-6 col-xl-6">
-          <Box className="card shadow-2-strong" sx={{ borderRadius: "1rem" }}>
+          <Box className="card shadow-2-strong" sx={{ borderRadius: '1rem' }}>
             <Box className="card-body p-5 text-center row" elevation={5}>
-              <Typography variant="h6" sx={{mb:'10px'}} fontWeight='bold'>Búsqueda:</Typography>
+              <Typography variant="h6" sx={{ mb: '10px' }} fontWeight="bold">
+                Búsqueda:
+              </Typography>
 
               <Input
                 type="search"
@@ -192,21 +204,23 @@ const VisualizacionBusquedaTecnicos = () => {
               </Typography>
 
               <FormControl>
-                <Typography variant="h6" sx={{mb:'10px'}} fontWeight='bold'>Categoría</Typography>
+                <Typography variant="h6" sx={{ mb: '10px' }} fontWeight="bold">
+                  Categoría
+                </Typography>
                 <Select
                   value={valoresBusqueda.categoria}
                   onChange={handleChange}
-                  sx={{ height: 30, mb:2 }}
+                  sx={{ height: 30, mb: 2 }}
                   name="categoria"
                   color="secondary"
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={"A"}>A</MenuItem>
-                  <MenuItem value={"B"}>B</MenuItem>
-                  <MenuItem value={"C"}>C</MenuItem>
-                  <MenuItem value={"D"}>D</MenuItem>
+                  <MenuItem value={'A'}>A</MenuItem>
+                  <MenuItem value={'B'}>B</MenuItem>
+                  <MenuItem value={'C'}>C</MenuItem>
+                  <MenuItem value={'D'}>D</MenuItem>
                 </Select>
               </FormControl>
 
@@ -215,7 +229,7 @@ const VisualizacionBusquedaTecnicos = () => {
                   variant="contained"
                   color="secondary"
                   onClick={filtrarTecnicos}
-                  startIcon={<SearchIcon/>}
+                  startIcon={<SearchIcon />}
                 >
                   Buscar
                 </Button>
@@ -244,8 +258,8 @@ const VisualizacionBusquedaTecnicos = () => {
                 <>
                   <TableRow
                     key={tecnicoObj.id_empleado}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    className={seleccionarFila === index ? "seleccionado" : ""}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    className={seleccionarFila === index ? 'seleccionado' : ''}
                   >
                     <TableCell align="center">
                       {tecnicoObj.id_empleado}

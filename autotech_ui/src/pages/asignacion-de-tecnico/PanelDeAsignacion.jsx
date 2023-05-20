@@ -251,7 +251,7 @@ const AsignacionDeTecnicos = ({ idTurnoPadre, open, setOpen, actualizar, setActu
                     </Box>
                 </Popup>
                 <Popup title="Asignación completada"
-                    description='La asignación del turno al técnico correspondiente hay sido exitosa. Recargue la página para ver los cambios correspondientes.'
+                    description='La asignación del turno al técnico correspondiente ha sido exitosa.'
                     openDialog={openPopupSeleccion}
                     setOpenDialog={setOpenPopupSeleccion}
                 >

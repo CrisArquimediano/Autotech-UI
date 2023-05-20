@@ -68,12 +68,13 @@ const ChecklistEvaluacion = () => {
       <Slider
         aria-label="Puntaje máximo"
         defaultValue={0}
+        size="small"
         valueLabelDisplay="auto"
-        valueLabelFormat="puntaje"
         step={5}
-        marks
         min={0}
         max={puntajeMaximo} //el maximo es variable
+        className="pt-5"
+        color="secondary"
       />
     </Box>
   );

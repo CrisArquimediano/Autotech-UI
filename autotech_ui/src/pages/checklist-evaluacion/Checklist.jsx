@@ -21,6 +21,7 @@ const ChecklistEvaluacion = () => {
   const [evaluaciones, setEvaluaciones] = useState([]);
   const [puntajeMaximo, setPuntajeMaximo] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   //alertas de la API
   const [alertType, setAlertType] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
@@ -98,7 +99,7 @@ const ChecklistEvaluacion = () => {
           columns={columnas}
           data={evaluaciones}
           state={{ isLoading: loading }}
-          enableTopToolbar={false}
+          enableToolbarInternalActions={false}
           enableRowSelection
           positionActionsColumn="last"
           enableRowActions
@@ -110,8 +111,34 @@ const ChecklistEvaluacion = () => {
             },
           }}
           defaultColumn={{ minSize: 10, maxSize: 100 }}
+          positionPagination="top"
+          initialState={{
+            pagination: {
+              pageSize: 5,
+              pageIndex: 0
+            }
+          }} muiTablePaginationProps={{
+            rowsPerPageOptions: [5, 10, 20],
+            showFirstButton: false,
+            showLastButton: false,
+            SelectProps: {
+              native: true
+            },
+            labelRowsPerPage: 'Número de tareas visibles'
+          }}
         />
       </Container>
+
+      <TextField
+          id="standard-multiline-static"
+          label="Comentarios"
+          multiline
+          rows={5}
+          variant="outlined"
+        />
+
+        {/* Se debe verificar que haya completado todos los items antes de crearla */}
+        <Button>Crear evaluación</Button>
 
       <Popup
         title="Finalizar Turno"

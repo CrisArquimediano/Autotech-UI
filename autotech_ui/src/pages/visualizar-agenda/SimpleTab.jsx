@@ -62,6 +62,7 @@ export const SimpleTabTurnos = () => {
           <Tab label="Pendientes de aprobación" {...allyProps(1)} />
           <Tab label="En Progreso" {...allyProps(2)} />
           <Tab label="Terminados" {...allyProps(3)} />
+          <Tab label="Cancelados" {...allyProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -75,6 +76,9 @@ export const SimpleTabTurnos = () => {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <TablaTurnosTerminados />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        Tabla de turnos cancelados
       </TabPanel>
     </Box>
   );

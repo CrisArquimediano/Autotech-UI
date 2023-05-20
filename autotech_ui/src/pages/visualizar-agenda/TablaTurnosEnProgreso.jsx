@@ -39,7 +39,7 @@ const TablaTurnosEnProgreso = (props) => {
         setAlertType("Error");
         setAlertTitle("Error de servidor");
         setAlertMessage(
-          "Error en el servidor. Por favor, vuelva a intentarlo nuevamente."
+          "Error en el servidor. Por favor, vuelva a intentarlo nuevamente.Si el error persiste, comuníquese con el área técnica de KarU."
         );
       });
   }, []);
@@ -257,7 +257,7 @@ const TablaTurnosEnProgreso = (props) => {
                 setVerMas(false);
               }}
             >
-              Atras
+              Atrás
             </Button>
           </DialogActions>
         </Box>

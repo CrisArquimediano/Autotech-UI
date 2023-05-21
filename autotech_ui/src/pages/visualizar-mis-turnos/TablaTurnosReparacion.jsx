@@ -8,13 +8,13 @@ import MaterialReactTable from 'material-react-table';
 import { Button, Box, DialogActions } from '@mui/material';
 import { getDetalleTurno } from '../../services/services-Turnos';
 import Alerts from '../components/generales/Alerts';
-import { getTurnosEvaluacion } from '../../services/services-tecnicos';
+import { getTurnosReparacion } from '../../services/services-tecnicos';
 import Popup from '../components/generales/DialogPopup';
 
 const idTecnico = 5;
 
-const TablaTurnosEvaluacion = () => {
-  const [turnosEvaluacion, setTurnosEvaluacion] = useState([]);
+const TablaTurnosReparacion = () => {
+  const [turnosReparacion, setTurnosReparacion] = useState([]);
   const [actualizarTabla, setActualizarTabla] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +50,10 @@ const TablaTurnosEvaluacion = () => {
         header: 'Hora de inicio',
       },
       {
+        accessorKey: 'fecha_fin',
+        header: 'Fecha de fin',
+      },
+      {
         accessorKey: 'hora_fin',
         header: 'Hora de fin',
       },
@@ -58,16 +62,16 @@ const TablaTurnosEvaluacion = () => {
   );
 
   const traerTurnos = useCallback(() => {
-    getTurnosEvaluacion(idTecnico)
+    getTurnosReparacion(idTecnico)
       .then((response) => {
-        setTurnosEvaluacion(response.data);
+        setTurnosReparacion(response.data);
         setLoading(false);
       })
       .catch((error) => {
         setAlertType('Error');
         setAlertTitle('Error de servidor');
         setAlertMessage(
-          'Error en el servidor. Por favor, vuelva a intentarlo nuevamente. Si el error persiste, comuníquese con el área técnica de KarU. ✉ insomia.autotech@gmail.com',
+          'Error en el servidor. Por favor, vuelva a intentarlo nuevamente. Si el error persiste, comuníquese con el área técnica de KarU. ✉: insomia.autotech@gmail.com',
         );
       });
   }, []);
@@ -116,7 +120,7 @@ const TablaTurnosEvaluacion = () => {
           setOpenChecklist(true);
         }}
       >
-        Realizar evaluación
+        Realizar reparación
       </Button>
     </Box>
   );
@@ -131,7 +135,8 @@ const TablaTurnosEvaluacion = () => {
         description="No hay turnos asignados para usted en este momento. Consulte con su supervisor a cargo."
         alertType="info"
       />
-    </Box>)
+    </Box>
+    )
   };
 
   const filaDetalle = (llave, valor) => {
@@ -166,12 +171,12 @@ const TablaTurnosEvaluacion = () => {
       </Box>
       <MaterialReactTable
         columns={columnas}
-        data={turnosEvaluacion}
+        data={turnosReparacion}
         state={{ isLoading: loading }}
         positionActionsColumn="last"
         enableRowActions
         renderRowActions={renderRowActions}
-        renderEmptyRowsFallback={noData}
+        renderEmptyRowsFallback= {noData}
         defaultColumn={{ minSize: 10, maxSize: 100 }}
         muiTopToolbarProps={{
           sx: {
@@ -221,4 +226,4 @@ const TablaTurnosEvaluacion = () => {
   );
 };
 
-export default TablaTurnosEvaluacion;
+export default TablaTurnosReparacion;

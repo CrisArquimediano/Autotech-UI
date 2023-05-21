@@ -8,11 +8,14 @@ const getTurnosService = async (tecnicoId)=> await axios.get(url+`/trabajos-en-p
 
 const getTurnosReparacion = async (tecnicoId)=> await axios.get(url+`/trabajos-en-proceso-reparacion/${tecnicoId}/`);
 
-const getTurnosExtraodinario = async (tecnicoId) => await axios.get(url+`/trabajos-en-proceso-extraodinarios/${tecnicoId}/`);
+const getTurnosExtraodinario = async (tecnicoId) => await axios.get(url+`/trabajos-en-proceso-extraordinario/${tecnicoId}/`);
+
+const getTurnosTerminados = async (tecnicoId) => axios.get(`${url}/trabajos-terminados/${tecnicoId}/`);
 
 export {
     getTurnosEvaluacion,
     getTurnosReparacion,
     getTurnosService,
     getTurnosExtraodinario,
+    getTurnosTerminados,
 };

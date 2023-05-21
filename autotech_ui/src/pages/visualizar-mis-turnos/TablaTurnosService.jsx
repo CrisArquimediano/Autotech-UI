@@ -8,13 +8,13 @@ import MaterialReactTable from 'material-react-table';
 import { Button, Box, DialogActions } from '@mui/material';
 import { getDetalleTurno } from '../../services/services-Turnos';
 import Alerts from '../components/generales/Alerts';
-import { getTurnosReparacion } from '../../services/services-tecnicos';
+import { getTurnosService } from '../../services/services-tecnicos';
 import Popup from '../components/generales/DialogPopup';
 
 const idTecnico = 5;
 
-const TablaTurnosReparacion = () => {
-  const [turnosReparacion, setTurnosReparacion] = useState([]);
+const TablaTurnosService = () => {
+  const [turnosService, setTurnosService] = useState([]);
   const [actualizarTabla, setActualizarTabla] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,21 +50,21 @@ const TablaTurnosReparacion = () => {
         header: 'Hora de inicio',
       },
       {
-        accessorKey: 'fecha_fin',
-        header: 'Fecha de fin',
-      },
-      {
         accessorKey: 'hora_fin',
         header: 'Hora de fin',
+      },
+      {
+        accessorKey: 'frecuencia_km',
+        header: 'Kilómetros',
       },
     ],
     [],
   );
 
   const traerTurnos = useCallback(() => {
-    getTurnosReparacion(idTecnico)
+    getTurnosService(idTecnico)
       .then((response) => {
-        setTurnosReparacion(response.data);
+        setTurnosService(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -120,7 +120,7 @@ const TablaTurnosReparacion = () => {
           setOpenChecklist(true);
         }}
       >
-        Realizar reparación
+        Realizar service
       </Button>
     </Box>
   );
@@ -135,8 +135,7 @@ const TablaTurnosReparacion = () => {
         description="No hay turnos asignados para usted en este momento. Consulte con su supervisor a cargo."
         alertType="info"
       />
-    </Box>
-    )
+    </Box>)
   };
 
   const filaDetalle = (llave, valor) => {
@@ -171,12 +170,12 @@ const TablaTurnosReparacion = () => {
       </Box>
       <MaterialReactTable
         columns={columnas}
-        data={turnosReparacion}
+        data={turnosService}
         state={{ isLoading: loading }}
         positionActionsColumn="last"
         enableRowActions
         renderRowActions={renderRowActions}
-        renderEmptyRowsFallback= {noData}
+        renderEmptyRowsFallback={noData}
         defaultColumn={{ minSize: 10, maxSize: 100 }}
         muiTopToolbarProps={{
           sx: {
@@ -226,4 +225,4 @@ const TablaTurnosReparacion = () => {
   );
 };
 
-export default TablaTurnosReparacion;
+export default TablaTurnosService;

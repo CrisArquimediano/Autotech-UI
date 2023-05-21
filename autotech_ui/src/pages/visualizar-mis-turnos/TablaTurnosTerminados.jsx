@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-unused-vars */
 import {
@@ -8,13 +9,13 @@ import MaterialReactTable from 'material-react-table';
 import { Button, Box, DialogActions } from '@mui/material';
 import { getDetalleTurno } from '../../services/services-Turnos';
 import Alerts from '../components/generales/Alerts';
-import { getTurnosReparacion } from '../../services/services-tecnicos';
+import { getTurnosTerminados } from '../../services/services-tecnicos';
 import Popup from '../components/generales/DialogPopup';
 
 const idTecnico = 5;
 
-const TablaTurnosReparacion = () => {
-  const [turnosReparacion, setTurnosReparacion] = useState([]);
+const TablaTurnosTerminados = () => {
+  const [turnosTerminados, setTurnosTerminados] = useState([]);
   const [actualizarTabla, setActualizarTabla] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,6 +43,10 @@ const TablaTurnosReparacion = () => {
         header: 'Patente',
       },
       {
+        accessorKey: 'tipo',
+        header: 'Tipo',
+      },
+      {
         accessorKey: 'fecha_inicio',
         header: 'Fecha de inicio',
       },
@@ -62,9 +67,9 @@ const TablaTurnosReparacion = () => {
   );
 
   const traerTurnos = useCallback(() => {
-    getTurnosReparacion(idTecnico)
+    getTurnosTerminados(idTecnico)
       .then((response) => {
-        setTurnosReparacion(response.data);
+        setTurnosTerminados(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -112,16 +117,6 @@ const TablaTurnosReparacion = () => {
       >
         Ver más
       </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          setIdTurno(row.original.id_turno);
-          setOpenChecklist(true);
-        }}
-      >
-        Realizar reparación
-      </Button>
     </Box>
   );
 
@@ -135,8 +130,7 @@ const TablaTurnosReparacion = () => {
         description="No hay turnos asignados para usted en este momento. Consulte con su supervisor a cargo."
         alertType="info"
       />
-    </Box>
-    )
+    </Box>)
   };
 
   const filaDetalle = (llave, valor) => {
@@ -171,12 +165,12 @@ const TablaTurnosReparacion = () => {
       </Box>
       <MaterialReactTable
         columns={columnas}
-        data={turnosReparacion}
+        data={turnosTerminados}
         state={{ isLoading: loading }}
         positionActionsColumn="last"
         enableRowActions
         renderRowActions={renderRowActions}
-        renderEmptyRowsFallback= {noData}
+        renderEmptyRowsFallback={noData}
         defaultColumn={{ minSize: 10, maxSize: 100 }}
         muiTopToolbarProps={{
           sx: {
@@ -226,4 +220,4 @@ const TablaTurnosReparacion = () => {
   );
 };
 
-export default TablaTurnosReparacion;
+export default TablaTurnosTerminados;

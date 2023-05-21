@@ -216,7 +216,7 @@ const TablaTurnosReparacion = () => {
         </Box>
       </Popup>
       <Popup
-        title="Checklist Evaluación"
+        title="Checklist"
         openDialog={openChecklist}
         setOpenDialog={setOpenChecklist}
       >
